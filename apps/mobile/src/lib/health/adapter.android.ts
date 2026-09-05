@@ -54,8 +54,6 @@ export const health: HealthPort = {
     });
     const latest = [...records].sort((a, b) => (a.time < b.time ? 1 : -1))[0];
     if (!latest) return null;
-    const { value, unit } = latest.weight;
-    const kg = unit === 'kilograms' ? value : unit === 'grams' ? value / 1000 : unit === 'pounds' ? value * 0.45359237 : unit === 'ounces' ? value * 0.028349523 : unit === 'milligrams' ? value / 1e6 : value / 1e9;
-    return { kg, at: new Date(latest.time).toISOString() };
+    return { kg: latest.weight.inKilograms, at: new Date(latest.time).toISOString() };
   },
 };

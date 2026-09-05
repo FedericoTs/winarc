@@ -20,7 +20,7 @@ export const health: HealthPort = {
   },
 
   workoutsBetween: async (start, end) => {
-    const workouts = await queryWorkoutSamples({ filter: { startDate: start, endDate: end }, limit: 25, ascending: false });
+    const workouts = await queryWorkoutSamples({ filter: { date: { startDate: start, endDate: end } }, limit: 25, ascending: false });
     const out: WorkoutEvidence[] = [];
     for (const w of workouts) {
       const s = new Date(w.startDate);
