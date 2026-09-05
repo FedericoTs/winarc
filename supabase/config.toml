@@ -39,9 +39,3 @@ secret = ""
 
 [functions.verify-proof]
 verify_jwt = true
-
-[functions.close-day]
-verify_jwt = false
-
-[functions.settle-week]
-verify_jwt = false

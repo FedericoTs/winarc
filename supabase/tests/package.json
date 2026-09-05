@@ -1,0 +1,21 @@
+{
+  "name": "@winarc/db-tests",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Applies the real migrations to a Postgres database and verifies the RPCs, row-level security, the daily tick and the Sunday settlement.",
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@winarc/domain": "workspace:*",
+    "pg": "^8.16.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@types/pg": "^8.15.0",
+    "typescript": "~5.9.3",
+    "vitest": "^5.0.0"
+  }
+}

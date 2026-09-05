@@ -12,9 +12,9 @@
       "bundleIdentifier": "app.winarc.season",
       "supportsTablet": false,
       "infoPlist": {
-        "NSCameraUsageDescription": "Arc uses the camera for the dual-cam proof: one photo of the place, one of you. Nothing from your library is ever uploaded.",
-        "NSHealthShareUsageDescription": "Arc reads workouts and weight to turn a photo proof into a Gold proof. Weight stays private to you.",
-        "NSHealthUpdateUsageDescription": "Arc does not write to Health."
+        "NSCameraUsageDescription": "WinArc uses the camera for the dual-cam proof: one photo of the place, one of you. Nothing from your library is ever uploaded.",
+        "NSHealthShareUsageDescription": "WinArc reads workouts and weight to turn a photo proof into a Gold proof. Weight stays private to you.",
+        "NSHealthUpdateUsageDescription": "WinArc does not write to Health."
       },
       "entitlements": {
         "com.apple.developer.healthkit": true
@@ -33,7 +33,7 @@
       [
         "expo-camera",
         {
-          "cameraPermission": "Arc uses the camera for the dual-cam proof. Nothing from your library is ever uploaded."
+          "cameraPermission": "WinArc uses the camera for the dual-cam proof. Nothing from your library is ever uploaded."
         }
       ],
       "expo-secure-store",

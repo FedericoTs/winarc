@@ -6,6 +6,7 @@
   "description": "Runs the shared verifier over a labeled proof set and gates rubric changes on false accept and false reject rates.",
   "scripts": {
     "eval": "tsx run.ts",
+    "smoke": "tsx smoke.ts",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {

@@ -10,6 +10,7 @@
     "typecheck": "pnpm -r --if-present typecheck",
     "lint": "pnpm -r --if-present lint",
     "domain:test": "pnpm --filter @winarc/domain test",
+    "db:test": "pnpm --filter @winarc/db-tests test",
     "mobile": "pnpm --filter @winarc/mobile start",
     "web": "pnpm --filter @winarc/web dev",
     "eval:verification": "pnpm --filter @winarc/eval-verification run eval"

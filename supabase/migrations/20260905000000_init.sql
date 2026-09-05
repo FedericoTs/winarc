@@ -487,13 +487,4 @@ create policy "members read their own files" on storage.objects
   for select to authenticated
   using (bucket_id in ('proofs', 'signatures', 'cards') and (storage.foldername(name))[1] = auth.uid()::text);
 
--- ---------------------------------------------------------------------------
--- cron: hourly ticks. Each function checks local time per member or squad.
--- Enable after deploying and setting the two secrets below in the dashboard:
---   select cron.schedule('close-day', '5 * * * *', $$
---     select net.http_post(
---       url := current_setting('app.functions_url') || '/close-day',
---       headers := jsonb_build_object('Authorization', 'Bearer ' || current_setting('app.cron_secret'), 'Content-Type', 'application/json'),
---       body := '{}'::jsonb);
---   $$);
---   select cron.schedule('settle-week', '10 * * * *', $$ ... '/settle-week' ... $$);
+-- The daily tick and the Sunday settlement live in 20260905000001_ticks_and_settlement.sql.

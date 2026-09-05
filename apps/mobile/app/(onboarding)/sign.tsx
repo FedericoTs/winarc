@@ -39,8 +39,13 @@ export default function Sign() {
     const { error: lErr } = await supabase.from('contract_lines').insert(
       lines.map((l, i) => ({ contract_id: contract.id, key: l.key, kind: l.kind, name: l.name, per_week: l.perWeek, days: l.days, verification: l.verification, staked: l.staked, position: i })),
     );
+    if (lErr) {
+      setBusy(false);
+      return setError(lErr.message);
+    }
+    // Opens today's due marks right away, so Today is never empty after signing.
+    await supabase.rpc('open_today');
     setBusy(false);
-    if (lErr) return setError(lErr.message);
     router.replace('/(tabs)/today');
   }
 

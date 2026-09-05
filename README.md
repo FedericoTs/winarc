@@ -11,7 +11,7 @@ apps/mobile          Expo SDK 57, expo-router. The app.
 apps/web             Next.js. Landing page and /join/[code].
 packages/domain      Pure product logic with tests. Seasons, contracts, squads, verification decisions, settlement.
 packages/verifier    The one model call, shared by the edge function and the evals.
-supabase             Schema with row-level security, storage buckets, edge functions, cron.
+supabase             Schema with row-level security, storage, the verify-proof function, ticks and settlement in SQL, and the database tests.
 evals/verification   Labeled proof set and the runner that gates rubric changes.
 docs                 Product rules, flows, design system, decisions, research, prototype.
 ```
