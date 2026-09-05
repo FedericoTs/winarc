@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { formatStake, type Currency } from '@winarc/domain';
 import { Body, Eyebrow, Screen, Tile } from '@/components/ui';
 import { supabase } from '@/lib/supabase';
 import { colors, fonts } from '@/theme/tokens';
@@ -11,6 +12,7 @@ type Entry = { profile_id: string; amount_cents: number; round_id: string | null
 export default function Ledger() {
   const [rounds, setRounds] = useState<Round[]>([]);
   const [entries, setEntries] = useState<Entry[]>([]);
+  const [currency, setCurrency] = useState<Currency>('EUR');
 
   useEffect(() => {
     (async () => {
@@ -18,6 +20,11 @@ export default function Ledger() {
       setRounds((r as Round[] | null) ?? []);
       const { data: e } = await supabase.from('ledger_entries').select('profile_id, amount_cents, round_id, profiles(display_name)');
       setEntries((e as Entry[] | null) ?? []);
+      const { data: auth } = await supabase.auth.getUser();
+      if (!auth.user) return;
+      const { data: sm } = await supabase.from('squad_members').select('squads(currency)').eq('profile_id', auth.user.id).is('left_at', null).maybeSingle();
+      const sq = (sm as { squads: { currency: Currency } | { currency: Currency }[] | null } | null)?.squads;
+      setCurrency((Array.isArray(sq) ? sq[0]?.currency : sq?.currency) ?? 'EUR');
     })();
   }, []);
 
@@ -34,15 +41,15 @@ export default function Ledger() {
     <Screen>
       <Eyebrow>The ledger{latest ? ` · week ${latest.week}` : ''}</Eyebrow>
       <View style={{ flexDirection: 'row', gap: 8 }}>
-        <Tile value={`€${(pot / 100).toFixed(0)}`} label="in the pot" color={colors.gold} />
+        <Tile value={formatStake(pot, currency)} label="in the pot" color={colors.gold} />
         <Tile value={latest ? `${Math.round(latest.hit_rate * 100)}%` : '–'} label="hit rate" />
-        <Tile value={latest ? `+€${(latest.pot_added_cents / 100).toFixed(0)}` : '–'} label="this week" color={colors.gold} />
+        <Tile value={latest ? `+${formatStake(latest.pot_added_cents, currency)}` : '–'} label="this week" color={colors.gold} />
       </View>
       <ScrollView contentContainerStyle={{ gap: 0 }}>
         {[...owed.entries()].map(([id, o]) => (
           <View key={id} style={styles.row}>
             <Text style={styles.name}>{o.name}</Text>
-            <Text style={[styles.amount, o.cents > 0 && { color: colors.gold }]}>{o.cents > 0 ? `€${(o.cents / 100).toFixed(0)}` : '—'}</Text>
+            <Text style={[styles.amount, o.cents > 0 && { color: colors.gold }]}>{o.cents > 0 ? formatStake(o.cents, currency) : '—'}</Text>
           </View>
         ))}
         {owed.size === 0 ? <Body muted>No rounds settled yet. The first ledger runs Sunday at 21:00.</Body> : null}

@@ -30,6 +30,8 @@ What is due, the deadline, the squad's status, and the rescue line. "Can't train
 
 Rear camera, front camera, one second apart. Verification returns in seconds and ends with a stamp. On an ask: retake first, vouch second, appeal third. Nothing is charged.
 
+Mind and money lines never go through the model. An attest line is one tap, a photo or artifact line is one photo from the in-app camera; both go on the board for the squad to see and stamp Bronze.
+
 ## 8. Board
 
 Members by day. Verified in ember, vouched in mint, misses in rose, rest quiet, today pulsing. Glyph plus color on every cell. Tap a cell to see the proof behind it. Squad only.

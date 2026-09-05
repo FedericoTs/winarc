@@ -13,7 +13,7 @@ const THUMB_TTL_SECONDS = 3600;
 
 type MarkRow = { profile_id: string; local_date: string; mark: DayMark; profiles: { display_name: string } | null };
 type VouchRequest = { id: string; proof_id: string; profile_id: string; local_date: string; profiles: { display_name: string } | null };
-type ProofRow = { profile_id: string; front_path: string | null; tier: string | null; profiles: { display_name: string } | null };
+type ProofRow = { profile_id: string; front_path: string | null; rear_path: string | null; tier: string | null; profiles: { display_name: string } | null };
 type Thumb = { id: string; name: string; tier: string; uri: string };
 
 const CELL: Record<DayMark, { bg?: string; border?: string; fg: string; glyph: string }> = {
@@ -55,16 +55,17 @@ export default function SquadBoard() {
       // Today's stamped proofs. Squadmates may read each other's proof images; the URLs are signed and short-lived.
       const { data: p } = await supabase
         .from('proofs')
-        .select('profile_id, front_path, tier, profiles(display_name)')
+        .select('profile_id, front_path, rear_path, tier, profiles(display_name)')
         .eq('local_date', today)
-        .in('status', ['verified', 'vouched']);
+        .in('status', ['verified', 'vouched', 'attested']);
       const proofs = (p as ProofRow[] | null) ?? [];
-      const paths = proofs.map((x) => x.front_path).filter((x): x is string => !!x);
+      const paths = proofs.map((x) => x.front_path ?? x.rear_path).filter((x): x is string => !!x);
       const { data: signed } = paths.length ? await supabase.storage.from('proofs').createSignedUrls(paths, THUMB_TTL_SECONDS) : { data: null };
       const byPath = new Map((signed ?? []).filter((s) => s.path && !s.error).map((s) => [s.path as string, s.signedUrl]));
       setThumbs(
         proofs.flatMap((x) => {
-          const uri = x.front_path ? byPath.get(x.front_path) : undefined;
+          const path = x.front_path ?? x.rear_path;
+          const uri = path ? byPath.get(path) : undefined;
           return uri ? [{ id: x.profile_id, name: x.profiles?.display_name ?? 'Member', tier: x.tier ?? 'SILVER', uri }] : [];
         }),
       );

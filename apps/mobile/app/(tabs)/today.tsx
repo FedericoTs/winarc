@@ -7,6 +7,7 @@ import {
   WEIGH_KEY,
   addDays,
   dayOfSeason,
+  formatStake,
   isWeighDay,
   localISODate,
   rollupMark,
@@ -14,6 +15,7 @@ import {
   squadStreak,
   vouchesLeft,
   weekdayOf,
+  type Currency,
   type DayMark,
 } from '@winarc/domain';
 import { Body, Button, Eyebrow, Screen, Tile } from '@/components/ui';
@@ -31,7 +33,7 @@ export default function Today() {
   const [now, setNow] = useState(new Date());
   const [due, setDue] = useState<Due[]>([]);
   const [rescues, setRescues] = useState({ sick: 0, vouch: 0 });
-  const [stats, setStats] = useState({ streak: 0, potCents: 0 });
+  const [stats, setStats] = useState<{ streak: number; potCents: number; currency: Currency }>({ streak: 0, potCents: 0, currency: 'EUR' });
   const [weighDay, setWeighDay] = useState(false);
   const [reloadKey, setReloadKey] = useState(0);
 
@@ -52,6 +54,31 @@ export default function Today() {
   }
   const today = localISODate(now, tz);
   const day = dayOfSeason(today, SEASON_ONE);
+
+  /** Sport lines take the dual-cam ritual; mind and money lines are witnessed by the squad. */
+  function proveLabel(v?: string): string {
+    return v === 'attest' ? 'I did it' : v === 'photo' || v === 'artifact' ? 'Add a photo' : 'Prove it';
+  }
+  function prove(line: Due) {
+    const v = line.contract_lines?.verification;
+    if (v === 'attest') {
+      Alert.alert(line.contract_lines?.name ?? 'Done today?', 'Your word, on the board where the squad can see it. Stamps Bronze.', [
+        { text: 'Not yet', style: 'cancel' },
+        {
+          text: 'I did it',
+          onPress: async () => {
+            const { error } = await supabase.rpc('attest_today', { p_line: line.contract_line_id });
+            if (error) Alert.alert("Couldn't stamp it", error.message);
+            else track({ name: 'habit_attested', verification: 'attest' });
+            setReloadKey((k) => k + 1);
+          },
+        },
+      ]);
+      return;
+    }
+    if (v === 'photo' || v === 'artifact') return router.push({ pathname: '/attest', params: { line: line.contract_line_id } });
+    router.push({ pathname: '/proof', params: { line: line.contract_line_id } });
+  }
 
   useEffect(() => {
     const id = setInterval(() => setNow(new Date()), 1000);
@@ -90,7 +117,10 @@ export default function Today() {
         days.push(rolled);
       }
       const { data: ledger } = await supabase.from('ledger_entries').select('amount_cents');
-      setStats({ streak: squadStreak(days), potCents: (ledger ?? []).reduce((a, e) => a + (e.amount_cents as number), 0) });
+      const { data: sm } = await supabase.from('squad_members').select('squads(currency)').eq('profile_id', auth.user.id).is('left_at', null).maybeSingle();
+      const sq = (sm as { squads: { currency: Currency } | { currency: Currency }[] | null } | null)?.squads;
+      const currency = (Array.isArray(sq) ? sq[0]?.currency : sq?.currency) ?? 'EUR';
+      setStats({ streak: squadStreak(days), potCents: (ledger ?? []).reduce((a, e) => a + (e.amount_cents as number), 0), currency });
 
       // The weigh-in is unstaked, so it never opens a mark; Today shows a private row on its day.
       const { data: contract } = await supabase.from('contracts').select('id').eq('profile_id', auth.user.id).eq('season_id', SEASON_ONE.id).maybeSingle();
@@ -133,9 +163,9 @@ export default function Today() {
         </View>
       </View>
       <Button
-        title={done ? 'Proved. See the squad' : open ? 'Prove it' : 'Train anyway'}
+        title={done ? 'Proved. See the squad' : open ? proveLabel(open.contract_lines?.verification) : 'Train anyway'}
         variant={open ? 'primary' : 'ghost'}
-        onPress={() => (done ? router.push('/(tabs)/squad') : router.push({ pathname: '/proof', params: { line: open?.contract_line_id ?? '' } }))}
+        onPress={() => (done ? router.push('/(tabs)/squad') : open ? prove(open) : router.push({ pathname: '/proof', params: { line: '' } }))}
       />
       {weighDay ? (
         <Pressable onPress={() => router.push('/weigh')} style={styles.weigh} accessibilityRole="button">
@@ -149,7 +179,7 @@ export default function Today() {
       <View style={{ flexDirection: 'row', gap: 8 }}>
         <Tile value={String(Math.max(0, day))} label="day arc" />
         <Tile value={String(stats.streak)} label="squad streak" color={colors.ember} />
-        <Tile value={`€${(stats.potCents / 100).toFixed(0)}`} label="in the pot" color={colors.gold} />
+        <Tile value={formatStake(stats.potCents, stats.currency)} label="in the pot" color={colors.gold} />
       </View>
       <Body muted style={{ fontSize: 12.5 }}>
         Rescue rules: {RESCUE.sickDaysPerFortnight} sick day per fortnight, {RESCUE.vouchesPerWeek} vouch per week.

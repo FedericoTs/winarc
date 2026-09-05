@@ -36,7 +36,8 @@ export type AnalyticsEvent =
   | { name: 'weigh_in_logged'; source: WeighSource; readings: number }
   | { name: 'push_registered'; state: PushState; asked: boolean }
   | { name: 'episode_created'; number: 1 | 2 | 3; fallback: boolean }
-  | { name: 'episode_shared'; number: 1 | 2 | 3; result: ShareResult };
+  | { name: 'episode_shared'; number: 1 | 2 | 3; result: ShareResult }
+  | { name: 'habit_attested'; verification: 'attest' | 'photo' | 'artifact' };
 
 let userId: string | null = null;
 let anonId: string | null = null;

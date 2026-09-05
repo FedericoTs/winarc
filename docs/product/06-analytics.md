@@ -26,6 +26,7 @@ A body weight. An image or a storage path. A display name, handle or email. Anyt
 | `push_registered` | state: registered, denied, unavailable; asked | The permission ask after signing |
 | `episode_created` | number, fallback | An episode is titled and stored |
 | `episode_shared` | number, result | The share sheet closes after an episode card |
+| `habit_attested` | verification: attest, photo, artifact | A mind or money line is stamped by the squad-witnessed path |
 
 Every event also carries `app_version`, `platform`, `season` and `$lib`.
 

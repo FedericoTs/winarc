@@ -54,6 +54,9 @@ Deno.serve(async (req) => {
 
   const line = Array.isArray(proof.contract_lines) ? proof.contract_lines[0] : proof.contract_lines;
   if (!line) return json({ error: 'contract line missing' }, 500);
+  if (line.verification === 'attest' || line.verification === 'photo' || line.verification === 'artifact') {
+    return json({ error: 'this line is squad-witnessed; call attest_today' }, 400);
+  }
   const sport = SPORTS[line.key] ?? customSport(line.name.replace(/ sessions$/, ''), line.key);
   const workout = proof.health_workout;
   const healthMatched = !!workout && workoutMatches(sport, workout.type, workout.minutes);
