@@ -1,0 +1,21 @@
+{
+  "name": "@arc/eval-verification",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Runs the shared verifier over a labeled proof set and gates rubric changes on false accept and false reject rates.",
+  "scripts": {
+    "eval": "tsx run.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.124.0",
+    "@arc/domain": "workspace:*",
+    "@arc/verifier": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "tsx": "^4.23.13",
+    "typescript": "~5.9.3"
+  }
+}

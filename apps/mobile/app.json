@@ -1,0 +1,46 @@
+{
+  "expo": {
+    "name": "Arc",
+    "slug": "arc",
+    "scheme": "arc",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "dark",
+    "backgroundColor": "#0B0D12",
+    "newArchEnabled": true,
+    "ios": {
+      "bundleIdentifier": "app.arc.season",
+      "supportsTablet": false,
+      "infoPlist": {
+        "NSCameraUsageDescription": "Arc uses the camera for the dual-cam proof: one photo of the place, one of you. Nothing from your library is ever uploaded.",
+        "NSHealthShareUsageDescription": "Arc reads workouts and weight to turn a photo proof into a Gold proof. Weight stays private to you.",
+        "NSHealthUpdateUsageDescription": "Arc does not write to Health."
+      },
+      "entitlements": {
+        "com.apple.developer.healthkit": true
+      }
+    },
+    "android": {
+      "package": "app.arc.season",
+      "permissions": [
+        "android.permission.CAMERA",
+        "android.permission.health.READ_EXERCISE",
+        "android.permission.health.READ_WEIGHT"
+      ]
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Arc uses the camera for the dual-cam proof. Nothing from your library is ever uploaded."
+        }
+      ],
+      "expo-secure-store",
+      "expo-notifications"
+    ],
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}

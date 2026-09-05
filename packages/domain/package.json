@@ -1,0 +1,24 @@
+{
+  "name": "@arc/domain",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Pure product logic shared by the app, the edge functions and the evals: seasons, sports, contracts, squads, verification decisions, settlement.",
+  "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "zod": "^4.5.4"
+  },
+  "devDependencies": {
+    "typescript": "~5.9.3",
+    "vitest": "^5.0.0"
+  }
+}

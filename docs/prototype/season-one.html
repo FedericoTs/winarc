@@ -1,0 +1,1094 @@
+<title>Season One</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;900&family=Instrument+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --bg:#F2F4F8; --bg-2:#FFFFFF; --ink:#141821; --ink-2:#56617A; --ink-3:#8A94A6; --line:#D9DFE8;
+  --accent:#2A63B8; --ember:#D95F0E; --focus:#2A63B8;
+  --p-ground:#0B0D12; --p-surface:#141821; --p-surface-2:#1B2130; --p-line:#262E3C;
+  --p-ink:#EAF2FA; --p-ink-2:#8A97A8; --p-ink-3:#5C6879;
+  --p-ice:#9CD3FF; --p-ember:#FF7A1A; --p-rose:#FF4D6D; --p-mint:#7EE0B8; --p-lilac:#C4A7FF; --p-gold:#E9B54A;
+  --f-display:'Big Shoulders Display','Arial Narrow',Impact,'Helvetica Neue',sans-serif;
+  --f-body:'Instrument Sans',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  --f-mono:'IBM Plex Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){ --bg:#0B0D12; --bg-2:#141821; --ink:#EAF2FA; --ink-2:#98A4B5; --ink-3:#6B7686; --line:#232A36; --accent:#9CD3FF; --ember:#FF7A1A; --focus:#9CD3FF; }
+}
+:root[data-theme="dark"]{ --bg:#0B0D12; --bg-2:#141821; --ink:#EAF2FA; --ink-2:#98A4B5; --ink-3:#6B7686; --line:#232A36; --accent:#9CD3FF; --ember:#FF7A1A; --focus:#9CD3FF; }
+
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased}
+button,input,select{font-family:inherit}
+:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+
+.studio{max-width:1240px;margin:0 auto;padding:22px 24px 48px;display:grid;gap:18px}
+.top{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:14px}
+.top h1{font-family:var(--f-display);font-weight:900;font-size:46px;line-height:.92;margin:0;letter-spacing:.01em;text-transform:uppercase;text-wrap:balance}
+.top .sub{color:var(--ink-2);max-width:62ch;margin:8px 0 0}
+.slate{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2)}
+.top-right{display:flex;gap:10px;align-items:center}
+.pbtn{border:1px solid var(--line);background:var(--bg-2);color:var(--ink);border-radius:10px;padding:8px 12px;font-size:13px;cursor:pointer}
+.pbtn:hover{border-color:var(--accent)}
+.roles{display:flex;gap:14px;flex-wrap:wrap;font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2)}
+.roles span{display:inline-flex;align-items:center;gap:6px}
+.roles i{width:10px;height:10px;border-radius:3px;display:inline-block}
+
+.main{display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:28px;align-items:start}
+@media (max-width:940px){.main{grid-template-columns:1fr}}
+.stage{position:relative;display:flex;justify-content:center;align-items:flex-start;overflow:hidden;height:880px;border-radius:24px;background:radial-gradient(120% 90% at 50% 0%, color-mix(in oklab, var(--accent) 14%, transparent) 0%, transparent 60%)}
+
+/* ---------- phone ---------- */
+.phone{width:390px;height:844px;border-radius:56px;background:#050608;padding:11px;position:relative;transform-origin:top center;box-shadow:0 40px 90px rgba(0,0,0,.45),0 0 0 1px #2a2f3a,inset 0 0 0 1px #12151c}
+.screen{width:100%;height:100%;border-radius:46px;background:var(--p-ground);color:var(--p-ink);overflow:hidden;position:relative}
+.island{position:absolute;top:20px;left:50%;transform:translateX(-50%);width:122px;height:35px;border-radius:20px;background:#000;z-index:6}
+.statusbar{position:absolute;top:24px;left:0;right:0;display:flex;justify-content:space-between;padding:0 34px;font-family:var(--f-mono);font-size:13px;font-weight:500;z-index:5;color:var(--p-ink)}
+.statusbar .r{display:flex;gap:6px;align-items:center}
+.batt{width:24px;height:11px;border:1.5px solid var(--p-ink);border-radius:3px;position:relative}
+.batt::after{content:"";position:absolute;left:2px;top:2px;bottom:2px;width:70%;background:var(--p-ink);border-radius:1px}
+.view{position:absolute;inset:0;padding:78px 20px 26px;display:flex;flex-direction:column;gap:14px;overflow:hidden}
+.view[hidden]{display:none}
+.scroll{overflow:auto;min-height:0;display:grid;gap:14px;align-content:start;scrollbar-width:none;margin:0 -4px;padding:0 4px}
+.scroll::-webkit-scrollbar{display:none}
+
+.brand{display:flex;justify-content:space-between;align-items:baseline}
+.wordmark{font-family:var(--f-display);font-weight:900;font-size:26px;letter-spacing:.08em}
+.eyebrow{font-family:var(--f-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--p-ink-2)}
+.eyebrow.ice{color:var(--p-ice)}
+.disp{font-family:var(--f-display);font-weight:900;text-transform:uppercase;line-height:.9;letter-spacing:.005em}
+.h1{font-size:44px}
+.h2{font-size:30px}
+.mono{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+.muted{color:var(--p-ink-2)}
+.fine{font-size:12.5px;color:var(--p-ink-2);margin:0}
+.p{margin:0;font-size:14px;color:var(--p-ink-2)}
+
+.btn{appearance:none;border:0;border-radius:14px;padding:16px 18px;font-size:16px;font-weight:600;cursor:pointer;color:var(--p-ground);background:var(--p-ice);width:100%;transition:transform .08s ease}
+.btn:active{transform:scale(.985)}
+.btn.ghost{background:transparent;color:var(--p-ink);border:1px solid var(--p-line)}
+.btn.sm{padding:11px 14px;font-size:14px;border-radius:12px;width:auto}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+.row-btns{display:flex;gap:10px}
+.row-btns .btn{flex:1}
+.linkbtn{background:none;border:0;color:var(--p-ice);font:600 13px var(--f-body);cursor:pointer;padding:0;text-align:left}
+.linkbtn.dim{color:var(--p-ink-2);font-weight:500}
+
+.cardp{background:var(--p-surface);border:1px solid var(--p-line);border-radius:18px;padding:16px}
+.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.tile{background:var(--p-surface);border-radius:14px;padding:12px 12px 10px;min-width:0}
+.tile .v{font-family:var(--f-display);font-weight:900;font-size:34px;line-height:.95;font-variant-numeric:tabular-nums}
+.tile .v.ember{color:var(--p-ember)}
+.tile .v.ice{color:var(--p-ice)}
+.tile .v.gold{color:var(--p-gold)}
+.tile .l{font-size:11.5px;color:var(--p-ink-2);margin-top:4px;letter-spacing:.02em}
+
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font-family:var(--f-display);font-weight:700;font-size:21px;letter-spacing:.07em;padding:12px 16px 10px;border-radius:12px;border:1px solid var(--p-line);background:var(--p-surface);color:var(--p-ink);cursor:pointer;line-height:1;display:inline-flex;align-items:center;gap:8px}
+.chip.on{background:var(--p-ice);color:var(--p-ground);border-color:var(--p-ice)}
+.chip.sm{font-size:16px;padding:9px 12px 8px}
+.chip.add{border-style:dashed;color:var(--p-ice)}
+.chip .x{font:500 12px var(--f-mono);opacity:.7}
+.chip.body{font-family:var(--f-body);font-weight:600;font-size:12.5px;letter-spacing:0;text-transform:none;padding:9px 12px}
+.customrow{display:flex;gap:8px}
+.customrow .input{flex:1;padding:10px 12px;font-size:14px}
+.customrow select{background:var(--p-ground);color:var(--p-ink);border:1px solid var(--p-line);border-radius:12px;padding:0 10px;font-size:13px}
+.input{width:100%;border:1px solid var(--p-line);background:var(--p-ground);color:var(--p-ink);border-radius:12px;padding:12px;font:500 15px var(--f-body)}
+
+.avatar{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;font:700 11.5px var(--f-mono);color:#0B0D12;flex:none;letter-spacing:.02em}
+.av-ice{background:var(--p-ice)}.av-ember{background:var(--p-ember)}.av-mint{background:var(--p-mint)}.av-lilac{background:var(--p-lilac)}.av-gold{background:var(--p-gold)}
+.avatar.sm{width:26px;height:26px;font-size:9.5px}
+
+.tabbar{margin-top:auto;display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--p-line);padding-top:8px}
+.tab{background:none;border:0;color:var(--p-ink-3);font:500 10.5px var(--f-mono);letter-spacing:.12em;text-transform:uppercase;padding:8px 0 4px;cursor:pointer}
+.tab.on{color:var(--p-ice)}
+
+/* countdown */
+.hero-count{display:flex;flex-direction:column;align-items:flex-start;gap:2px;margin-top:8px}
+.bignum{font-family:var(--f-display);font-weight:900;font-size:172px;line-height:.82;letter-spacing:-.01em;font-variant-numeric:tabular-nums;margin-left:-4px}
+.bignum-l{font-family:var(--f-display);font-weight:700;font-size:30px;text-transform:uppercase;letter-spacing:.06em;color:var(--p-ink-2);margin-top:6px}
+.clock{font-family:var(--f-mono);font-size:22px;color:var(--p-ice);letter-spacing:.06em;margin-top:6px}
+.daterange{font-family:var(--f-mono);font-size:12px;letter-spacing:.12em;color:var(--p-ink-2);margin-top:2px}
+
+/* contract */
+.lines{display:flex;flex-direction:column;gap:8px}
+.line{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;background:var(--p-surface);border-radius:14px;padding:11px 12px}
+.line .n{font-weight:600;font-size:15px}
+.line .ver{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--p-ink-2);margin-top:2px}
+.line.off{opacity:.55}
+.step{display:flex;align-items:center;gap:6px;background:var(--p-surface-2);border-radius:10px;padding:4px}
+.step button{width:28px;height:28px;border:0;border-radius:8px;background:transparent;color:var(--p-ink);font-size:18px;cursor:pointer;line-height:1}
+.step button:hover{background:var(--p-line)}
+.step .val{font-family:var(--f-display);font-weight:900;font-size:22px;width:44px;text-align:center;line-height:1}
+.step .val small{font:500 9px var(--f-mono);letter-spacing:.08em;display:block;color:var(--p-ink-2)}
+.switch{width:42px;height:24px;border-radius:12px;background:var(--p-surface-2);border:0;position:relative;cursor:pointer;flex:none}
+.switch::after{content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:var(--p-ink-3);transition:transform .2s,background .2s}
+.switch.on{background:color-mix(in oklab,var(--p-ice) 30%,var(--p-surface-2))}
+.switch.on::after{transform:translateX(18px);background:var(--p-ice)}
+
+/* squad */
+.seg{display:grid;grid-template-columns:repeat(3,1fr);background:var(--p-surface);border-radius:12px;padding:4px;gap:4px}
+.seg button{border:0;background:transparent;color:var(--p-ink-2);font:600 13px var(--f-body);padding:9px 0;border-radius:9px;cursor:pointer}
+.seg button.on{background:var(--p-surface-2);color:var(--p-ink)}
+.door{background:var(--p-surface);border:1px solid var(--p-line);border-radius:18px;padding:14px;display:flex;flex-direction:column;gap:10px}
+.door[hidden]{display:none}
+.door h4{margin:0;font-family:var(--f-display);font-weight:900;font-size:24px;text-transform:uppercase;letter-spacing:.03em}
+.tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.tier{background:var(--p-ground);border:1px solid var(--p-line);border-radius:12px;padding:10px 6px 8px;text-align:center;cursor:pointer;color:var(--p-ink)}
+.tier .v{font-family:var(--f-display);font-weight:900;font-size:30px;line-height:1}
+.tier .l{font-family:var(--f-mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--p-ink-2);margin-top:3px}
+.tier.on{border-color:var(--p-gold);color:var(--p-gold)}
+.potchips .chip.body.on{background:var(--p-gold);border-color:var(--p-gold);color:#160B02}
+.potchips .chip.body[disabled]{opacity:.5;cursor:not-allowed}
+.math{font-family:var(--f-mono);font-size:12px;color:var(--p-ink-2);background:var(--p-ground);border-radius:10px;padding:10px 12px;line-height:1.6}
+.math b{color:var(--p-gold);font-weight:500}
+.coderow{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center}
+.code{font-family:var(--f-mono);font-size:17px;letter-spacing:.16em;background:var(--p-ground);border:1px dashed var(--p-ice);color:var(--p-ice);border-radius:10px;padding:11px;text-align:center}
+.matched{background:color-mix(in oklab,var(--p-mint) 14%,var(--p-surface));border:1px solid var(--p-mint);color:var(--p-ink);border-radius:12px;padding:10px 12px;font-size:13.5px}
+.terms{display:flex;justify-content:space-between;align-items:center;font-family:var(--f-mono);font-size:11px;letter-spacing:.06em;color:var(--p-ink-2);background:var(--p-surface);border-radius:12px;padding:10px 12px}
+.terms b{color:var(--p-gold);font-weight:500}
+
+/* sign */
+.poster-mini{background:var(--p-surface);border-radius:14px;padding:12px 14px;display:grid;gap:4px}
+.poster-mini .disp{font-size:26px}
+.poster-mini .ln{font-family:var(--f-mono);font-size:11px;letter-spacing:.06em;color:var(--p-ink-2);text-transform:uppercase}
+.poster-mini .ln.gold{color:var(--p-gold)}
+.poster-mini .ln.ice{color:var(--p-ice)}
+.sigwrap{background:var(--p-surface);border:1px dashed var(--p-line);border-radius:14px;position:relative;height:150px}
+.sigwrap canvas{width:100%;height:100%;display:block;touch-action:none;border-radius:14px}
+.sigwrap .hint{position:absolute;left:0;right:0;bottom:10px;text-align:center;font:500 10.5px var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--p-ink-3);pointer-events:none}
+.sigline{position:absolute;left:18px;right:18px;bottom:34px;border-bottom:1px solid var(--p-line);pointer-events:none}
+
+/* today */
+.slatebar{display:flex;justify-content:space-between;align-items:center;font-family:var(--f-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--p-ink-2)}
+.slatebar b{color:var(--p-ink);font-weight:500}
+.due{background:linear-gradient(160deg,#171C28,#0F131B);border:1px solid var(--p-line);border-radius:20px;padding:18px 18px 14px;display:grid;gap:8px;position:relative;overflow:hidden}
+.due::before{content:"";position:absolute;inset:-40% -20% auto auto;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,color-mix(in oklab,var(--p-ice) 30%,transparent),transparent 65%);pointer-events:none}
+.due.done::before{background:radial-gradient(circle,color-mix(in oklab,var(--p-ember) 35%,transparent),transparent 65%)}
+.due.miss::before{background:radial-gradient(circle,color-mix(in oklab,var(--p-rose) 30%,transparent),transparent 65%)}
+.due .what{font-family:var(--f-display);font-weight:900;font-size:40px;text-transform:uppercase;line-height:.9}
+.due .cd{font-family:var(--f-mono);font-size:26px;letter-spacing:.06em;color:var(--p-ice);font-variant-numeric:tabular-nums}
+.due.done .cd{color:var(--p-ember)}
+.due.miss .cd{color:var(--p-rose)}
+.due.sick .cd{color:var(--p-ink-2)}
+.rescue{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.04em;color:var(--p-ink-2);line-height:1.6;border-top:1px solid var(--p-line);padding-top:8px;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.rescue b{color:var(--p-ink);font-weight:500}
+.strip{display:flex;justify-content:space-between;gap:4px}
+.member{display:flex;flex-direction:column;align-items:center;gap:5px;flex:1;min-width:0}
+.member .st{font:500 9.5px var(--f-mono);letter-spacing:.04em;color:var(--p-ink-3);text-transform:uppercase;text-align:center;max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.member.v .st{color:var(--p-ember)}
+.member.p .avatar{box-shadow:0 0 0 2px var(--p-ground),0 0 0 3.5px var(--p-ice)}
+.member.v .avatar{box-shadow:0 0 0 2px var(--p-ground),0 0 0 3.5px var(--p-ember)}
+.member.r .avatar{opacity:.5}
+.member.x .avatar{box-shadow:0 0 0 2px var(--p-ground),0 0 0 3.5px var(--p-rose)}
+.member.x .st{color:var(--p-rose)}
+.scrim{position:absolute;inset:0;background:rgba(11,13,18,.6);z-index:14}
+.scrim[hidden]{display:none}
+.sheet{position:absolute;left:0;right:0;bottom:0;background:var(--p-surface);border-radius:28px 28px 0 0;padding:14px 20px 30px;z-index:15;display:grid;gap:10px;box-shadow:0 -20px 60px rgba(0,0,0,.5)}
+.sheet[hidden]{display:none}
+.sheet .grab{width:40px;height:4px;border-radius:2px;background:var(--p-line);margin:0 auto 4px}
+.sheet h5{margin:0;font-family:var(--f-display);font-weight:900;font-size:28px;text-transform:uppercase;line-height:.9}
+.opt{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;background:var(--p-ground);border:1px solid var(--p-line);border-radius:14px;padding:12px 14px;text-align:left;cursor:pointer;color:var(--p-ink)}
+.opt .t{font-weight:600;font-size:15px}
+.opt .d{font-size:12.5px;color:var(--p-ink-2)}
+.opt[disabled]{opacity:.5;cursor:not-allowed}
+.opt .k{font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;color:var(--p-ink-2);white-space:nowrap}
+.opt .k.rose{color:var(--p-rose)}
+
+/* proof */
+.finder{position:absolute;inset:0;overflow:hidden}
+.scene{position:absolute;inset:0;background:#0f1218}
+.sc-gym{background:
+  radial-gradient(60% 40% at 80% 12%, rgba(156,211,255,.35), transparent 60%),
+  radial-gradient(40% 30% at 15% 20%, rgba(255,122,26,.28), transparent 60%),
+  repeating-linear-gradient(90deg, rgba(255,255,255,.05) 0 2px, transparent 2px 46px),
+  linear-gradient(180deg,#1a2030 0%,#0e1219 55%,#07090d 100%)}
+.sc-run{background:
+  radial-gradient(70% 45% at 50% 42%, rgba(255,122,26,.55), transparent 70%),
+  linear-gradient(180deg,#1c1230 0%,#3a2150 35%,#1a1420 46%,#0a0b0f 47%,#161a22 100%)}
+.sc-swim{background:
+  radial-gradient(30% 20% at 30% 30%, rgba(255,255,255,.18), transparent 70%),
+  radial-gradient(35% 22% at 70% 60%, rgba(255,255,255,.14), transparent 70%),
+  linear-gradient(180deg,#0a3d5c,#137a9a 60%,#0a2f45)}
+.sc-climb{background:
+  radial-gradient(10px 10px at 20% 30%, #FF7A1A 60%, transparent 62%),
+  radial-gradient(10px 10px at 55% 22%, #7EE0B8 60%, transparent 62%),
+  radial-gradient(12px 12px at 75% 48%, #C4A7FF 60%, transparent 62%),
+  radial-gradient(9px 9px at 35% 62%, #E9B54A 60%, transparent 62%),
+  radial-gradient(11px 11px at 62% 78%, #9CD3FF 60%, transparent 62%),
+  linear-gradient(160deg,#3a3230,#211d1c)}
+.sc-hyrox{background:
+  repeating-linear-gradient(135deg, rgba(233,181,74,.22) 0 14px, transparent 14px 40px),
+  radial-gradient(50% 35% at 70% 20%, rgba(255,255,255,.12), transparent 60%),
+  linear-gradient(180deg,#14161c,#0a0b0e)}
+.sc-court{background:
+  radial-gradient(50% 30% at 50% 18%, rgba(255,255,255,.14), transparent 60%),
+  repeating-linear-gradient(0deg, rgba(255,255,255,.09) 0 2px, transparent 2px 64px),
+  linear-gradient(180deg,#0f2a24,#123d33 60%,#0a1f1a)}
+.sc-snow{background:
+  radial-gradient(60% 40% at 50% 30%, rgba(255,255,255,.35), transparent 65%),
+  linear-gradient(180deg,#5f7f9f 0%,#b9c9d8 45%,#dfe6ee 60%,#9fb0c0 100%)}
+.sc-custom{background:
+  radial-gradient(60% 40% at 50% 40%, rgba(156,211,255,.25), transparent 65%),
+  linear-gradient(180deg,#151a26,#0b0d12)}
+.scene::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.35),transparent 30%,transparent 60%,rgba(0,0,0,.6))}
+.finder .hud{position:absolute;top:78px;left:20px;right:20px;display:flex;justify-content:space-between;font-family:var(--f-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--p-ink)}
+.rec{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--p-rose);margin-right:6px;animation:blink 1.2s infinite}
+.front{position:absolute;top:120px;left:20px;width:96px;height:128px;border-radius:16px;border:2px solid rgba(255,255,255,.7);background:radial-gradient(60% 50% at 50% 35%, #2b3444, #141821);display:grid;place-items:center;transition:transform .35s ease,border-color .35s}
+.front .fi{width:44px;height:44px;border-radius:50%;background:var(--p-ice);display:grid;place-items:center;font:700 13px var(--f-mono);color:var(--p-ground)}
+.front .fl{position:absolute;bottom:6px;font:500 9px var(--f-mono);letter-spacing:.12em;color:rgba(255,255,255,.75)}
+.front.got{border-color:var(--p-ember)}
+.shutterwrap{position:absolute;bottom:30px;left:0;right:0;display:flex;flex-direction:column;align-items:center;gap:8px}
+.shutterwrap[hidden]{display:none}
+.shutter{width:78px;height:78px;border-radius:50%;border:5px solid #fff;background:transparent;cursor:pointer;position:relative}
+.shutter::after{content:"";position:absolute;inset:6px;border-radius:50%;background:#fff}
+.shutter:active::after{transform:scale(.9)}
+.demo{background:rgba(11,13,18,.6);border:1px solid var(--p-line);color:var(--p-ink-2);border-radius:999px;padding:5px 10px;font:500 10px var(--f-mono);letter-spacing:.1em;text-transform:uppercase;cursor:pointer}
+.demo.on{color:var(--p-rose);border-color:var(--p-rose)}
+.flash{position:absolute;inset:0;background:#fff;opacity:0;pointer-events:none}
+.flash.go{animation:flash .28s ease-out}
+.verify{position:absolute;left:20px;right:20px;bottom:30px;background:rgba(11,13,18,.88);backdrop-filter:blur(10px);border:1px solid var(--p-line);border-radius:18px;padding:14px 16px;display:grid;gap:8px}
+.verify[hidden]{display:none}
+.vstep{display:flex;justify-content:space-between;align-items:center;font-size:13.5px;color:var(--p-ink-3)}
+.vstep .k{font-family:var(--f-mono);font-size:11px;letter-spacing:.06em}
+.vstep.ok{color:var(--p-ink)}
+.vstep.ok .k{color:var(--p-ember)}
+.vstep.unsure{color:var(--p-ink)}
+.vstep.unsure .k{color:var(--p-ice)}
+.reject{position:absolute;left:20px;right:20px;bottom:30px;background:rgba(11,13,18,.92);backdrop-filter:blur(10px);border:1px solid var(--p-line);border-radius:18px;padding:16px;display:grid;gap:10px}
+.reject[hidden]{display:none}
+.reject .t{font-family:var(--f-display);font-weight:900;font-size:30px;text-transform:uppercase;line-height:.9}
+.reject .d{font-size:13px;color:var(--p-ink-2);margin:0}
+.stamp{position:absolute;left:0;right:0;top:44%;transform:translateY(-50%) rotate(-8deg);text-align:center;pointer-events:none}
+.stamp[hidden]{display:none}
+.stamp .word{display:inline-block;font-family:var(--f-display);font-weight:900;font-size:78px;letter-spacing:.06em;color:var(--p-ember);border:6px solid var(--p-ember);border-radius:14px;padding:6px 18px 0;line-height:.9;background:rgba(11,13,18,.35);text-shadow:0 0 30px rgba(255,122,26,.35)}
+.stamp.bronze .word{color:var(--p-mint);border-color:var(--p-mint);text-shadow:0 0 30px rgba(126,224,184,.35)}
+.stamp .sub{margin-top:10px;font-family:var(--f-mono);font-size:13px;letter-spacing:.16em;color:var(--p-ink)}
+.stamp.slam .word{animation:slam .55s cubic-bezier(.2,1.4,.3,1) both}
+.proof-actions{position:absolute;left:20px;right:20px;bottom:30px;display:flex;gap:10px}
+.proof-actions[hidden]{display:none}
+.proof-actions .btn{flex:1}
+
+/* board */
+.streakbar{display:flex;justify-content:space-between;align-items:baseline;background:var(--p-surface);border-radius:14px;padding:12px 14px}
+.streakbar .v{font-family:var(--f-display);font-weight:900;font-size:40px;line-height:.9;color:var(--p-ember)}
+.streakbar .l{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--p-ink-2)}
+.board{display:grid;grid-template-columns:54px repeat(12,1fr);gap:3px;align-items:center}
+.board .nm{font-family:var(--f-mono);font-size:10.5px;color:var(--p-ink-2);padding-right:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.board .dh{font-family:var(--f-mono);font-size:9.5px;color:var(--p-ink-3);text-align:center}
+.board .dh.today{color:var(--p-ice)}
+.cell{aspect-ratio:1;border-radius:5px;display:grid;place-items:center;font:600 11px var(--f-mono);border:0;padding:0;cursor:pointer;background:transparent;color:var(--p-ink)}
+.c-v{background:var(--p-ember);color:#160B02}
+.c-b{background:var(--p-mint);color:#06281B}
+.c-x{border:1px solid var(--p-rose);color:var(--p-rose)}
+.c-r{background:var(--p-surface-2);color:var(--p-ink-3)}
+.c-p{border:1px dashed var(--p-ice);color:var(--p-ice);animation:pulse 1.6s infinite}
+.legend{display:flex;gap:10px;flex-wrap:wrap;font-family:var(--f-mono);font-size:10.5px;color:var(--p-ink-2)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{width:12px;height:12px;border-radius:3px;display:inline-grid;place-items:center;font-size:8px;font-style:normal}
+.pop{background:var(--p-surface);border:1px solid var(--p-line);border-radius:14px;padding:12px 14px;display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:center;min-height:64px}
+.pop .sc{width:52px;height:52px;border-radius:10px}
+.pop .t{font-weight:600;font-size:14px}
+.pop .d{font-family:var(--f-mono);font-size:11px;color:var(--p-ink-2);letter-spacing:.04em}
+
+/* ledger */
+.lrow{display:grid;grid-template-columns:36px 1fr auto auto;gap:10px;align-items:center;padding:9px 0;border-bottom:1px solid var(--p-line)}
+.lrow .n{font-weight:600;font-size:14.5px}
+.lrow .s{font-family:var(--f-mono);font-size:11px;color:var(--p-ink-2)}
+.lrow .hits{font-family:var(--f-mono);font-size:12px;color:var(--p-ink-2);text-align:right}
+.lrow .owe{font-family:var(--f-display);font-weight:900;font-size:22px;min-width:52px;text-align:right;color:var(--p-ink-3)}
+.lrow .owe.pay{color:var(--p-gold)}
+#lrows{overflow:auto;min-height:0;flex:1;scrollbar-width:none}
+#lrows::-webkit-scrollbar{display:none}
+.mvp{display:flex;align-items:center;gap:10px;background:color-mix(in oklab,var(--p-mint) 12%,var(--p-surface));border:1px solid var(--p-mint);border-radius:12px;padding:8px 12px;font-size:13px}
+.mvp b{font-family:var(--f-mono);font-size:10px;letter-spacing:.14em;color:var(--p-mint);font-weight:500}
+.potbox{display:flex;justify-content:space-between;align-items:center;background:var(--p-surface);border-radius:14px;padding:10px 14px}
+.potbox .v{font-family:var(--f-display);font-weight:900;font-size:32px;color:var(--p-gold);line-height:1}
+.potbox .l{font-size:12px;color:var(--p-ink-2)}
+
+/* episode */
+.ep{background:linear-gradient(170deg,#181D2A,#0D1017);border:1px solid var(--p-line);border-radius:20px;padding:16px;display:grid;gap:10px;position:relative;overflow:hidden}
+.ep .no{font-family:var(--f-mono);font-size:11px;letter-spacing:.16em;color:var(--p-ember)}
+.ep .ti{font-family:var(--f-display);font-weight:900;font-size:46px;line-height:.86;text-transform:uppercase}
+.collage{display:grid;grid-template-columns:repeat(6,1fr);gap:4px}
+.collage i{display:block;aspect-ratio:1;border-radius:6px;position:relative}
+.collage i::after{content:attr(data-d);position:absolute;left:3px;bottom:2px;font:500 8px var(--f-mono);color:rgba(255,255,255,.85)}
+.ep.playing .collage i{animation:pop .5s ease both}
+.ep.playing .ti{animation:reveal .9s ease both;animation-delay:1.2s}
+.ep.playing .collage i:nth-child(1){animation-delay:.05s}.ep.playing .collage i:nth-child(2){animation-delay:.12s}.ep.playing .collage i:nth-child(3){animation-delay:.19s}.ep.playing .collage i:nth-child(4){animation-delay:.26s}.ep.playing .collage i:nth-child(5){animation-delay:.33s}.ep.playing .collage i:nth-child(6){animation-delay:.4s}.ep.playing .collage i:nth-child(7){animation-delay:.47s}.ep.playing .collage i:nth-child(8){animation-delay:.54s}.ep.playing .collage i:nth-child(9){animation-delay:.61s}.ep.playing .collage i:nth-child(10){animation-delay:.68s}.ep.playing .collage i:nth-child(11){animation-delay:.75s}.ep.playing .collage i:nth-child(12){animation-delay:.82s}
+.epstats{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.epstats div{background:rgba(255,255,255,.04);border-radius:10px;padding:8px 6px;text-align:center}
+.epstats .v{font-family:var(--f-display);font-weight:900;font-size:26px;line-height:1}
+.epstats .l{font:500 9px var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--p-ink-2);margin-top:3px}
+
+/* finale */
+.cert{border:1px solid var(--p-ice);border-radius:18px;padding:16px;display:grid;gap:6px;background:radial-gradient(80% 60% at 50% 0%, rgba(156,211,255,.14), transparent 70%)}
+.cert .big{font-family:var(--f-display);font-weight:900;font-size:64px;line-height:.85;text-transform:uppercase}
+.cert .big span{color:var(--p-ice)}
+.cert .ln{font-family:var(--f-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--p-ink-2)}
+.vote{display:grid;gap:8px}
+.vopt{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;background:var(--p-surface);border:1px solid var(--p-line);border-radius:12px;padding:10px 12px;cursor:pointer;color:var(--p-ink);text-align:left}
+.vopt.on{border-color:var(--p-gold)}
+.vopt .t{font-weight:600;font-size:14px}
+.vopt .bar{height:4px;background:var(--p-surface-2);border-radius:2px;margin-top:6px;overflow:hidden}
+.vopt .bar i{display:block;height:100%;background:var(--p-gold);width:0;transition:width .5s ease}
+.vopt .c{font-family:var(--f-display);font-weight:900;font-size:24px;min-width:26px;text-align:right}
+
+/* cards gallery */
+.gallery{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;padding:4px 0 10px;margin:0 -20px;padding-left:20px;padding-right:20px;scrollbar-width:none}
+.gallery::-webkit-scrollbar{display:none}
+.gitem{scroll-snap-align:center;flex:none;width:300px;display:grid;gap:10px}
+.test{list-style:none;margin:0;padding:0;display:grid;gap:4px;font-family:var(--f-mono);font-size:11px;color:var(--p-ink-2)}
+.test li::before{content:"✓ ";color:var(--p-ember)}
+.gdots{display:flex;justify-content:center;gap:6px}
+.gdots i{width:6px;height:6px;border-radius:50%;background:var(--p-line)}
+.gdots i.on{background:var(--p-ice)}
+
+/* share card */
+.share{position:absolute;inset:0;background:rgba(11,13,18,.94);z-index:20;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:20px}
+.share[hidden]{display:none}
+.scard{width:300px;height:533px;border-radius:18px;overflow:hidden;position:relative;background:var(--p-surface);color:var(--p-ink);flex:none;box-shadow:0 20px 60px rgba(0,0,0,.6)}
+.scard .wm{position:absolute;left:16px;right:16px;bottom:14px;font:500 10px var(--f-mono);letter-spacing:.14em;color:var(--p-ink-2);text-transform:uppercase;line-height:1.5}
+.scard .wm b{color:var(--p-ink);font-weight:500}
+.scard .wm .jc{color:var(--p-ice)}
+.scard .big{font-family:var(--f-display);font-weight:900;text-transform:uppercase;line-height:.86;letter-spacing:.005em}
+.scard .ey{font-family:var(--f-mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--p-ink-2)}
+.scard .pad{position:absolute;inset:0;padding:22px 18px}
+.cp-lines{display:grid;gap:5px;margin-top:14px}
+.cp-lines div{font-family:var(--f-mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;display:flex;justify-content:space-between;border-bottom:1px solid var(--p-line);padding-bottom:4px}
+.cp-lines div b{color:var(--p-ink-2);font-weight:500}
+.cp-lines div.gold,.cp-lines div.gold b{color:var(--p-gold)}
+.cp-join{margin-top:14px;border:1px dashed var(--p-ice);border-radius:10px;padding:8px 10px;font-family:var(--f-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--p-ice);display:flex;justify-content:space-between}
+.cp-sig{position:absolute;right:18px;bottom:52px;width:140px;height:60px;object-fit:contain;filter:drop-shadow(0 0 6px rgba(234,242,250,.25))}
+.cp-sigline{position:absolute;right:18px;bottom:50px;width:140px;border-bottom:1px solid var(--p-ink-2)}
+.sc-scene{position:absolute;inset:0}
+.sc-scene::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.45),transparent 35%,transparent 55%,rgba(0,0,0,.75))}
+.cp-front{position:absolute;right:16px;bottom:74px;width:72px;height:96px;border-radius:12px;border:2px solid var(--p-ember);background:radial-gradient(60% 50% at 50% 35%,#2b3444,#141821);display:grid;place-items:center}
+.cp-front.bronze{border-color:var(--p-mint)}
+.cp-front i{width:32px;height:32px;border-radius:50%;background:var(--p-ice);display:grid;place-items:center;font:700 10px var(--f-mono);color:var(--p-ground);font-style:normal}
+.cp-stamp{display:inline-block;font-family:var(--f-display);font-weight:900;font-size:40px;letter-spacing:.06em;color:var(--p-ember);border:4px solid var(--p-ember);border-radius:10px;padding:4px 10px 0;line-height:.9;transform:rotate(-6deg);background:rgba(11,13,18,.35)}
+.cp-stamp.bronze{color:var(--p-mint);border-color:var(--p-mint)}
+.miniboard{display:grid;grid-template-columns:44px repeat(7,1fr);gap:3px;align-items:center;margin-top:14px}
+.miniboard .nm{font-family:var(--f-mono);font-size:10px;color:var(--p-ink-2)}
+.miniboard .cell{font-size:10px;cursor:default}
+.cp-rows{display:grid;gap:6px;margin-top:12px}
+.cp-rows div{display:flex;justify-content:space-between;font-family:var(--f-mono);font-size:12px;letter-spacing:.04em;border-bottom:1px solid var(--p-line);padding-bottom:5px}
+.cp-rows div b{font-weight:500;color:var(--p-gold)}
+.cp-rows div b.ok{color:var(--p-ink-3)}
+.cp-collage{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-top:12px}
+.cp-collage i{display:block;aspect-ratio:1;border-radius:6px}
+.cp-stats{display:flex;gap:14px;margin-top:12px}
+.cp-stats div{display:grid}
+.cp-stats .v{font-family:var(--f-display);font-weight:900;font-size:30px;line-height:1}
+.cp-stats .l{font:500 9px var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--p-ink-2)}
+.toast{position:absolute;left:50%;bottom:36px;transform:translateX(-50%);background:var(--p-ink);color:var(--p-ground);font:500 12px var(--f-mono);letter-spacing:.08em;padding:9px 14px;border-radius:999px;z-index:30;opacity:0;transition:opacity .25s;pointer-events:none;white-space:nowrap;max-width:340px;overflow:hidden;text-overflow:ellipsis}
+.toast.show{opacity:1}
+
+/* lock screen */
+.lock{position:absolute;inset:0;background:
+  radial-gradient(70% 45% at 30% 20%, rgba(156,211,255,.25), transparent 65%),
+  radial-gradient(50% 35% at 80% 70%, rgba(255,122,26,.22), transparent 65%),
+  linear-gradient(180deg,#0f1420,#0B0D12 70%)}
+.lock .time{position:absolute;top:96px;left:0;right:0;text-align:center}
+.lock .time .t{font-family:var(--f-display);font-weight:900;font-size:110px;line-height:.85;letter-spacing:.01em}
+.lock .time .d{font-family:var(--f-mono);font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--p-ink-2);margin-top:8px}
+.widget{position:absolute;left:24px;right:24px;top:262px;background:rgba(20,24,33,.85);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.08);border-radius:22px;padding:14px 16px;display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center}
+.widget .d1{font-family:var(--f-display);font-weight:900;font-size:44px;line-height:.9}
+.widget .d1 small{font-size:22px;color:var(--p-ink-2)}
+.widget .d2{font:500 10px var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--p-ink-2);margin-top:4px}
+.widget .avs{display:flex}
+.widget .avs .avatar{margin-left:-8px;border:2px solid #141821}
+.la{position:absolute;left:24px;right:24px;bottom:120px;background:rgba(11,13,18,.92);border:1px solid rgba(255,255,255,.1);border-radius:26px;padding:14px 18px;display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center}
+.la .ic{width:40px;height:40px;border-radius:12px;background:var(--p-ice);display:grid;place-items:center;font-family:var(--f-display);font-weight:900;font-size:18px;color:#0B0D12}
+.la .k{font:500 10px var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--p-ink-2)}
+.la .v{font-family:var(--f-mono);font-size:22px;letter-spacing:.04em;color:var(--p-ice);font-variant-numeric:tabular-nums}
+.la .s{font-family:var(--f-mono);font-size:11px;color:var(--p-ink-2);text-align:right}
+.la .s b{color:var(--p-ember);font-weight:500}
+.homebar{position:absolute;left:50%;bottom:10px;transform:translateX(-50%);width:130px;height:5px;border-radius:3px;background:rgba(255,255,255,.7)}
+
+/* notes */
+.notes{background:var(--bg-2);border:1px solid var(--line);border-radius:20px;padding:22px 24px;display:grid;gap:16px;position:sticky;top:16px}
+.notes h2{font-family:var(--f-display);font-weight:900;font-size:34px;line-height:.92;margin:0;text-transform:uppercase;text-wrap:balance}
+.notes h3{margin:0 0 4px;font:500 11px var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2)}
+.notes p{margin:0;font-size:14.5px;line-height:1.55}
+.notes .build{font-family:var(--f-mono);font-size:12.5px;line-height:1.6;color:var(--ink-2);background:var(--bg);border-radius:10px;padding:10px 12px}
+.ntest{list-style:none;margin:0;padding:0;display:grid;gap:4px;font-size:13.5px}
+.ntest li{display:flex;gap:8px;align-items:baseline}
+.ntest li::before{content:"✓";color:var(--ember);font-weight:700;font-family:var(--f-mono)}
+.nnav{display:flex;gap:10px;padding-top:6px;border-top:1px solid var(--line)}
+.nnav button{flex:1;border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:10px;padding:10px;font-size:14px;font-weight:600;cursor:pointer}
+.nnav button.primary{background:var(--accent);color:var(--bg-2);border-color:var(--accent)}
+
+/* chapter nav */
+.chapters{display:flex;gap:6px;overflow-x:auto;padding:4px 2px 8px;scrollbar-width:thin}
+.chap{flex:none;border:1px solid var(--line);background:var(--bg-2);color:var(--ink-2);border-radius:999px;padding:8px 12px;font-size:13px;cursor:pointer;display:flex;gap:8px;align-items:center;white-space:nowrap}
+.chap b{font-family:var(--f-mono);font-size:10.5px;font-weight:500;letter-spacing:.08em;color:var(--ink-3)}
+.chap.on{border-color:var(--accent);color:var(--ink);background:color-mix(in oklab,var(--accent) 12%,var(--bg-2))}
+.chap.on b{color:var(--accent)}
+
+@keyframes blink{50%{opacity:.2}}
+@keyframes pulse{50%{opacity:.45}}
+@keyframes flash{0%{opacity:.95}100%{opacity:0}}
+@keyframes slam{0%{transform:scale(3.2);opacity:0}60%{transform:scale(.94);opacity:1}80%{transform:scale(1.04)}100%{transform:scale(1)}}
+@keyframes pop{0%{transform:scale(.6);opacity:0}100%{transform:scale(1);opacity:1}}
+@keyframes reveal{0%{opacity:0;transform:translateY(12px)}100%{opacity:1;transform:none}}
+@media (prefers-reduced-motion: reduce){
+  *{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important}
+}
+</style>
+
+<div class="studio">
+  <header class="top">
+    <div>
+      <div class="slate">Prototype · squad season · S01 · v2 · sample squad data, marked as example</div>
+      <h1>Season One</h1>
+      <p class="sub">Tap through the thirteen moments that make the winter arc app spread. Stakes are squad terms, every card carries a join code, the rescue mechanics are on the home screen, and the reject path is as designed as the stamp.</p>
+      <div class="roles" style="margin-top:10px"><span><i style="background:#FF7A1A"></i>ember = proof</span><span><i style="background:#E9B54A"></i>gold = money</span><span><i style="background:#9CD3FF"></i>ice = structure &amp; actions</span><span><i style="background:#FF4D6D"></i>rose = missed</span><span><i style="background:#7EE0B8"></i>mint = squad</span></div>
+    </div>
+    <div class="top-right">
+      <button class="pbtn" id="reset" type="button">Reset demo</button>
+    </div>
+  </header>
+
+  <div class="main">
+    <section class="stage" id="stage" aria-label="Phone prototype">
+      <div class="phone" id="phone">
+        <div class="screen" id="screen">
+          <div class="island"></div>
+          <div class="statusbar"><span id="clock">06:41</span><span class="r"><span>●●●</span><span class="batt" aria-hidden="true"></span></span></div>
+
+          <!-- 01 countdown -->
+          <div class="view" id="v-countdown">
+            <div class="brand"><span class="wordmark">ARC</span><span class="eyebrow">Season one · S01</span></div>
+            <div class="hero-count">
+              <div class="eyebrow ice" id="cd-eyebrow">Your arc starts in</div>
+              <div class="bignum" id="cd-days">25</div>
+              <div class="bignum-l" id="cd-unit">days</div>
+              <div class="clock" id="cd-clock">00:00:00</div>
+              <div class="daterange">01 OCT → 31 DEC 2026</div>
+            </div>
+            <div class="tiles">
+              <div class="tile"><div class="v">90</div><div class="l">days, one cohort</div></div>
+              <div class="tile"><div class="v">2–8</div><div class="l">people per squad</div></div>
+              <div class="tile"><div class="v gold">€</div><div class="l">misses feed the pot</div></div>
+            </div>
+            <button class="btn" data-go="sports" type="button">Start your arc</button>
+            <p class="fine">Squads lock 7 Oct. No feed. No coach. Just proof.</p>
+          </div>
+
+          <!-- 02 sports -->
+          <div class="view" id="v-sports" hidden>
+            <div class="eyebrow">01 · Identity</div>
+            <div class="disp h1">What are you<br>training for?</div>
+            <p class="p">Pick one to three, or name your own. This sets your proof scene, your templates and who you get drafted with.</p>
+            <div class="scroll">
+              <div class="chips" id="sportchips"></div>
+              <div class="customrow" id="customrow" hidden><input class="input" id="customname" placeholder="Name it, e.g. Cold plunge" maxlength="22" aria-label="Custom sport name"><button class="btn sm" id="customadd" type="button">Add</button></div>
+            </div>
+            <div class="row-btns"><button class="btn ghost" data-go="countdown" type="button">Back</button><button class="btn" data-go="contract" type="button" id="sports-next">Build my contract</button></div>
+          </div>
+
+          <!-- 03 contract -->
+          <div class="view" id="v-contract" hidden>
+            <div class="eyebrow">02 · Contract</div>
+            <div class="disp h2">Three to five lines.<br><span class="muted">Nothing you can't screenshot.</span></div>
+            <div class="scroll">
+              <div class="lines" id="lines"></div>
+              <div>
+                <div class="eyebrow" style="margin-bottom:8px">Mind &amp; money · max 2 · <span id="extracount">0</span> picked</div>
+                <div class="chips" id="extras"></div>
+                <div class="customrow" id="xcustomrow" hidden style="margin-top:8px"><input class="input" id="xcustomname" placeholder="e.g. Meditate 10 min" maxlength="24" aria-label="Custom habit name"><select id="xcustomver" aria-label="How it is verified"><option>Photo</option><option>Attest + squad</option><option>Artifact</option><option>Health</option></select><button class="btn sm" id="xcustomadd" type="button">Add</button></div>
+              </div>
+            </div>
+            <div class="row-btns"><button class="btn ghost" data-go="sports" type="button">Back</button><button class="btn" data-go="squad" type="button">Find my squad</button></div>
+          </div>
+
+          <!-- 04 squad -->
+          <div class="view" id="v-squad" hidden>
+            <div class="eyebrow">03 · Squad &amp; terms</div>
+            <div class="disp h2">You don't do this alone.</div>
+            <div class="seg" id="seg"><button type="button" data-door="found">Found</button><button type="button" data-door="join">Join</button><button type="button" data-door="draft">Draft</button></div>
+            <div class="scroll">
+              <div class="door" id="door-found">
+                <input class="input" id="squadname" placeholder="Squad name" aria-label="Squad name">
+                <div class="eyebrow">Squad size · your call, two to eight</div>
+                <div class="chips" id="sizes"></div>
+                <div class="eyebrow">Squad terms · set once, everyone inherits</div>
+                <div class="tiers" id="tiers"></div>
+                <div class="chips potchips" id="pots"></div>
+                <div class="math" id="math"></div>
+                <button class="btn sm" id="gencode" type="button">Create squad · get the code</button>
+                <div class="coderow" id="coderow" hidden><div class="code" id="codebox">ARC-0000</div><button class="btn sm ghost" id="copycode" type="button">Copy invite</button></div>
+                <p class="fine" id="spots" hidden>4 spots left · squads lock 7 Oct</p>
+                <p class="fine">Two is a pact. Five to eight is a squad. Under three active members and the survivors get re-drafted.</p>
+              </div>
+              <div class="door" id="door-join" hidden>
+                <div class="customrow"><input class="input" id="joincode" placeholder="Enter a code, e.g. ARC-7K2Q" maxlength="12" aria-label="Join code"><button class="btn sm" id="joinbtn" type="button">Join</button></div>
+                <div class="matched" id="joined" hidden></div>
+                <p class="fine">You inherit the squad's stake and pot rule. No terms to set.</p>
+              </div>
+              <div class="door" id="door-draft" hidden>
+                <div class="chips"><span class="chip sm on" id="draft-sport">GYM</span><span class="chip sm">CET</span><span class="chip sm" id="draft-freq">4×/WK</span></div>
+                <button class="btn sm ghost" id="matchme" type="button">Match me within 24h</button>
+                <div class="matched" id="matched" hidden>Matched: The Cold Starters · €10 per miss · squad pot. Two spots left. Squads lock 7 Oct.</div>
+              </div>
+              <div class="terms" id="terms"></div>
+              <p class="fine">One home squad per contract. Crews, like <span class="mono">Hyrox Milano · 12 squads</span>, come later.</p>
+            </div>
+            <div class="row-btns"><button class="btn ghost" data-go="contract" type="button">Back</button><button class="btn" data-go="sign" type="button">Sign the contract</button></div>
+          </div>
+
+          <!-- 05 sign -->
+          <div class="view" id="v-sign" hidden>
+            <div class="eyebrow">04 · Sign</div>
+            <div class="poster-mini" id="poster-mini"></div>
+            <div class="sigwrap">
+              <canvas id="sig" width="700" height="300" aria-label="Signature pad"></canvas>
+              <div class="sigline"></div>
+              <div class="hint" id="sighint">Sign with your finger</div>
+            </div>
+            <div class="row-btns"><button class="btn ghost sm" id="sigclear" type="button">Clear</button></div>
+            <div class="row-btns" style="margin-top:auto"><button class="btn ghost" data-go="squad" type="button">Back</button><button class="btn" id="signshare" type="button">Sign &amp; share</button></div>
+          </div>
+
+          <!-- 06 today -->
+          <div class="view" id="v-today" hidden>
+            <div class="slatebar"><span><b>S01</b> · Day 12 / 90</span><span>Mon 12 Oct</span></div>
+            <div class="due" id="due">
+              <div class="eyebrow" id="due-ey">Due today</div>
+              <div class="what" id="due-what">Gym session</div>
+              <div class="cd" id="due-cd">17:18:23</div>
+              <div class="fine" id="due-sub">Before 23:59 · Health + photo · Gold</div>
+              <div class="rescue"><span id="rescue-txt"><b>1</b> sick day · <b>1</b> vouch left · a miss costs €10, never your arc</span><button class="linkbtn" id="cant" type="button">Can't train?</button></div>
+            </div>
+            <button class="btn" id="prove" data-go="proof" type="button">Prove it</button>
+            <div>
+              <div class="eyebrow" style="margin-bottom:8px"><span id="strip-name">The Cold Starters</span> · today</div>
+              <div class="strip" id="strip"></div>
+            </div>
+            <div class="tiles">
+              <div class="tile"><div class="v">12</div><div class="l">day arc</div></div>
+              <div class="tile"><div class="v ember" id="t-streak">9</div><div class="l">squad streak</div></div>
+              <div class="tile"><div class="v gold" id="t-pot">€70</div><div class="l">in the pot</div></div>
+            </div>
+            <div class="tabbar"><button class="tab on" type="button">Today</button><button class="tab" data-go="board" type="button">Squad</button><button class="tab" data-go="ledger" type="button">Ledger</button><button class="tab" data-go="episode" type="button">Arc</button></div>
+            <div class="scrim" id="scrim" hidden></div>
+            <div class="sheet" id="sheet" hidden>
+              <div class="grab"></div>
+              <h5>Can't train today?</h5>
+              <p class="p">Three honest options. None of them reset your arc.</p>
+              <button type="button" class="opt" id="o-sick"><div><div class="t">Use a sick day</div><div class="d">Today becomes a rest day. The squad is told.</div></div><span class="k" id="k-sick">1 left</span></button>
+              <button type="button" class="opt" id="o-vouch"><div><div class="t">Ask the squad to vouch</div><div class="d">Two squadmates confirm you trained. Bronze.</div></div><span class="k" id="k-vouch">1 left</span></button>
+              <button type="button" class="opt" id="o-miss"><div><div class="t">Take the miss</div><div class="d">Your arc continues tomorrow. Nothing else changes.</div></div><span class="k rose" id="k-miss">€10 to pot</span></button>
+              <button type="button" class="linkbtn dim" id="sheet-close" style="text-align:center">Never mind, I'm going</button>
+            </div>
+          </div>
+
+          <!-- 07 proof -->
+          <div class="view" id="v-proof" hidden style="padding:0">
+            <div class="finder">
+              <div class="scene sc-gym" id="scene"></div>
+              <div class="hud"><span><i class="rec"></i>Rear · <span id="proof-sport">Gym</span></span><span>Day 12 · <span id="proof-time">06:41</span></span></div>
+              <div class="front" id="front"><div class="fi">YO</div><div class="fl">FRONT</div></div>
+              <div class="shutterwrap" id="shutterwrap"><button class="shutter" id="shutter" type="button" aria-label="Capture proof"></button><span class="eyebrow">In-app camera only</span><button class="demo" id="demo-reject" type="button">Demo · simulate a reject</button></div>
+              <div class="flash" id="flash"></div>
+              <div class="verify" id="verify" hidden>
+                <div class="vstep" data-i="0"><span>Scene matches <span id="v-sportname">gym</span></span><span class="k">…</span></div>
+                <div class="vstep" data-i="1"><span>You're in frame</span><span class="k">…</span></div>
+                <div class="vstep" data-i="2"><span>Not a photo of a screen</span><span class="k">…</span></div>
+                <div class="vstep" data-i="3"><span id="v-health">Apple Health · 52 min workout</span><span class="k">…</span></div>
+              </div>
+              <div class="reject" id="reject" hidden>
+                <div class="t">We couldn't verify this one</div>
+                <p class="d" id="reject-d">The scene is unclear and no workout was logged. Nothing is charged. Retake, or ask your squad.</p>
+                <div class="row-btns"><button class="btn ghost sm" id="retake" type="button" style="flex:1">Retake</button><button class="btn sm" id="vouch" type="button" style="flex:1.4">Ask squad to vouch · 1 left</button></div>
+                <button class="linkbtn dim" id="appeal" type="button" style="text-align:center">Appeal instead · your day is safe until we answer</button>
+              </div>
+              <div class="stamp" id="stamp" hidden><span class="word" id="stamp-word">Verified</span><div class="sub" id="stamp-sub">DAY 12 / 90 · 06:41 · GOLD</div></div>
+              <div class="proof-actions" id="proof-actions" hidden><button class="btn ghost" data-go="today" type="button">Done</button><button class="btn" id="share-proof" type="button">Share proof</button></div>
+            </div>
+          </div>
+
+          <!-- 08 board -->
+          <div class="view" id="v-board" hidden>
+            <div class="slatebar"><span><b id="board-name">The Cold Starters</b></span><span>Oct 1 → 12</span></div>
+            <div class="streakbar"><div><div class="v" id="board-streak">9</div><div class="l">Squad streak · days</div></div><div style="text-align:right"><div class="v" style="color:var(--p-ice)" id="b-hits">51</div><div class="l" id="b-sched">of 56 sessions</div></div></div>
+            <div class="board" id="board"></div>
+            <div class="legend"><span><i class="c-v">✓</i>verified</span><span><i class="c-b">✓</i>vouched</span><span><i class="c-x">✕</i>missed</span><span><i class="c-r">–</i>rest</span><span><i class="c-p">·</i>due</span></div>
+            <div class="pop" id="pop"><div class="sc sc-gym"></div><div><div class="t">Tap any cell to see the proof</div><div class="d">Squad only. Nothing here is public.</div></div></div>
+            <div class="tabbar"><button class="tab" data-go="today" type="button">Today</button><button class="tab on" type="button">Squad</button><button class="tab" data-go="ledger" type="button">Ledger</button><button class="tab" data-go="episode" type="button">Arc</button></div>
+          </div>
+
+          <!-- 09 ledger -->
+          <div class="view" id="v-ledger" hidden>
+            <div class="slatebar"><span><b>The Ledger</b> · Week 2</span><span>Sun 11 Oct · 21:00</span></div>
+            <div class="tiles">
+              <div class="tile"><div class="v gold" data-count="70" data-prefix="€">€0</div><div class="l" id="l-week">pot · +€30 this week</div></div>
+              <div class="tile"><div class="v" data-count="85" data-suffix="%">0%</div><div class="l">hit rate</div></div>
+              <div class="tile"><div class="v" data-count="3">0</div><div class="l">misses</div></div>
+            </div>
+            <div class="mvp"><span class="avatar av-mint sm" id="mvp-av">GI</span><div><b>MVP OF THE WEEK</b><div id="mvp-txt">Giulia · 4 of 4, all before 08:00</div></div></div>
+            <div id="lrows"></div>
+            <div class="potbox"><div><div class="l">Pot is a ledger, not a charge.</div><div class="l">The squad votes what it becomes on 31 Dec.</div></div><div class="v" id="l-pot">€70</div></div>
+            <button class="btn ghost" id="share-ledger" type="button">Share the ledger</button>
+            <div class="tabbar"><button class="tab" data-go="today" type="button">Today</button><button class="tab" data-go="board" type="button">Squad</button><button class="tab on" type="button">Ledger</button><button class="tab" data-go="episode" type="button">Arc</button></div>
+          </div>
+
+          <!-- 10 episode -->
+          <div class="view" id="v-episode" hidden>
+            <div class="slatebar"><span><b>Your arc</b></span><span>Day 30 · Fri 30 Oct</span></div>
+            <div class="ep" id="ep">
+              <div class="no">EPISODE 1 · DAYS 1–30</div>
+              <div class="ti">The Cold Start</div>
+              <div class="collage" id="collage"></div>
+              <div class="epstats">
+                <div><div class="v">26</div><div class="l">proofs</div></div>
+                <div><div class="v" style="color:var(--p-rose)">4</div><div class="l">misses</div></div>
+                <div><div class="v" style="color:var(--p-ember)">9</div><div class="l">streak</div></div>
+                <div><div class="v">3</div><div class="l">PRs</div></div>
+              </div>
+            </div>
+            <div class="row-btns"><button class="btn ghost" id="play" type="button">Play the montage</button><button class="btn" id="share-ep" type="button">Share episode</button></div>
+            <p class="fine">Titled by the model from your own proofs. Episodes 2 and 3 land on Day 60 and Day 90.</p>
+            <div class="tabbar"><button class="tab" data-go="today" type="button">Today</button><button class="tab" data-go="board" type="button">Squad</button><button class="tab" data-go="ledger" type="button">Ledger</button><button class="tab on" type="button">Arc</button></div>
+          </div>
+
+          <!-- 11 finale -->
+          <div class="view" id="v-finale" hidden>
+            <div class="slatebar"><span><b>Finale</b></span><span>Thu 31 Dec · 23:59</span></div>
+            <div class="cert">
+              <div class="ln">Season one · 01 Oct – 31 Dec 2026</div>
+              <div class="big">Arc<br><span>complete</span></div>
+              <div class="ln">You · <span id="cert-squad">The Cold Starters</span> · 83 of 90</div>
+            </div>
+            <div>
+              <div class="eyebrow" style="margin-bottom:8px">Pot vote · <span style="color:var(--p-gold)">€410</span> · 5 votes decide</div>
+              <div class="vote" id="vote"></div>
+            </div>
+            <button class="btn ghost" id="share-cert" type="button">Share the certificate</button>
+            <p class="fine">Next arc opens 1 Jan. Your squad keeps its name and its code.</p>
+          </div>
+
+          <!-- 12 cards -->
+          <div class="view" id="v-cards" hidden>
+            <div class="eyebrow">Share cards · 9:16 · every card carries the code</div>
+            <div class="gallery" id="gallery"></div>
+            <div class="gdots" id="gdots"></div>
+          </div>
+
+          <!-- 13 lock screen -->
+          <div class="view" id="v-lock" hidden style="padding:0">
+            <div class="lock">
+              <div class="time"><div class="t" id="lock-time">06:41</div><div class="d">Monday 12 October</div></div>
+              <div class="widget"><div><div class="d1">12<small> / 90</small></div><div class="d2"><span id="lock-squad">The Cold Starters</span> · <span id="lock-pr">3 of 5</span> proved</div></div><div class="avs" id="lock-avs"><span class="avatar av-ember sm">MA</span><span class="avatar av-mint sm">GI</span><span class="avatar av-gold sm">AY</span></div></div>
+              <div class="la"><div class="ic">A</div><div><div class="k">Proof due</div><div class="v" id="lock-cd">17:18:23</div></div><div class="s"><span id="lock-sport">Gym</span><br><b id="lock-pr2">3 / 5</b> proved</div></div>
+              <div class="homebar"></div>
+            </div>
+          </div>
+
+          <!-- share overlay -->
+          <div class="share" id="share" hidden>
+            <div class="scard" id="scard"></div>
+            <div class="row-btns" style="width:300px"><button class="btn ghost sm" id="share-close" type="button">Close</button><button class="btn sm" id="share-go" type="button" style="flex:1">Share to story</button></div>
+          </div>
+          <div class="toast" id="toast">Shared · demo</div>
+        </div>
+      </div>
+    </section>
+
+    <aside class="notes" aria-live="polite">
+      <div class="slate" id="n-slate">Chapter 01 / 13</div>
+      <h2 id="n-title">The date is the product</h2>
+      <div><h3>What happens</h3><p id="n-what"></p></div>
+      <div><h3>Why it spreads</h3><p id="n-why"></p></div>
+      <div id="n-testwrap"><h3>Screenshot test</h3><ul class="ntest" id="n-test"></ul></div>
+      <div><h3>Build note</h3><div class="build" id="n-build"></div></div>
+      <div class="nnav"><button id="prev" type="button">Back</button><button id="next" class="primary" type="button">Next chapter</button></div>
+    </aside>
+  </div>
+
+  <nav class="chapters" id="chapters" aria-label="Chapters"></nav>
+</div>
+
+<script>
+(function(){
+'use strict';
+const $=s=>document.querySelector(s), $$=s=>Array.from(document.querySelectorAll(s));
+const RM=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+const KEY='seasonone.v2';
+const HP='Health + photo';
+const SPORTS={
+ GYM:{name:'Gym sessions',per:4,ver:HP,scene:'sc-gym',word:'Gym'},RUN:{name:'Runs',per:3,ver:HP,scene:'sc-run',word:'Run'},HYROX:{name:'Hyrox sessions',per:3,ver:HP,scene:'sc-hyrox',word:'Hyrox'},CROSSFIT:{name:'WODs',per:4,ver:HP,scene:'sc-hyrox',word:'WOD'},CALISTHENICS:{name:'Calisthenics sessions',per:3,ver:HP,scene:'sc-gym',word:'Calisthenics'},CLIMB:{name:'Climbing sessions',per:2,ver:HP,scene:'sc-climb',word:'Climb'},SWIM:{name:'Swims',per:2,ver:HP,scene:'sc-swim',word:'Swim'},RIDE:{name:'Rides',per:2,ver:HP,scene:'sc-run',word:'Ride'},TRI:{name:'Tri sessions',per:5,ver:HP,scene:'sc-swim',word:'Tri'},ROWING:{name:'Rows',per:3,ver:HP,scene:'sc-swim',word:'Row'},HIIT:{name:'HIIT sessions',per:3,ver:HP,scene:'sc-gym',word:'HIIT'},YOGA:{name:'Yoga',per:3,ver:'Photo',scene:'sc-gym',word:'Yoga'},PILATES:{name:'Pilates',per:2,ver:'Photo',scene:'sc-gym',word:'Pilates'},MMA:{name:'Fight training',per:3,ver:'Photo',scene:'sc-gym',word:'Training'},BOXING:{name:'Boxing sessions',per:3,ver:HP,scene:'sc-gym',word:'Boxing'},PADEL:{name:'Padel matches',per:2,ver:'Photo',scene:'sc-court',word:'Padel'},TENNIS:{name:'Tennis sessions',per:2,ver:HP,scene:'sc-court',word:'Tennis'},FOOTBALL:{name:'Football sessions',per:2,ver:HP,scene:'sc-court',word:'Football'},BASKETBALL:{name:'Basketball runs',per:2,ver:HP,scene:'sc-court',word:'Basketball'},SKI:{name:'Ski days',per:1,ver:HP,scene:'sc-snow',word:'Ski'},HIKE:{name:'Hikes',per:1,ver:HP,scene:'sc-snow',word:'Hike'},WALK:{name:'10k steps',per:7,ver:'Health',scene:'sc-run',word:'Walk'}
+};
+const EXTRAS={read:{name:'Read 20 pages',per:7,ver:'Photo'},alcohol:{name:'No alcohol',per:7,ver:'Attest + squad'},deep:{name:'Deep work 90 min',per:5,ver:'Artifact'},ship:{name:'Ship one thing',per:1,ver:'Artifact'},meditate:{name:'Meditate 10 min',per:7,ver:'Attest + squad'},journal:{name:'Journal',per:7,ver:'Photo'},sleep:{name:'Sleep by 23:00',per:5,ver:'Health'},save:{name:'Save €50',per:1,ver:'Artifact'},sugar:{name:'No sugar',per:7,ver:'Attest + squad'},cold:{name:'Cold shower',per:7,ver:'Attest + squad'}};
+const MEMBERS=[{n:'You',i:'YO',c:'av-ice'},{n:'Marco',i:'MA',c:'av-ember'},{n:'Giulia',i:'GI',c:'av-mint'},{n:'Sam',i:'SA',c:'av-lilac'},{n:'Ayşe',i:'AY',c:'av-gold'},{n:'Lena',i:'LE',c:'av-ice'},{n:'Tom',i:'TO',c:'av-ember'},{n:'Nour',i:'NO',c:'av-mint'}];
+const PATTERN={You:'VVRVVRVVVRVP',Marco:'VVRVXVVRVBRV',Giulia:'VVRVVVRVVRVV',Sam:'VXRVVRXVXRVP','Ayşe':'VVRVVRVVRVVR',Lena:'VVRVVRVVVRVV',Tom:'VRVVXRVVVRVP',Nour:'VVRVVVRVXRVV'};
+const TODAYST={Marco:['v','06:12'],Giulia:['v','07:40'],Sam:['p','Due'],'Ayşe':['r','Rest'],Lena:['v','05:58'],Tom:['p','Due'],Nour:['v','08:15']};
+function active(){return MEMBERS.slice(0,Math.max(2,Math.min(8,S.size||5)));}
+function patOf(m){let p=PATTERN[m.n];if(m.n==='You')p=p.slice(0,11)+youToday();return p;}
+function provedToday(){return active().filter(m=>m.n!=='You'&&TODAYST[m.n][0]==='v').length+(S.proved?1:0);}
+function stats(){const A=active();let hits=0,sched=0,w2h=0,w2x=0,missAll=0;const rows=A.map(m=>{const p=patOf(m);let h=0,x=0;for(let d=0;d<12;d++){const c=p[d];if(c==='V'||c==='B'){hits++;sched++;}else if(c==='X'){sched++;if(d<11)missAll++;}else if(c==='P'){sched++;}if(d>=4&&d<=10){if(c==='V'||c==='B')h++;if(c==='X')x++;}}w2h+=h;w2x+=x;return{m,h,x};});return{hits,sched,w2h,w2x,missAll,rows,rate:Math.round(100*w2h/Math.max(1,w2h+w2x))};}
+function spotsText(){const n=S.size||5;return (S.joined||S.matched?2:Math.max(1,n-1))+' spots';}
+const SCENES=['sc-gym','sc-run','sc-hyrox','sc-gym','sc-climb','sc-swim','sc-gym','sc-run','sc-gym','sc-hyrox','sc-gym','sc-run'];
+const DEF={sports:['GYM'],custom:[],per:{},extras:[],xcustom:[],weigh:true,door:'found',size:5,stake:10,ben:'pot',squad:'',code:'',joined:false,matched:false,sig:null,proved:false,tier:null,vouchedBy:null,sick:1,vouch:1,today:'due',vote:null,reject:false,ch:'countdown'};
+let S=load();
+function load(){try{const r=localStorage.getItem(KEY);if(r){return Object.assign({},JSON.parse(JSON.stringify(DEF)),JSON.parse(r));}}catch(e){}return JSON.parse(JSON.stringify(DEF));}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
+const pad=n=>String(n).padStart(2,'0');
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function sportOf(k){if(SPORTS[k])return SPORTS[k];const c=S.custom.find(x=>x.key===k);return c?{name:c.name+' sessions',per:3,ver:'Photo · Health if logged',scene:'sc-custom',word:c.name,custom:true}:SPORTS.GYM;}
+function primary(){return S.sports[0]||'GYM';}
+function tierOf(k){return sportOf(k).ver.indexOf('Health')>=0?'GOLD':'SILVER';}
+function squadName(){return S.squad||(S.joined||S.matched?'The Cold Starters':'Squad forming');}
+function squadCode(){return S.code||'';}
+
+/* ---------- chapters & notes ---------- */
+const CH=[
+ {id:'countdown',label:'Countdown',title:'The date is the product',what:'The first screen is a countdown to 1 October, not a feature tour. One number, one button.',why:'The trend already runs on a date. Every declaration post says when it starts. The app repeats the ritual instead of explaining itself.',build:'Expo Router screen. Countdown from the device clock. No sign-in before the contract exists.'},
+ {id:'sports',label:'Sports',title:'Identity before features',what:'Twenty-two sports as chips, plus your own. A custom sport verifies by photo, and by Health when the watch logs it as a workout.',why:'Sport is identity. Gym, Hyrox, padel, climbing and ski people post differently and recruit differently, and a custom chip means nobody is turned away at the door.',build:'Each preset maps to a HealthKit and Health Connect workout type. Custom sports map to Other and rely on the photo rubric the model writes from the name.'},
+ {id:'contract',label:'Contract',title:'Three to five lines',what:'Lines come from sport templates with a weekly frequency. The weigh-in is weekly, private and optional. Ten mind and money presets, or your own with a verification method, capped at two.',why:'A short contract is a screenshot. A long one is a spreadsheet nobody posts.',build:'contract_lines: kind, sport, target_per_week, verification tier. Frequencies are editable until squads lock on 7 Oct.'},
+ {id:'squad',label:'Squad',title:'Squad terms, set once',what:'The founder sets the squad size, two to eight, plus the stake and the pot rule when creating the squad, and gets one code with spots and a lock date. Anyone joining with the code inherits the terms and skips them. The draft matches you into a squad and its terms.',why:'Uniform stakes make the pot fair and the ledger readable, and invitees reach the signature two screens sooner.',build:'size, stake_cents and pot_rule live on squads, not contracts. One code per squad, spots_left, locks_at. Two is a pact, five to eight is a squad, under three active and the survivors get re-drafted. Crews group squads under a creator, gym or city later.'},
+ {id:'sign',label:'Sign',title:'Sign it, and the poster invites',what:'The contract renders as a poster with the squad code, spots left and the lock date. Sign on glass, then share.',why:'Every Day 0 post becomes an invite with a deadline. The poster is the growth loop, not a souvenir.',test:['One number: the stake','Identity: sports and squad name','Squad: code and spots left','Watermark and lock date','Readable at thumbnail'],build:'react-native-view-shot renders the card. The code deep-links to the join door. Signature stored as a PNG in Storage.'},
+ {id:'today',label:'Today',title:'One thing due, and a way out',what:'What is due, the deadline, the squad\'s status, and the rescue line: sick days, vouches, and the rule that a miss never resets the arc. "Can\'t train?" opens the three honest options.',why:'The week-three quit is a shame spiral. Showing the exit is what keeps people in the building.',build:'sick_days and vouches are per-member counters reset by pg_cron. A sick day writes a rest entry and notifies the squad. Push at 20:00 only if the proof is missing.'},
+ {id:'proof',label:'Proof',title:'Dual-cam, and a kind no',what:'Rear camera captures the place, front camera captures you, one second apart. Gold is Health plus photo, Silver is photo, Bronze is vouched. Flip the demo toggle to see the reject path: retake first, vouch second, appeal third.',why:'BeReal made the format iconic. Two cameras make fakes hard and stories easy. A rejection that never accuses is what keeps a false reject from becoming a deleted app.',test:['One number: Day 12 / 90','Identity: the sport and your face','Squad: 3 of 5 proved','Watermark, code and time','Readable at thumbnail'],build:'expo-camera, sequential capture. claude-opus-5 with structured output: verdict, sport match, person present, recapture suspected, confidence. Below the confidence floor the app asks, it never charges.'},
+ {id:'board',label:'Board',title:'Faces, not charts',what:'Members by day. Verified in ember, vouched in mint, misses in rose, rest days quiet, today pulsing. Tap any cell to see the proof behind it.',why:'It is a contribution graph with your friends in it, and it is squad-only, so nobody performs for strangers.',test:['One number: the squad streak','Identity: your row','Squad: every member visible','Watermark, code and dates','Readable at thumbnail'],build:'Every cell carries a glyph as well as a color, so it reads without color. Rows update over Realtime. Thumbnails replace glyphs in the next pass.'},
+ {id:'ledger',label:'Ledger',title:'Sunday at 21:00',what:'Misses become pot entries. Hit rate, MVP, who owes what. Money is gold, proof is ember, misses are rose. Settlement is a ledger update, not a card charge.',why:'It is the results show. The squad group chat writes itself every Sunday night.',test:['One number: the pot','Identity: your line','Squad: everyone ranked','Watermark, code and week','Readable at thumbnail'],build:'pg_cron settlement job on Sunday 21:00 local. Resend emails the ledger. Stripe stays off until season two.'},
+ {id:'episode',label:'Episode',title:'The montage',what:'Day 30, 60 and 90 each render an episode from your proofs and stats, titled by the model in training-arc language.',why:'The trend is built on the montage. This ships one for every member, on schedule, with their own footage, and the card carries the squad code.',test:['One number: proofs','Identity: your title','Squad: streak and code','Watermark and episode','Readable at thumbnail'],build:'Static card in season one from the same components as the screen. Remotion video when the card\'s share rate passes 20 percent.'},
+ {id:'finale',label:'Finale',title:'Arc complete',what:'31 December. A certificate, the season stats, and the pot vote: the squad decides what the pot becomes.',why:'The vote turns a debt into a plan, and the plan is a real-world meetup. Then 1 January opens the next arc, same squad, same code.',test:['One number: 83 of 90','Identity: your name','Squad: named and dated','Watermark and season','Readable at thumbnail'],build:'One vote per member, options are squad-defined text. The pot total is the sum of ledger_entries.'},
+ {id:'cards',label:'Cards',title:'The screenshot test',what:'Every card is 9:16, one number, identity, squad, watermark, readable at thumbnail, and now every card carries the join code. Swipe through the six.',why:'Cards are the acquisition channel. They cost nothing and every one of them is an invite with a date on it.',build:'Cards render on device from the same state as the screens. Instrument every share tap by card type, and every join by code.'},
+ {id:'lock',label:'Lock screen',title:'The seventh surface',what:'A Live Activity counts down the proof deadline. A widget shows the day and who has proved.',why:'People photograph their lock screens. The countdown is a nag they chose.',build:'expo-widgets, alpha, renders both as React components. Fall back to the apple-targets plugin if the alpha bites.'}
+];
+const idx=id=>CH.findIndex(c=>c.id===id);
+
+function renderChapters(){
+  const nav=$('#chapters'); nav.innerHTML='';
+  CH.forEach((c,i)=>{const b=document.createElement('button');b.type='button';b.className='chap'+(c.id===S.ch?' on':'');b.innerHTML='<b>'+pad(i+1)+'</b>'+esc(c.label);b.addEventListener('click',()=>go(c.id));nav.appendChild(b);});
+}
+function renderNotes(){
+  const i=idx(S.ch), c=CH[i];
+  $('#n-slate').textContent='Chapter '+pad(i+1)+' / '+pad(CH.length);
+  $('#n-title').textContent=c.title; $('#n-what').textContent=c.what; $('#n-why').textContent=c.why; $('#n-build').textContent=c.build;
+  const tw=$('#n-testwrap'), ul=$('#n-test'); ul.innerHTML='';
+  if(c.test){tw.hidden=false;c.test.forEach(t=>{const li=document.createElement('li');li.textContent=t;ul.appendChild(li);});}else{tw.hidden=true;}
+  $('#prev').disabled=i===0; $('#next').textContent=i===CH.length-1?'Back to start':'Next chapter';
+}
+function go(id){
+  if(idx(id)<0)id='countdown';
+  S.ch=id; save();
+  $$('.view').forEach(v=>{v.hidden=v.id!=='v-'+id;});
+  $('#share').hidden=true; closeSheet();
+  $$('.chap').forEach((b,i)=>b.classList.toggle('on',CH[i].id===id));
+  renderNotes();
+  ({sports:renderSports,contract:renderContract,squad:renderSquad,sign:renderSign,today:renderToday,proof:startProof,board:renderBoard,ledger:renderLedger,episode:renderEpisode,finale:renderFinale,cards:renderCards,lock:renderLock}[id]||function(){})();
+}
+document.addEventListener('click',e=>{const t=e.target.closest('[data-go]');if(t){go(t.getAttribute('data-go'));}});
+$('#prev').addEventListener('click',()=>go(CH[Math.max(0,idx(S.ch)-1)].id));
+$('#next').addEventListener('click',()=>go(CH[(idx(S.ch)+1)%CH.length].id));
+$('#reset').addEventListener('click',()=>{S=JSON.parse(JSON.stringify(DEF));sigDrawn=false;save();renderChapters();go('countdown');});
+
+/* ---------- clocks ---------- */
+function tick(){
+  const now=new Date();
+  const target=new Date(2026,9,1,0,0,0);
+  let diff=target-now;
+  if(diff>0){
+    const d=Math.floor(diff/864e5); diff-=d*864e5;
+    const h=Math.floor(diff/36e5); diff-=h*36e5;
+    const m=Math.floor(diff/6e4); const s=Math.floor((diff-m*6e4)/1e3);
+    $('#cd-eyebrow').textContent='Your arc starts in'; $('#cd-days').textContent=d; $('#cd-unit').textContent=d===1?'day':'days'; $('#cd-clock').textContent=pad(h)+':'+pad(m)+':'+pad(s);
+  }else{
+    const day=Math.min(90,Math.floor((now-target)/864e5)+1);
+    $('#cd-eyebrow').textContent='Season one · live'; $('#cd-days').textContent=day; $('#cd-unit').textContent='of 90'; $('#cd-clock').textContent=pad(now.getHours())+':'+pad(now.getMinutes())+':'+pad(now.getSeconds());
+  }
+  const end=new Date(now); end.setHours(23,59,59,999);
+  const r=Math.max(0,end-now); const hh=Math.floor(r/36e5), mm=Math.floor((r%36e5)/6e4), ss=Math.floor((r%6e4)/1e3);
+  const cd=pad(hh)+':'+pad(mm)+':'+pad(ss);
+  if(!S.proved&&S.today==='due'){$('#due-cd').textContent=cd;}
+  $('#lock-cd').textContent=S.proved?'Proved':S.today==='sick'?'Rest day':cd;
+  const t=pad(now.getHours())+':'+pad(now.getMinutes());
+  $('#clock').textContent=t; $('#lock-time').textContent=t; $('#proof-time').textContent=t;
+}
+tick(); setInterval(tick,1000);
+
+/* ---------- sports ---------- */
+function renderSports(){
+  const w=$('#sportchips'); w.innerHTML='';
+  const mk=(k,label,custom)=>{const b=document.createElement('button');b.type='button';b.className='chip sm'+(S.sports.includes(k)?' on':'');b.innerHTML=esc(label)+(custom?' <span class="x" data-rm="'+esc(k)+'">✕</span>':'');b.addEventListener('click',e=>{
+    const rm=e.target.closest('[data-rm]');
+    if(rm){S.custom=S.custom.filter(c=>c.key!==k);S.sports=S.sports.filter(x=>x!==k);if(!S.sports.length)S.sports=['GYM'];save();renderSports();return;}
+    if(S.sports.includes(k)){if(S.sports.length>1)S.sports=S.sports.filter(x=>x!==k);else toast('Keep at least one');}
+    else if(S.sports.length<3){S.sports.push(k);}else{toast('Three sports max');}
+    save();renderSports();});w.appendChild(b);};
+  Object.keys(SPORTS).forEach(k=>mk(k,k,false));
+  S.custom.forEach(c=>mk(c.key,c.name.toUpperCase(),true));
+  const add=document.createElement('button');add.type='button';add.className='chip sm add';add.textContent='+ CUSTOM';add.addEventListener('click',()=>{const r=$('#customrow');r.hidden=!r.hidden;if(!r.hidden)$('#customname').focus();});w.appendChild(add);
+  $('#sports-next').textContent=S.sports.length?'Build my contract':'Pick a sport';
+}
+$('#customadd').addEventListener('click',()=>{
+  const n=$('#customname').value.trim(); if(!n){toast('Name it first');return;}
+  if(S.sports.length>=3){toast('Three sports max');return;}
+  const key='C_'+Date.now().toString(36); S.custom.push({key,name:n}); S.sports.push(key); $('#customname').value=''; $('#customrow').hidden=true; save(); renderSports();
+});
+$('#customname').addEventListener('keydown',e=>{if(e.key==='Enter')$('#customadd').click();});
+
+/* ---------- contract ---------- */
+function baseOf(k){if(SPORTS[k])return SPORTS[k].per;if(S.custom.some(c=>c.key===k))return 3;if(EXTRAS[k])return EXTRAS[k].per;return 5;}
+function perOf(k){return S.per[k]!=null?S.per[k]:baseOf(k);}
+function contractLines(){
+  const L=S.sports.map(k=>({key:k,name:sportOf(k).name,per:perOf(k),ver:sportOf(k).ver,kind:'sport'}));
+  if(S.weigh)L.push({key:'weigh',name:'Weekly weigh-in',per:1,ver:'Health or scale photo · private',kind:'body'});
+  S.extras.forEach(k=>{
+    if(EXTRAS[k]){L.push({key:k,name:EXTRAS[k].name,per:perOf(k),ver:EXTRAS[k].ver,kind:'extra'});return;}
+    const c=S.xcustom.find(x=>x.key===k); if(c)L.push({key:c.key,name:c.name,per:perOf(k),ver:c.ver,kind:'extra'});
+  });
+  return L;
+}
+function renderContract(){
+  const w=$('#lines'); w.innerHTML='';
+  const L=contractLines();
+  L.forEach(l=>{
+    const d=document.createElement('div'); d.className='line';
+    d.innerHTML='<div><div class="n">'+esc(l.name)+'</div><div class="ver">'+esc(l.ver)+'</div></div>'+
+      (l.kind==='body'?'<button type="button" class="switch on" id="weighsw" aria-label="Track weight privately"></button>':
+      '<div class="step"><button type="button" data-k="'+esc(l.key)+'" data-d="-1" aria-label="Fewer">−</button><div class="val">'+l.per+'<small>/ WK</small></div><button type="button" data-k="'+esc(l.key)+'" data-d="1" aria-label="More">+</button></div>');
+    w.appendChild(d);
+  });
+  if(!S.weigh){const d=document.createElement('div');d.className='line off';d.innerHTML='<div><div class="n">Weekly weigh-in</div><div class="ver">Off · turn on to track privately</div></div><button type="button" class="switch" id="weighsw" aria-label="Track weight privately"></button>';w.appendChild(d);}
+  const sw=$('#weighsw'); if(sw)sw.addEventListener('click',()=>{S.weigh=!S.weigh;save();renderContract();});
+  w.querySelectorAll('button[data-k]').forEach(b=>b.addEventListener('click',()=>{const k=b.getAttribute('data-k'),d=+b.getAttribute('data-d');S.per[k]=Math.max(1,Math.min(7,perOf(k)+d));save();renderContract();}));
+  const ex=$('#extras'); ex.innerHTML='';
+  const picked=S.extras.length; $('#extracount').textContent=picked;
+  const mk=(k,label,custom)=>{const b=document.createElement('button');b.type='button';b.className='chip body'+(S.extras.includes(k)?' on':'');b.innerHTML=esc(label)+(custom?' <span class="x" data-rm="'+esc(k)+'">✕</span>':'');b.addEventListener('click',e=>{const rm=e.target.closest('[data-rm]');if(rm){S.xcustom=S.xcustom.filter(c=>c.key!==k);S.extras=S.extras.filter(x=>x!==k);save();renderContract();return;}if(S.extras.includes(k))S.extras=S.extras.filter(x=>x!==k);else if(S.extras.length<2)S.extras.push(k);else toast('Two mind & money lines max');save();renderContract();});ex.appendChild(b);};
+  Object.keys(EXTRAS).forEach(k=>mk(k,EXTRAS[k].name,false));
+  S.xcustom.forEach(c=>mk(c.key,c.name,true));
+  const add=document.createElement('button');add.type='button';add.className='chip body add';add.textContent='+ Your own';add.addEventListener('click',()=>{const r=$('#xcustomrow');r.hidden=!r.hidden;if(!r.hidden)$('#xcustomname').focus();});ex.appendChild(add);
+}
+$('#xcustomadd').addEventListener('click',()=>{
+  const n=$('#xcustomname').value.trim(); if(!n){toast('Name it first');return;}
+  if(S.extras.length>=2){toast('Two mind & money lines max');return;}
+  const key='X_'+Date.now().toString(36); S.xcustom.push({key,name:n,ver:$('#xcustomver').value}); S.extras.push(key); $('#xcustomname').value=''; $('#xcustomrow').hidden=true; save(); renderContract();
+});
+$('#xcustomname').addEventListener('keydown',e=>{if(e.key==='Enter')$('#xcustomadd').click();});
+
+/* ---------- squad & terms ---------- */
+function code(){const A='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';let s='';for(let i=0;i<4;i++)s+=A[Math.floor(Math.random()*A.length)];return 'ARC-'+s;}
+function renderSquad(){
+  $$('#seg button').forEach(b=>b.classList.toggle('on',b.getAttribute('data-door')===S.door));
+  ['found','join','draft'].forEach(d=>{$('#door-'+d).hidden=S.door!==d;});
+  $('#squadname').value=S.squad;
+  const sz=$('#sizes'); sz.innerHTML='';
+  [2,3,4,5,6,8].forEach(v=>{const b=document.createElement('button');b.type='button';b.className='chip sm'+((S.size||5)===v?' on':'');b.textContent=v;b.setAttribute('aria-label','Squad size '+v);b.addEventListener('click',()=>{S.size=v;save();renderSquad();});sz.appendChild(b);});
+  const t=$('#tiers'); t.innerHTML='';
+  [5,10,25].forEach(v=>{const b=document.createElement('button');b.type='button';b.className='tier'+(S.stake===v?' on':'');b.innerHTML='<div class="v">€'+v+'</div><div class="l">per miss</div>';b.addEventListener('click',()=>{S.stake=v;save();renderSquad();});t.appendChild(b);});
+  const p=$('#pots'); p.innerHTML='';
+  [{k:'pot',t:'Squad pot · ledger',tag:'S1'},{k:'charity',t:'Charity · S2',dis:true},{k:'anti',t:'Anti-charity · S2',dis:true}].forEach(x=>{const b=document.createElement('button');b.type='button';b.className='chip body'+(S.ben===x.k?' on':'');if(x.dis)b.disabled=true;b.textContent=x.t;b.addEventListener('click',()=>{if(!x.dis){S.ben=x.k;save();renderSquad();}});p.appendChild(b);});
+  const sessions=contractLines().filter(l=>l.kind==='sport').reduce((a,l)=>a+l.per,0);
+  $('#math').innerHTML=sessions+' sessions a week · one miss puts <b>€'+S.stake+'</b> in the pot.<br>Hit 90% and you keep everything; the pot buys the finale.';
+  const has=!!S.code&&!S.joined&&!S.matched;
+  $('#coderow').hidden=!has; $('#spots').hidden=!has; if(has){$('#codebox').textContent=S.code;$('#spots').textContent=spotsText()+' left of '+(S.size||5)+' · squads lock 7 Oct';}
+  $('#gencode').textContent=has?'Regenerate code':'Create squad · get the code';
+  $('#joined').hidden=!S.joined; if(S.joined)$('#joined').textContent='Joined The Cold Starters via '+S.code+' · 5 people · €10 per miss · squad pot · 2 spots left.';
+  $('#matched').hidden=!S.matched;
+  $('#draft-sport').textContent=primary().indexOf('C_')===0?sportOf(primary()).word.toUpperCase():primary(); $('#draft-freq').textContent=perOf(primary())+'×/WK';
+  const setBy=S.joined||S.matched?'set by the founder':S.code?'set by you':'set when you create or join';
+  $('#terms').innerHTML='<span>Your terms · '+setBy+'</span><span><b>€'+S.stake+' per miss → '+(S.ben==='pot'?'squad pot':S.ben)+'</b></span>';
+}
+$$('#seg button').forEach(b=>b.addEventListener('click',()=>{S.door=b.getAttribute('data-door');save();renderSquad();}));
+$('#squadname').addEventListener('input',e=>{S.squad=e.target.value.slice(0,28);save();});
+$('#gencode').addEventListener('click',()=>{if(!S.squad.trim()){S.squad='The Cold Starters';}S.code=code();S.joined=false;S.matched=false;save();renderSquad();toast('Squad created · '+S.code);});
+$('#copycode').addEventListener('click',()=>{toast('Copied: Join my squad · '+S.code);});
+$('#joinbtn').addEventListener('click',()=>{const v=$('#joincode').value.trim().toUpperCase().replace(/[^A-Z0-9]/g,'');if(v.length<4){toast('Enter a code');return;}S.code=v.indexOf('ARC')===0?'ARC-'+v.slice(3,7):'ARC-'+v.slice(0,4);S.joined=true;S.matched=false;S.squad='The Cold Starters';S.size=5;S.stake=10;S.ben='pot';save();renderSquad();});
+$('#joincode').addEventListener('keydown',e=>{if(e.key==='Enter')$('#joinbtn').click();});
+$('#matchme').addEventListener('click',()=>{S.matched=true;S.joined=false;S.squad='The Cold Starters';S.code='ARC-7K2Q';S.size=5;S.stake=10;S.ben='pot';save();renderSquad();});
+
+/* ---------- sign ---------- */
+let sigDrawn=!!S.sig, drawing=false, ctx;
+function renderSign(){
+  const L=contractLines();
+  const jc=squadCode();
+  $('#poster-mini').innerHTML='<div class="disp">Arc contract</div>'+L.slice(0,4).map(l=>'<div class="ln">'+l.per+'× '+esc(l.name)+'</div>').join('')+'<div class="ln gold">€'+S.stake+' per miss → '+(S.ben==='pot'?'squad pot':S.ben)+'</div><div class="ln ice">'+esc(squadName())+(jc?' · join '+esc(jc)+' · locks 7 Oct':' · locks 7 Oct')+'</div>';
+  const cv=$('#sig'); ctx=cv.getContext('2d'); ctx.clearRect(0,0,cv.width,cv.height);
+  ctx.lineWidth=5; ctx.lineCap='round'; ctx.lineJoin='round'; ctx.strokeStyle='#EAF2FA';
+  if(S.sig){const im=new Image();im.onload=()=>ctx.drawImage(im,0,0);im.src=S.sig;}
+  $('#sighint').hidden=sigDrawn;
+}
+const cv=$('#sig');
+function pos(e){const r=cv.getBoundingClientRect();return{x:(e.clientX-r.left)/r.width*cv.width,y:(e.clientY-r.top)/r.height*cv.height};}
+cv.addEventListener('pointerdown',e=>{drawing=true;cv.setPointerCapture(e.pointerId);const p=pos(e);ctx.beginPath();ctx.moveTo(p.x,p.y);sigDrawn=true;$('#sighint').hidden=true;});
+cv.addEventListener('pointermove',e=>{if(!drawing)return;const p=pos(e);ctx.lineTo(p.x,p.y);ctx.stroke();});
+const endDraw=()=>{if(drawing){drawing=false;try{S.sig=cv.toDataURL('image/png');save();}catch(e){}}};
+cv.addEventListener('pointerup',endDraw); cv.addEventListener('pointercancel',endDraw); cv.addEventListener('pointerleave',endDraw);
+$('#sigclear').addEventListener('click',()=>{S.sig=null;sigDrawn=false;save();renderSign();});
+$('#signshare').addEventListener('click',()=>{if(!sigDrawn){toast('Sign first');return;}openShare('poster');});
+
+/* ---------- today & rescue ---------- */
+function renderToday(){
+  const k=primary(), sp=sportOf(k);
+  const due=$('#due'); due.className='due'+(S.proved?' done':S.today==='miss'?' miss':S.today==='sick'?' sick':'');
+  const what=sp.custom?sp.word:sp.name.replace(/s$/,'').replace('WODs','WOD');
+  $('#due-what').textContent=what;
+  if(S.proved){$('#due-ey').textContent='Done';$('#due-cd').textContent=(S.tier==='BRONZE'?'Vouched':'Verified')+' · '+(S.tier||tierOf(k)).toLowerCase().replace(/^./,c=>c.toUpperCase());$('#due-sub').textContent=S.tier==='BRONZE'?'Marco vouched · counts, no stake':'Stamped · squad notified';}
+  else if(S.today==='sick'){$('#due-ey').textContent='Rest · sick day';$('#due-cd').textContent='Squad told';$('#due-sub').textContent='Nothing owed. Your arc continues tomorrow.';}
+  else if(S.today==='miss'){$('#due-ey').textContent='Missed';$('#due-cd').textContent='€'+S.stake+' to the pot';$('#due-sub').textContent='Your arc continues tomorrow. Streak untouched by shame.';}
+  else{$('#due-ey').textContent='Due today';$('#due-sub').textContent='Before 23:59 · '+sp.ver+' · '+tierOf(k).toLowerCase().replace(/^./,c=>c.toUpperCase());}
+  $('#rescue-txt').innerHTML='<b>'+S.sick+'</b> sick day · <b>'+S.vouch+'</b> vouch left · a miss costs €'+S.stake+', never your arc';
+  $('#cant').hidden=S.proved||S.today!=='due';
+  const pb=$('#prove'); pb.className='btn'+(S.proved||S.today!=='due'?' ghost':'');
+  pb.textContent=S.proved?'Proved. See the squad':S.today==='sick'?'Train anyway':S.today==='miss'?'Prove it anyway':'Prove it';
+  pb.setAttribute('data-go',S.proved?'board':'proof');
+  const you={m:MEMBERS[0],s:S.proved?'v':S.today==='sick'?'r':S.today==='miss'?'x':'p',t:S.proved?(S.tier==='BRONZE'?'Vouched':'Proved'):S.today==='sick'?'Rest':S.today==='miss'?'Missed':'Due'};
+  const st=[you].concat(active().slice(1).map(m=>({m,s:TODAYST[m.n][0],t:TODAYST[m.n][1]})));
+  $('#strip').innerHTML=st.map(x=>'<div class="member '+x.s+'"><span class="avatar '+x.m.c+'">'+x.m.i+'</span><span class="st">'+esc(x.t)+'</span></div>').join('');
+  $('#strip-name').textContent=squadName(); $('#t-streak').textContent=S.proved?'10':'9'; $('#t-pot').textContent='€'+(stats().missAll*S.stake+(S.today==='miss'?S.stake:0));
+  $('#k-sick').textContent=S.sick+' left'; $('#o-sick').disabled=!S.sick; $('#k-vouch').textContent=S.vouch+' left'; $('#o-vouch').disabled=!S.vouch; $('#k-miss').textContent='€'+S.stake+' to pot';
+}
+function openSheet(){$('#scrim').hidden=false;$('#sheet').hidden=false;}
+function closeSheet(){$('#scrim').hidden=true;$('#sheet').hidden=true;}
+$('#cant').addEventListener('click',openSheet); $('#scrim').addEventListener('click',closeSheet); $('#sheet-close').addEventListener('click',closeSheet);
+$('#o-sick').addEventListener('click',()=>{if(!S.sick)return;S.sick=0;S.today='sick';save();closeSheet();renderToday();toast('Sick day used · squad told');});
+$('#o-vouch').addEventListener('click',()=>{if(!S.vouch)return;closeSheet();toast('Asked. Marco and Giulia have 24h to vouch.');});
+$('#o-miss').addEventListener('click',()=>{S.today='miss';save();closeSheet();renderToday();toast('€'+S.stake+' to the pot · arc continues');});
+
+/* ---------- proof ---------- */
+let proofTimers=[];
+function clearTimers(){proofTimers.forEach(clearTimeout);proofTimers=[];}
+function startProof(){
+  clearTimers();
+  const k=primary(), sp=sportOf(k);
+  $('#scene').className='scene '+sp.scene; $('#proof-sport').textContent=sp.word; $('#v-sportname').textContent=sp.word.toLowerCase();
+  $('#v-health').textContent=tierOf(k)==='GOLD'?'Apple Health · 52 min workout':'No Health data needed · photo tier';
+  $('#front').classList.remove('got'); $('#front').style.transform='';
+  $('#verify').hidden=true; $('#reject').hidden=true; $('#stamp').hidden=true; $('#stamp').classList.remove('slam','bronze'); $('#proof-actions').hidden=true; $('#shutterwrap').hidden=false;
+  $$('.vstep').forEach(v=>{v.classList.remove('ok','unsure');v.querySelector('.k').textContent='…';});
+  $('#demo-reject').classList.toggle('on',S.reject); $('#demo-reject').textContent=S.reject?'Demo · reject path on':'Demo · simulate a reject';
+  $('#vouch').textContent=S.vouch?'Ask squad to vouch · '+S.vouch+' left':'No vouches left this week'; $('#vouch').disabled=!S.vouch;
+}
+$('#demo-reject').addEventListener('click',()=>{S.reject=!S.reject;save();startProof();});
+function stampIt(tier,by){
+  const s=$('#stamp'); const t=$('#clock').textContent;
+  $('#stamp-word').textContent=tier==='BRONZE'?'Vouched':'Verified';
+  $('#stamp-sub').textContent='DAY 12 / 90 · '+t+' · '+tier+(by?' · '+by.toUpperCase():'');
+  s.classList.toggle('bronze',tier==='BRONZE'); s.hidden=false; s.classList.add('slam');
+  S.proved=true; S.tier=tier; S.vouchedBy=by||null; S.today='due'; save();
+  proofTimers.push(setTimeout(()=>{$('#proof-actions').hidden=false;},RM?50:800));
+}
+$('#shutter').addEventListener('click',()=>{
+  const f=$('#flash'); f.classList.remove('go'); void f.offsetWidth; f.classList.add('go');
+  $('#shutterwrap').hidden=true;
+  const T=RM?60:1;
+  const at=(ms,fn)=>proofTimers.push(setTimeout(fn,ms/T));
+  at(650,()=>{$('#front').style.transform='scale(1.12)';f.classList.remove('go');void f.offsetWidth;f.classList.add('go');});
+  at(1000,()=>{$('#front').classList.add('got');$('#front').style.transform='';});
+  at(1300,()=>{$('#verify').hidden=false;});
+  const k=primary(), gold=tierOf(k)==='GOLD';
+  if(!S.reject){
+    [0,1,2,3].forEach(i=>at(1700+i*450,()=>{const v=$('.vstep[data-i="'+i+'"]');v.classList.add('ok');v.querySelector('.k').textContent=i===3?(gold?'GOLD':'SILVER'):'OK';}));
+    at(3700,()=>{$('#verify').hidden=true;stampIt(gold?'GOLD':'SILVER');});
+  }else{
+    const res=[['unsure','UNSURE'],['ok','OK'],['unsure','UNSURE'],['unsure','NONE']];
+    res.forEach((r,i)=>at(1700+i*450,()=>{const v=$('.vstep[data-i="'+i+'"]');v.classList.add(r[0]);v.querySelector('.k').textContent=r[1];}));
+    at(3800,()=>{$('#verify').hidden=true;$('#reject').hidden=false;});
+  }
+});
+$('#retake').addEventListener('click',()=>{startProof();});
+$('#vouch').addEventListener('click',()=>{if(!S.vouch)return;$('#reject').hidden=true;toast('Asked · Marco is looking');proofTimers.push(setTimeout(()=>{S.vouch=0;stampIt('BRONZE','Marco');},RM?100:1300));});
+$('#appeal').addEventListener('click',()=>{$('#reject').hidden=true;toast('Sent to review · your day is safe');proofTimers.push(setTimeout(()=>{$('#proof-actions').hidden=false;$('#share-proof').hidden=true;},600));});
+$('#share-proof').addEventListener('click',()=>openShare('proof'));
+
+/* ---------- board ---------- */
+function youToday(){return S.proved?(S.tier==='BRONZE'?'B':'V'):S.today==='sick'?'R':S.today==='miss'?'X':'P';}
+function renderBoard(){
+  const b=$('#board'); let h='<div></div>';
+  for(let d=1;d<=12;d++)h+='<div class="dh'+(d===12?' today':'')+'">'+d+'</div>';
+  const CLS={V:'c-v',B:'c-b',X:'c-x',R:'c-r',P:'c-p'}, G={V:'✓',B:'✓',X:'✕',R:'–',P:'·'};
+  active().forEach(m=>{
+    const p=patOf(m);
+    h+='<div class="nm">'+esc(m.n)+'</div>';
+    for(let d=0;d<12;d++){const c=p[d];h+='<button type="button" class="cell '+CLS[c]+'" data-m="'+esc(m.n)+'" data-d="'+(d+1)+'" data-c="'+c+'" aria-label="'+esc(m.n)+' day '+(d+1)+'">'+G[c]+'</button>';}
+  });
+  b.innerHTML=h;
+  b.querySelectorAll('.cell').forEach(c=>c.addEventListener('click',()=>{
+    const m=c.getAttribute('data-m'), d=+c.getAttribute('data-d'), st=c.getAttribute('data-c');
+    const sc=SCENES[(d-1)%SCENES.length];
+    const txt={V:m+' · Day '+d+' · verified 06:'+pad((d*7)%60),B:m+' · Day '+d+' · vouched · Bronze',X:m+' · Day '+d+' · missed · €'+S.stake+' to the pot',R:m+' · Day '+d+' · rest day',P:m+' · Day '+d+' · due before 23:59'}[st];
+    const sub={V:'Gym · 52 min via Apple Health · Gold',B:'Two squadmates confirmed. Counts, no stake.',X:'One sick day left this fortnight.',R:'Planned rest. Nothing owed.',P:'Squad only. Nothing here is public.'}[st];
+    $('#pop').innerHTML='<div class="sc '+(st==='V'||st==='B'?sc:'')+'" style="'+(st!=='V'&&st!=='B'?'background:var(--p-surface-2)':'')+'"></div><div><div class="t">'+esc(txt)+'</div><div class="d">'+esc(sub)+'</div></div>';
+  }));
+  $('#board-streak').textContent=S.proved?'10':'9'; $('#board-name').textContent=squadName();
+  const st=stats(); $('#b-hits').textContent=st.hits; $('#b-sched').textContent='of '+st.sched+' sessions';
+}
+
+/* ---------- ledger ---------- */
+function ledgerRows(){const st=stats();return st.rows.slice().sort((a,b)=>a.x-b.x||(a.m.n==='Giulia'?-1:b.m.n==='Giulia'?1:0)||a.m.n.localeCompare(b.m.n));}
+function renderLedger(){
+  const st=stats(), rows=ledgerRows();
+  $('#lrows').innerHTML=rows.map(r=>{const o=r.x*S.stake;return '<div class="lrow"><span class="avatar '+r.m.c+'">'+r.m.i+'</span><div><div class="n">'+esc(r.m.n)+'</div><div class="s">'+(o?'owes the pot':'clean week')+'</div></div><div class="hits">'+r.h+' / '+(r.h+r.x)+'</div><div class="owe'+(o?' pay':'')+'">'+(o?'€'+o:'—')+'</div></div>';}).join('');
+  const mvp=rows[0];
+  $('#mvp-av').className='avatar '+mvp.m.c+' sm'; $('#mvp-av').textContent=mvp.m.i; $('#mvp-txt').textContent=mvp.m.n+' · '+mvp.h+' of '+(mvp.h+mvp.x)+(mvp.x?'':', all before 08:00');
+  const week=st.w2x*S.stake, pot=st.missAll*S.stake;
+  $$('#v-ledger .tile .v').forEach(el=>{if(el.dataset.prefix==='€')el.dataset.count=pot;else if(el.dataset.suffix==='%')el.dataset.count=st.rate;else el.dataset.count=st.w2x;});
+  $('#l-week').textContent='pot · +€'+week+' this week'; $('#l-pot').textContent='€'+pot;
+  $$('#v-ledger [data-count]').forEach(el=>countUp(el));
+}
+function countUp(el){
+  const to=+el.dataset.count, pre=el.dataset.prefix||'', suf=el.dataset.suffix||'';
+  if(RM){el.textContent=pre+to+suf;return;}
+  const t0=performance.now(), dur=900;
+  const step=t=>{const p=Math.min(1,(t-t0)/dur), e=1-Math.pow(1-p,3);el.textContent=pre+Math.round(to*e)+suf;if(p<1)requestAnimationFrame(step);};
+  requestAnimationFrame(step);
+}
+$('#share-ledger').addEventListener('click',()=>openShare('ledger'));
+
+/* ---------- episode ---------- */
+function renderEpisode(){$('#collage').innerHTML=SCENES.map((s,i)=>'<i class="'+s+'" data-d="D'+(i*2+3)+'"></i>').join('');}
+$('#play').addEventListener('click',()=>{const e=$('#ep');e.classList.remove('playing');void e.offsetWidth;e.classList.add('playing');setTimeout(()=>e.classList.remove('playing'),RM?100:2600);});
+$('#share-ep').addEventListener('click',()=>openShare('episode'));
+
+/* ---------- finale ---------- */
+const VOPTS=[{k:'dinner',t:'Finale dinner, 2 Jan',base:2},{k:'donate',t:'Donate it, squad\'s name',base:1},{k:'race',t:'Race entries for spring',base:1},{k:'gear',t:'Gear for the next arc',base:0}];
+function renderFinale(){
+  const total=VOPTS.reduce((a,o)=>a+o.base,0)+(S.vote?1:0);
+  $('#vote').innerHTML=VOPTS.map(o=>{const c=o.base+(S.vote===o.k?1:0);return '<button type="button" class="vopt'+(S.vote===o.k?' on':'')+'" data-v="'+o.k+'"><div><div class="t">'+o.t+'</div><div class="bar"><i style="width:'+Math.round(c/Math.max(1,total)*100)+'%"></i></div></div><div class="c">'+c+'</div></button>';}).join('');
+  $('#vote').querySelectorAll('.vopt').forEach(b=>b.addEventListener('click',()=>{S.vote=b.getAttribute('data-v');save();renderFinale();}));
+  $('#cert-squad').textContent=squadName();
+}
+$('#share-cert').addEventListener('click',()=>openShare('cert'));
+function renderLock(){$('#lock-squad').textContent=squadName();$('#lock-sport').textContent=sportOf(primary()).word;const n=active().length,p=provedToday();$('#lock-pr').textContent=p+' of '+n;$('#lock-pr2').textContent=p+' / '+n;$('#lock-avs').innerHTML=active().filter(m=>m.n!=='You'&&TODAYST[m.n][0]==='v').slice(0,3).map(m=>'<span class="avatar '+m.c+' sm">'+m.i+'</span>').join('');}
+
+/* ---------- cards ---------- */
+function wm(extra){const jc=squadCode();return '<div class="wm"><b>ARC</b> · S01 · '+esc(squadName())+(jc?' · <span class="jc">join '+esc(jc)+'</span>':'')+(extra?'<br>'+extra:'')+'</div>';}
+function cardHTML(type){
+  const L=contractLines(); const sp=sportOf(primary()); const st=stats(); const pot=st.missAll*S.stake; const jc=squadCode(); const bronze=S.tier==='BRONZE';
+  if(type==='poster')return '<div class="pad"><div class="ey">Season one · S01 · signed '+esc(signedDate())+'</div><div class="big" style="font-size:48px;margin-top:10px;overflow-wrap:anywhere">Arc<br>contract</div><div class="cp-lines">'+L.slice(0,4).map(l=>'<div><span>'+l.per+'× '+esc(l.name)+'</span><b>'+(l.kind==='sport'?'proof':l.kind==='body'?'weekly':'artifact')+'</b></div>').join('')+'<div class="gold"><span>€'+S.stake+' per miss</span><b>'+(S.ben==='pot'?'squad pot':S.ben)+'</b></div></div><div class="cp-join"><span>'+(jc?'Join my squad · '+esc(jc):'Squad forming')+'</span><span>'+spotsText()+' · locks 7 Oct</span></div>'+(S.sig?'<img class="cp-sig" alt="signature" src="'+S.sig+'">':'')+'<div class="cp-sigline"></div>'+wm('starts 01 Oct · signed on glass')+'</div>';
+  if(type==='proof')return '<div class="sc-scene '+sp.scene+'"></div><div class="pad"><div style="display:flex;justify-content:space-between" class="ey"><span style="color:var(--p-ink)">Day 12 / 90</span><span style="color:var(--p-ink)">'+esc($('#clock').textContent)+'</span></div><div style="position:absolute;left:18px;right:104px;bottom:120px"><span class="cp-stamp'+(bronze?' bronze':'')+'">'+(bronze?'Vouched':'Verified')+'</span><div class="ey" style="margin-top:10px;color:var(--p-ink)">'+esc(sp.word)+' · '+(bronze?'Marco vouched · Bronze':(tierOf(primary())==='GOLD'?'52 min · Apple Health · Gold':'Photo · Silver'))+'</div><div class="ey" style="margin-top:4px">'+provedToday()+' of '+active().length+' proved today</div></div><div class="cp-front'+(bronze?' bronze':'')+'"><i>YO</i></div>'+wm()+'</div>';
+  if(type==='board'){let h='<div class="pad"><div class="ey">'+esc(squadName())+' · week 2</div><div class="big" style="font-size:64px;margin-top:8px;color:var(--p-ember)">'+(S.proved?'10':'9')+'<span style="font-size:20px;color:var(--p-ink-2);margin-left:6px">day squad streak</span></div><div class="miniboard"><div></div>';for(let d=5;d<=11;d++)h+='<div class="ey" style="text-align:center">'+d+'</div>';active().forEach(m=>{const p=patOf(m);h+='<div class="nm">'+esc(m.n)+'</div>';for(let d=4;d<11;d++){const c=p[d];h+='<div class="cell '+({V:'c-v',B:'c-b',X:'c-x',R:'c-r',P:'c-p'}[c])+'">'+({V:'✓',B:'✓',X:'✕',R:'–',P:'·'}[c])+'</div>';}});h+='</div><div class="ey" style="margin-top:14px">'+st.hits+' of '+st.sched+' sessions · squad only</div>'+wm('01 → 12 Oct')+'</div>';return h;}
+  if(type==='ledger')return '<div class="pad"><div class="ey">The ledger · week 2 · Sun 11 Oct</div><div class="big" style="font-size:88px;margin-top:6px;color:var(--p-gold)">€'+pot+'</div><div class="ey">in the pot · +€'+(st.w2x*S.stake)+' this week · '+st.rate+'% hit rate</div><div class="cp-rows">'+ledgerRows().slice(0,6).map((r,i)=>'<div><span>'+esc(r.m.n)+(i===0?' · MVP':'')+'</span><b'+(r.x?'':' class="ok"')+'>'+r.h+' / '+(r.h+r.x)+(r.x?' · €'+(r.x*S.stake):'')+'</b></div>').join('')+'</div><div class="ey" style="margin-top:14px">The squad votes what the pot becomes on 31 Dec</div>'+wm()+'</div>';
+  if(type==='episode')return '<div class="pad"><div class="ey" style="color:var(--p-ember)">Episode 1 · days 1–30</div><div class="big" style="font-size:58px;margin-top:8px">The Cold<br>Start</div><div class="cp-collage">'+SCENES.map(s=>'<i class="'+s+'"></i>').join('')+'</div><div class="cp-stats"><div><span class="v">26</span><span class="l">proofs</span></div><div><span class="v" style="color:var(--p-rose)">4</span><span class="l">misses</span></div><div><span class="v" style="color:var(--p-ember)">9</span><span class="l">streak</span></div><div><span class="v">3</span><span class="l">PRs</span></div></div>'+wm()+'</div>';
+  if(type==='cert')return '<div class="pad" style="border:1px solid var(--p-ice);border-radius:18px;inset:10px;padding:18px"><div class="ey">Season one · 01 Oct – 31 Dec 2026</div><div class="big" style="font-size:66px;margin-top:10px">Arc<br><span style="color:var(--p-ice)">complete</span></div><div class="big" style="font-size:96px;margin-top:16px">83<span style="font-size:30px;color:var(--p-ink-2)"> / 90</span></div><div class="ey" style="margin-top:8px">You · '+esc(squadName())+' · pot <span style="color:var(--p-gold)">€410</span> → '+esc((VOPTS.find(o=>o.k===S.vote)||VOPTS[0]).t)+'</div>'+(S.sig?'<img class="cp-sig" alt="signature" src="'+S.sig+'">':'')+wm('next arc opens 01 Jan · same code')+'</div>';
+  return '';
+}
+function signedDate(){const d=new Date();return d.getDate()+' '+['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()];}
+const TESTS={poster:['One number: the stake','Identity: sports, squad','Squad: code, spots left','Watermark, lock date','Readable at thumbnail'],proof:['One number: Day 12 / 90','Identity: sport, face','Squad: 3 of 5 proved','Watermark, code, time','Readable at thumbnail'],board:['One number: the streak','Identity: your row','Squad: all five','Watermark, code, dates','Readable at thumbnail'],ledger:['One number: the pot','Identity: your line','Squad: ranked','Watermark, code, week','Readable at thumbnail'],episode:['One number: proofs','Identity: your title','Squad: streak, code','Watermark, episode','Readable at thumbnail'],cert:['One number: 83 / 90','Identity: your name','Squad: named, dated','Watermark, season, code','Readable at thumbnail']};
+function renderCards(){
+  const g=$('#gallery'); const types=['poster','proof','board','ledger','episode','cert'];
+  g.innerHTML=types.map(t=>'<div class="gitem" data-t="'+t+'"><div class="scard">'+cardHTML(t)+'</div><ul class="test">'+TESTS[t].map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul></div>').join('');
+  $('#gdots').innerHTML=types.map((t,i)=>'<i class="'+(i===0?'on':'')+'"></i>').join('');
+  g.onscroll=()=>{const i=Math.round(g.scrollLeft/316);$$('#gdots i').forEach((d,j)=>d.classList.toggle('on',j===i));};
+}
+function openShare(type){$('#scard').innerHTML=cardHTML(type);$('#share').hidden=false;}
+$('#share-close').addEventListener('click',()=>{$('#share').hidden=true;});
+$('#share-go').addEventListener('click',()=>{toast('Shared to story · demo');setTimeout(()=>{$('#share').hidden=true;},700);});
+let toastT; function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('show'),1700);}
+
+/* ---------- fit ---------- */
+function fit(){
+  const stage=$('#stage'), ph=$('#phone');
+  const w=stage.clientWidth-24, vh=Math.max(560,Math.min(window.innerHeight-140,900));
+  const s=Math.min(1,w/390,vh/844);
+  ph.style.transform='scale('+s+')';
+  stage.style.height=Math.round(844*s+24)+'px';
+}
+window.addEventListener('resize',fit);
+
+renderChapters(); fit(); go(S.ch||'countdown');
+})();
+</script>

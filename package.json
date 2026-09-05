@@ -1,0 +1,17 @@
+{
+  "name": "arc",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Squad season app: contract, dual-cam proof, squad board, Sunday ledger, episodes.",
+  "packageManager": "pnpm@10.33.0",
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "test": "pnpm -r --if-present test",
+    "typecheck": "pnpm -r --if-present typecheck",
+    "lint": "pnpm -r --if-present lint",
+    "domain:test": "pnpm --filter @arc/domain test",
+    "mobile": "pnpm --filter @arc/mobile start",
+    "web": "pnpm --filter @arc/web dev",
+    "eval:verification": "pnpm --filter @arc/eval-verification run eval"
+  }
+}
