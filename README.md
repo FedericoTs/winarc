@@ -11,7 +11,7 @@ apps/mobile          Expo SDK 57, expo-router. The app.
 apps/web             Next.js. Landing page and /join/[code].
 packages/domain      Pure product logic with tests. Seasons, contracts, squads, verification decisions, settlement.
 packages/verifier    The one model call, shared by the edge function and the evals.
-supabase             Schema with row-level security, storage, the verify-proof function, ticks and settlement in SQL, and the database tests.
+supabase             Schema with row-level security, storage, the verify-proof and title-episode functions, ticks, settlement, rescues and episodes in SQL, and the database tests.
 evals/verification   Labeled proof set and the runner that gates rubric changes.
 docs                 Product rules, flows, design system, decisions, research, prototype.
 ```
@@ -21,7 +21,9 @@ docs                 Product rules, flows, design system, decisions, research, p
 ```
 scripts/bootstrap.sh          # pnpm install, runs the domain tests, prints next steps
 pnpm domain:test
+pnpm db:test                  # real migrations on a local Postgres; see CLAUDE.md
 pnpm typecheck
+pnpm mobile:bundle            # Metro bundles the iOS app without a device
 ```
 
 For the backend you need Docker and the Supabase CLI:
@@ -54,4 +56,9 @@ npx expo install --fix         # if package versions drift from SDK 57
 
 ## Status
 
-Scaffold. Domain logic and its tests are real. The schema, edge functions, app shell and eval runner are structured but not yet run end to end. See the cut line in CLAUDE.md.
+Season one launch scope is built and verified as far as a machine without a phone can go:
+
+- Domain rules run as tests (38). The real migrations run on plain Postgres in CI with 34 tests over RPCs, policies, ticks, settlement, rescues, nudges, weigh-ins, episodes and the squad-witnessed habit path.
+- The iOS app bundles under Metro in CI, so every screen's imports resolve against the versions Expo SDK 57 ships.
+- Both edge functions type-check under Deno against the synced domain and verifier copies.
+- Not yet exercised: the model call itself (needs a key; `evals/verification/smoke.ts`), the app on a device, Android on a device, and push delivery. The widget and Live Activity from the Day 30 list need native targets and are not started. `docs/ops/launch-checklist.md` walks the rest.

@@ -63,3 +63,19 @@ describe('squad-witnessed lines', () => {
     expect(await expectError(c, `select * from public.attest_today($1)`, [alcohol])).toMatch(/not your line/);
   });
 });
+
+describe('squad-witnessed lines at settlement', () => {
+  it('counts an attested day as a hit, so nothing goes to the pot', async () => {
+    const { rows } = await c.query(`select id from public.contract_lines where contract_id = $1 and key = 'read'`, [CONTRACT]);
+    const read = rows[0].id;
+    await openToday(read);
+    await asUser(c, YOU);
+    await c.query(`select * from public.attest_today($1, $2)`, [read, `${YOU}/today/${read}-rear.jpg`]);
+
+    await asAdmin(c);
+    const round = (await c.query(`select public.settle_squad_week($1, 1, public.local_date_for($2)) as id`, [SQUAD, YOU])).rows[0].id;
+    const r = (await c.query(`select pot_added_cents, hit_rate::float as hit_rate, mvp_profile_id from public.rounds where id = $1`, [round])).rows[0];
+    expect(r).toEqual({ pot_added_cents: 0, hit_rate: 1, mvp_profile_id: YOU });
+    expect((await c.query(`select count(*)::int as n from public.ledger_entries where squad_id = $1`, [SQUAD])).rows[0].n).toBe(0);
+  });
+});
