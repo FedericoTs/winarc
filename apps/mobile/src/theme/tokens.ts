@@ -28,17 +28,21 @@ export const roles = {
 } as const;
 
 /**
- * Target faces: Big Shoulders Display 900 for numerals and slates, Instrument
- * Sans for UI, IBM Plex Mono for the ledger and timecodes. Load them with
- * expo-font from @expo-google-fonts/big-shoulders-display,
- * @expo-google-fonts/instrument-sans and @expo-google-fonts/ibm-plex-mono,
- * then replace the fallbacks below.
+ * Type. Big Shoulders Display 900 for numerals and slates, 700 for chips.
+ * Instrument Sans for UI, IBM Plex Mono for the ledger and timecodes. Each
+ * name is one loaded face, so styles set the family and never a fontWeight:
+ * pairing a weight with an already-weighted face makes the platform fake a
+ * bolder one. Loaded in app/_layout.tsx before the first screen paints.
  */
 export const fonts = {
-  display: undefined as string | undefined,
-  body: undefined as string | undefined,
-  mono: undefined as string | undefined,
-};
+  display: 'BigShouldersDisplay_900Black',
+  displayBold: 'BigShouldersDisplay_700Bold',
+  body: 'InstrumentSans_400Regular',
+  bodyMedium: 'InstrumentSans_500Medium',
+  bodySemi: 'InstrumentSans_600SemiBold',
+  mono: 'IBMPlexMono_400Regular',
+  monoMedium: 'IBMPlexMono_500Medium',
+} as const;
 
 export const radius = { card: 18, button: 14, chip: 12, tile: 14 } as const;
 

@@ -36,6 +36,6 @@ export function Stamp({ tier, subtitle }: { tier: Tier; subtitle: string }) {
 const styles = StyleSheet.create({
   wrap: { position: 'absolute', left: 0, right: 0, top: '38%', alignItems: 'center', gap: 12 },
   word: { borderWidth: 6, borderRadius: 14, paddingHorizontal: 18, paddingTop: 6, backgroundColor: 'rgba(11,13,18,0.35)' },
-  text: { fontFamily: fonts.display, fontWeight: '900', fontSize: 72, letterSpacing: 4, lineHeight: 72, textTransform: 'uppercase' },
+  text: { fontFamily: fonts.display, fontSize: 72, letterSpacing: 4, lineHeight: 72, textTransform: 'uppercase' },
   sub: { fontFamily: fonts.mono, fontSize: 13, letterSpacing: 2.4, color: colors.ink, textTransform: 'uppercase' },
 });

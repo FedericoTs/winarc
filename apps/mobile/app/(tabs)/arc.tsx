@@ -122,7 +122,7 @@ export default function Arc() {
 const styles = StyleSheet.create({
   ep: { backgroundColor: colors.surface, borderWidth: 1, borderColor: colors.line, borderRadius: 18, padding: 14, gap: 8 },
   epEyebrow: { fontFamily: fonts.mono, fontSize: 10.5, letterSpacing: 1.4, textTransform: 'uppercase', color: colors.ink2 },
-  title: { fontFamily: fonts.display, fontWeight: '900', fontSize: 30, lineHeight: 32, textTransform: 'uppercase', color: colors.ink },
+  title: { fontFamily: fonts.display, fontSize: 30, lineHeight: 32, textTransform: 'uppercase', color: colors.ink },
   line: { fontFamily: fonts.body, fontSize: 14, color: colors.ink2 },
   stats: { fontFamily: fonts.mono, fontSize: 11.5, letterSpacing: 0.8, color: colors.ink2 },
 });

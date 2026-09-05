@@ -114,6 +114,6 @@ export default function Weigh() {
 const styles = StyleSheet.create({
   box: { backgroundColor: colors.surface, borderWidth: 1, borderColor: colors.line, borderRadius: 18, padding: 14, gap: 10 },
   label: { fontFamily: fonts.mono, fontSize: 11, letterSpacing: 1.4, textTransform: 'uppercase', color: colors.ink2 },
-  big: { fontFamily: fonts.display, fontWeight: '900', fontSize: 44, lineHeight: 46, color: colors.ink },
+  big: { fontFamily: fonts.display, fontSize: 44, lineHeight: 46, color: colors.ink },
   input: { borderWidth: 1, borderColor: colors.line, backgroundColor: colors.ground, borderRadius: 12, padding: 12, color: colors.ink, fontSize: 22, fontFamily: fonts.mono },
 });

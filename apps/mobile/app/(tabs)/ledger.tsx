@@ -61,6 +61,6 @@ export default function Ledger() {
 
 const styles = StyleSheet.create({
   row: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingVertical: 10, borderBottomWidth: 1, borderBottomColor: colors.line },
-  name: { fontFamily: fonts.body, fontWeight: '600', fontSize: 14.5, color: colors.ink },
-  amount: { fontFamily: fonts.display, fontWeight: '900', fontSize: 22, color: colors.ink3 },
+  name: { fontFamily: fonts.bodySemi, fontSize: 14.5, color: colors.ink },
+  amount: { fontFamily: fonts.display, fontSize: 22, color: colors.ink3 },
 });

@@ -80,10 +80,10 @@ export default function Contract() {
 
 const styles = StyleSheet.create({
   line: { flexDirection: 'row', alignItems: 'center', gap: 10, backgroundColor: colors.surface, borderRadius: 14, padding: 12 },
-  name: { fontFamily: fonts.body, fontWeight: '600', fontSize: 15, color: colors.ink },
+  name: { fontFamily: fonts.bodySemi, fontSize: 15, color: colors.ink },
   ver: { fontFamily: fonts.mono, fontSize: 10.5, letterSpacing: 1, textTransform: 'uppercase', color: colors.ink2, marginTop: 2 },
   step: { flexDirection: 'row', alignItems: 'center', backgroundColor: colors.surface2, borderRadius: 10, padding: 4 },
   stepBtn: { width: 28, height: 28, alignItems: 'center', justifyContent: 'center' },
   stepText: { color: colors.ink, fontSize: 18 },
-  val: { fontFamily: fonts.display, fontWeight: '900', fontSize: 22, color: colors.ink, width: 36, textAlign: 'center' },
+  val: { fontFamily: fonts.display, fontSize: 22, color: colors.ink, width: 36, textAlign: 'center' },
 });

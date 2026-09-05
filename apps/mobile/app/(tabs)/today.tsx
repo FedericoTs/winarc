@@ -199,11 +199,11 @@ const styles = StyleSheet.create({
   slate: { flexDirection: 'row', justifyContent: 'space-between', marginTop: 8 },
   slateText: { fontFamily: fonts.mono, fontSize: 11, letterSpacing: 1.4, textTransform: 'uppercase', color: colors.ink2 },
   due: { backgroundColor: colors.surface, borderWidth: 1, borderColor: colors.line, borderRadius: 20, padding: 18, gap: 8 },
-  what: { fontFamily: fonts.display, fontWeight: '900', fontSize: 40, lineHeight: 38, textTransform: 'uppercase', color: colors.ink },
+  what: { fontFamily: fonts.display, fontSize: 40, lineHeight: 38, textTransform: 'uppercase', color: colors.ink },
   cd: { fontFamily: fonts.mono, fontSize: 26, letterSpacing: 1.5, color: colors.ice },
   rescueRow: { flexDirection: 'row', alignItems: 'center', gap: 8, borderTopWidth: 1, borderTopColor: colors.line, paddingTop: 8 },
   rescue: { flex: 1, fontFamily: fonts.mono, fontSize: 10.5, lineHeight: 17, color: colors.ink2 },
-  link: { fontFamily: fonts.body, fontWeight: '600', fontSize: 13, color: colors.ice },
+  link: { fontFamily: fonts.bodySemi, fontSize: 13, color: colors.ice },
   weigh: { flexDirection: 'row', alignItems: 'center', gap: 10, backgroundColor: colors.surface, borderWidth: 1, borderColor: colors.line, borderRadius: 16, padding: 14 },
   weighText: { fontFamily: fonts.body, fontSize: 13, color: colors.ink2 },
 });

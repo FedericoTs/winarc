@@ -228,5 +228,5 @@ const styles = StyleSheet.create({
   shutter: { width: 78, height: 78, borderRadius: 39, borderWidth: 5, borderColor: '#fff', backgroundColor: 'rgba(255,255,255,0.85)' },
   panel: { position: 'absolute', left: 20, right: 20, bottom: 30, backgroundColor: 'rgba(11,13,18,0.92)', borderWidth: 1, borderColor: colors.line, borderRadius: 18, padding: 16, gap: 10 },
   actions: { position: 'absolute', left: 20, right: 20, bottom: 30 },
-  askTitle: { fontFamily: fonts.display, fontWeight: '900', fontSize: 28, textTransform: 'uppercase', color: colors.ink },
+  askTitle: { fontFamily: fonts.display, fontSize: 28, textTransform: 'uppercase', color: colors.ink },
 });

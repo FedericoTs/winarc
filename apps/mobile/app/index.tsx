@@ -61,9 +61,9 @@ export default function Countdown() {
 
 const styles = StyleSheet.create({
   brand: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 'auto', marginTop: 8 },
-  wordmark: { fontFamily: fonts.display, fontWeight: '900', fontSize: 26, letterSpacing: 2, color: colors.ink },
-  big: { fontFamily: fonts.display, fontWeight: '900', fontSize: 168, lineHeight: 150, color: colors.ink, marginLeft: -4 },
-  unit: { fontFamily: fonts.display, fontWeight: '700', fontSize: 30, letterSpacing: 2, color: colors.ink2, textTransform: 'uppercase' },
+  wordmark: { fontFamily: fonts.display, fontSize: 26, letterSpacing: 2, color: colors.ink },
+  big: { fontFamily: fonts.display, fontSize: 172, lineHeight: 141, letterSpacing: -1.7, color: colors.ink, marginLeft: -4 },
+  unit: { fontFamily: fonts.displayBold, fontSize: 30, letterSpacing: 2, color: colors.ink2, textTransform: 'uppercase' },
   clock: { fontFamily: fonts.mono, fontSize: 22, color: colors.ice, letterSpacing: 1.5, marginTop: 6 },
   range: { fontFamily: fonts.mono, fontSize: 12, letterSpacing: 1.5, color: colors.ink2, marginTop: 2 },
 });

@@ -119,7 +119,7 @@ export default function SquadBoard() {
                 const c = CELL[mark];
                 return (
                   <View key={d} style={[styles.cell, { backgroundColor: c.bg ?? 'transparent', borderColor: c.border ?? 'transparent' }]}>
-                    <Text style={{ color: c.fg, fontFamily: fonts.mono, fontSize: 11, fontWeight: '600' }}>{c.glyph}</Text>
+                    <Text style={{ color: c.fg, fontFamily: fonts.monoMedium, fontSize: 11 }}>{c.glyph}</Text>
                   </View>
                 );
               })}
@@ -158,5 +158,5 @@ const styles = StyleSheet.create({
   request: { flexDirection: 'row', alignItems: 'center', gap: 10, backgroundColor: colors.surface, borderRadius: 12, padding: 12 },
   requestText: { flex: 1, fontFamily: fonts.body, fontSize: 13.5, color: colors.ink },
   vouchBtn: { backgroundColor: colors.mint, borderRadius: 10, paddingVertical: 8, paddingHorizontal: 14 },
-  vouchText: { fontFamily: fonts.body, fontWeight: '600', fontSize: 13, color: '#06281B' },
+  vouchText: { fontFamily: fonts.bodySemi, fontSize: 13, color: '#06281B' },
 });
