@@ -24,6 +24,8 @@ A body weight. An image or a storage path. A display name, handle or email. Anyt
 | `sick_day_used` | ok | The sick day RPC returns |
 | `weigh_in_logged` | source, readings | A reading is stored; the number never leaves the device except to the owner's own row |
 | `push_registered` | state: registered, denied, unavailable; asked | The permission ask after signing |
+| `episode_created` | number, fallback | An episode is titled and stored |
+| `episode_shared` | number, result | The share sheet closes after an episode card |
 
 Every event also carries `app_version`, `platform`, `season` and `$lib`.
 

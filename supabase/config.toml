@@ -39,3 +39,6 @@ secret = ""
 
 [functions.verify-proof]
 verify_jwt = true
+
+[functions.title-episode]
+verify_jwt = true

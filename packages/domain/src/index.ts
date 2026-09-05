@@ -6,3 +6,4 @@ export * from './squad';
 export * from './verification';
 export * from './settlement';
 export * from './body';
+export * from './episodes';

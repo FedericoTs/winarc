@@ -19,7 +19,7 @@ Season one starts 1 October 2026 and locks squads on 7 October. Everything below
 
 ## 3. Verification edge function
 
-- Deploy: `supabase functions deploy verify-proof`.
+- Deploy: `supabase functions deploy verify-proof` and `supabase functions deploy title-episode`.
 - Secrets: `supabase secrets set ANTHROPIC_API_KEY=... VERIFY_MODEL=claude-opus-5`.
 - Smoke test with real images from a phone, on your machine:
   `ANTHROPIC_API_KEY=... pnpm --filter @winarc/eval-verification smoke -- ./rear.jpg ./front.jpg GYM`

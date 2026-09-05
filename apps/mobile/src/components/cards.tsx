@@ -118,3 +118,32 @@ const styles = StyleSheet.create({
   wm: { position: 'absolute', left: 22, right: 22, bottom: 20, gap: 2 },
   wmText: { fontFamily: fonts.mono, fontSize: 11, letterSpacing: 1.8, textTransform: 'uppercase', color: colors.ink2 },
 });
+
+export interface EpisodeCardProps {
+  number: number;
+  fromDay: number;
+  toDay: number;
+  proofs: number;
+  title: string;
+  line: string;
+  bestStreak: number;
+  squadName: string;
+  code: string | null;
+}
+
+/** One number (proofs), the title as identity, the streak as the squad line, code and episode in the watermark. */
+export const EpisodeCard = forwardRef<CardRef, EpisodeCardProps>(function EpisodeCard(p, ref) {
+  return (
+    <View ref={ref} collapsable={false} style={[styles.card, { backgroundColor: '#0F1320' }]}>
+      <Text style={styles.ey}>
+        Episode {p.number} · days {p.fromDay}–{p.toDay}
+      </Text>
+      <Text style={[styles.big, { fontSize: 120, lineHeight: 112, marginTop: 26, color: colors.ember }]}>{p.proofs}</Text>
+      <Text style={[styles.ey, { color: colors.ink }]}>proofs</Text>
+      <Text style={[styles.big, { fontSize: 40, lineHeight: 40, marginTop: 28 }]}>{p.title}</Text>
+      <Text style={[styles.lineText, { marginTop: 10, color: colors.ink2, textTransform: 'none', letterSpacing: 0.4 }]}>{p.line}</Text>
+      <Text style={[styles.ey, { marginTop: 14, color: colors.mint }]}>best streak {p.bestStreak} · {p.squadName}</Text>
+      <Watermark squad={p.squadName} code={p.code} extra={`Episode ${p.number} of 3 · winter arc S01`} />
+    </View>
+  );
+});

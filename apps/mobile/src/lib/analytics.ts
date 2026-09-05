@@ -34,7 +34,9 @@ export type AnalyticsEvent =
   | { name: 'vouched' }
   | { name: 'sick_day_used'; ok: boolean }
   | { name: 'weigh_in_logged'; source: WeighSource; readings: number }
-  | { name: 'push_registered'; state: PushState; asked: boolean };
+  | { name: 'push_registered'; state: PushState; asked: boolean }
+  | { name: 'episode_created'; number: 1 | 2 | 3; fallback: boolean }
+  | { name: 'episode_shared'; number: 1 | 2 | 3; result: ShareResult };
 
 let userId: string | null = null;
 let anonId: string | null = null;

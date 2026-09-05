@@ -6,3 +6,4 @@ export * from './squad.ts';
 export * from './verification.ts';
 export * from './settlement.ts';
 export * from './body.ts';
+export * from './episodes.ts';
