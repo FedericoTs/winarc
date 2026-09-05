@@ -8,12 +8,11 @@
  *
  * Body: { "proof_id": "<uuid>" }
  */
-import { decodeBase64, encodeBase64 } from '@std/encoding/base64';
+import { encodeBase64 } from '@std/encoding/base64';
 import { SPORTS, askCopy, customSport, workoutMatches } from '@winarc/domain';
 import { verifyProof, type ProofImage } from '@winarc/verifier';
 import { adminClient, json, userClient } from '../_shared/supabase.ts';
 
-declare const Deno: { serve(handler: (req: Request) => Promise<Response> | Response): void };
 
 type LineRow = { key: string; name: string; verification: 'health_photo' | 'photo' | 'health' | 'attest' | 'artifact' };
 type ProofRow = {
@@ -96,5 +95,3 @@ async function download(admin: ReturnType<typeof adminClient>, path: string): Pr
   return { base64: encodeBase64(bytes), mediaType };
 }
 
-// Keep decodeBase64 referenced so the import map entry is exercised by type checks.
-void decodeBase64;

@@ -1,5 +1,5 @@
-import { SPORTS, customSport, type Sport, type VerificationMethod } from './sports';
-import { HABITS, customHabit, type Habit, type HabitKind } from './habits';
+import { SPORTS, customSport, type Sport, type VerificationMethod } from './sports.ts';
+import { HABITS, customHabit, type Habit, type HabitKind } from './habits.ts';
 
 /**
  * A contract is three to five lines a person can screenshot. Sports lines are

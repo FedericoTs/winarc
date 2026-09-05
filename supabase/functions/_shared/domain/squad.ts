@@ -1,4 +1,4 @@
-import { isLocked, type Season, SEASON_ONE } from './season';
+import { isLocked, type Season, SEASON_ONE } from './season.ts';
 
 /**
  * Squad terms are set once by the founder and inherited by everyone who

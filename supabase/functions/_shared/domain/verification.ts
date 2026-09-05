@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import type { Sport, VerificationMethod } from './sports';
+import type { Sport, VerificationMethod } from './sports.ts';
 
 /**
  * Proof verification. The model looks at the dual-cam capture and returns a

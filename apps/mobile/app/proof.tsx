@@ -1,12 +1,15 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { CameraView, useCameraPermissions } from 'expo-camera';
 import { router, useLocalSearchParams } from 'expo-router';
 import { SEASON_ONE, askCopy, dayOfSeason, localISODate, type AskReason, type Tier } from '@winarc/domain';
 import { Body, Button, Eyebrow } from '@/components/ui';
-import { evidenceFor } from '@/lib/health';
+import { evidenceFor, health } from '@/lib/health';
 import { supabase } from '@/lib/supabase';
 import { Stamp } from '@/components/Stamp';
+import { ProofCard, type CardRef } from '@/components/cards';
+import { shareCard } from '@/lib/share';
+import { SPORTS, customSport } from '@winarc/domain';
 import { colors, fonts } from '@/theme/tokens';
 
 const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
@@ -27,6 +30,26 @@ export default function Proof() {
   const [ask, setAsk] = useState<AskReason | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [proofId, setProofId] = useState<string | null>(null);
+  const [squad, setSquad] = useState<{ name: string; code: string } | null>(null);
+  const [sportKey, setSportKey] = useState<string>('GYM');
+  const card = useRef<CardRef>(null);
+
+  useEffect(() => {
+    // Authorization must precede any read; the Gold tier depends on it.
+    health.available().then((ok) => ok && health.requestRead()).catch(() => {});
+    (async () => {
+      const { data: auth } = await supabase.auth.getUser();
+      if (!auth.user) return;
+      const { data } = await supabase.from('squad_members').select('squads(name, code)').eq('profile_id', auth.user.id).is('left_at', null).maybeSingle();
+      const s = (data as { squads: { name: string; code: string } | { name: string; code: string }[] | null } | null)?.squads;
+      const one = Array.isArray(s) ? s[0] : s;
+      if (one) setSquad({ name: one.name, code: one.code });
+      if (line) {
+        const { data: l } = await supabase.from('contract_lines').select('key').eq('id', line).maybeSingle();
+        if (l?.key) setSportKey(l.key);
+      }
+    })();
+  }, [line]);
 
   if (!permission?.granted) {
     return (
@@ -107,6 +130,9 @@ export default function Proof() {
 
   const day = dayOfSeason(localISODate(new Date(), tz), SEASON_ONE);
   const copy = ask ? askCopy(ask) : null;
+  const sport = SPORTS[sportKey] ?? customSport(sportKey);
+  const now = new Date();
+  const time = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
 
   return (
     <View style={{ flex: 1, backgroundColor: colors.ground }}>
@@ -129,8 +155,27 @@ export default function Proof() {
       {phase === 'stamped' && tier ? (
         <>
           <Stamp tier={tier} subtitle={`Day ${day} / ${SEASON_ONE.arcDays} · ${tier}`} />
-          <View style={styles.actions}>
-            <Button title="Done" variant="ghost" onPress={() => router.back()} />
+          <View style={{ position: 'absolute', left: -2000, top: 0 }} pointerEvents="none">
+            <ProofCard
+              ref={card}
+              day={day}
+              arcDays={SEASON_ONE.arcDays}
+              time={time}
+              sportWord={sport.word}
+              tier={tier}
+              evidence={tier === 'GOLD' ? 'Health + photo' : tier === 'SILVER' ? 'Photo' : 'Squad vouched'}
+              provedToday="Proved today"
+              squadName={squad?.name ?? 'My squad'}
+              code={squad?.code ?? null}
+            />
+          </View>
+          <View style={[styles.actions, { flexDirection: 'row', gap: 10 }]}>
+            <View style={{ flex: 1 }}>
+              <Button title="Done" variant="ghost" onPress={() => router.back()} />
+            </View>
+            <View style={{ flex: 1 }}>
+              <Button title="Share proof" onPress={() => shareCard(card, `Day ${day} of ${SEASON_ONE.arcDays} on WinArc${squad?.code ? ` · join ${squad.code}` : ''}`).catch(() => {})} />
+            </View>
           </View>
         </>
       ) : null}

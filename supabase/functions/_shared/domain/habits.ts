@@ -1,4 +1,4 @@
-import type { VerificationMethod } from './sports';
+import type { VerificationMethod } from './sports.ts';
 
 /**
  * Mind and money lines. Capped at two per contract so the product stays

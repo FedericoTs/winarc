@@ -1,6 +1,5 @@
 import { createClient, type SupabaseClient } from '@supabase/supabase-js';
 
-declare const Deno: { env: { get(key: string): string | undefined } };
 
 function env(key: string): string {
   const v = Deno.env.get(key);

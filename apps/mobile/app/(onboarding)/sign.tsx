@@ -1,8 +1,10 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { router } from 'expo-router';
 import { SEASON_ONE, buildContract, formatStake } from '@winarc/domain';
 import { Body, Button, Display, Eyebrow, Screen } from '@/components/ui';
+import { PosterCard, type CardRef } from '@/components/cards';
+import { shareCard } from '@/lib/share';
 import { supabase } from '@/lib/supabase';
 import { useOnboarding } from '@/state/arc';
 import { colors, fonts } from '@/theme/tokens';
@@ -17,6 +19,9 @@ export default function Sign() {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const lines = buildContract(ob.contractInput());
+  const poster = useRef<CardRef>(null);
+  const stakeLabel = formatStake(ob.squad.stakeCents, ob.squad.currency);
+  const spots = ob.squad.role === 'founder' ? `${Math.max(1, ob.squad.size - 1)} spots` : 'spots open';
 
   async function sign() {
     if (!ob.squad.id) return setError('Join or found a squad first');
@@ -46,11 +51,29 @@ export default function Sign() {
     // Opens today's due marks right away, so Today is never empty after signing.
     await supabase.rpc('open_today');
     setBusy(false);
+    // The poster is the growth loop: every Day 0 post is an invite with a deadline.
+    try {
+      await shareCard(poster, `Join my squad on WinArc${ob.squad.code ? ` · ${ob.squad.code}` : ''}`);
+    } catch {
+      // Sharing is optional; the contract is already signed.
+    }
     router.replace('/(tabs)/today');
   }
 
   return (
     <Screen>
+      <View style={{ position: 'absolute', left: -2000, top: 0 }} pointerEvents="none">
+        <PosterCard
+          ref={poster}
+          lines={lines}
+          stakeLabel={stakeLabel}
+          squadName={ob.squad.name || 'Squad forming'}
+          code={ob.squad.code}
+          spots={spots}
+          locksOn={SEASON_ONE.locksOn}
+          signedOn={new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}
+        />
+      </View>
       <Eyebrow>04 · Sign</Eyebrow>
       <View style={styles.poster}>
         <Display size={26}>Arc contract</Display>
