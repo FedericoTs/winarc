@@ -26,6 +26,16 @@ pnpm typecheck
 pnpm mobile:bundle            # Metro bundles the iOS app without a device
 ```
 
+On Windows `cmd` the bootstrap script will not run, since it is bash. Do the same three things directly:
+
+```
+npm i -g pnpm@10
+pnpm install
+pnpm domain:test
+```
+
+Everything else is cross-platform. The only other bash script is `scripts/sync-domain.sh`, needed before deploying edge functions after editing `packages/domain` or `packages/verifier`; run it from Git Bash, and CI runs it on every push either way.
+
 For the backend you need Docker and the Supabase CLI:
 
 ```
@@ -35,13 +45,19 @@ supabase secrets set ANTHROPIC_API_KEY=... VERIFY_MODEL=claude-opus-5
 supabase functions serve --env-file supabase/.env
 ```
 
-For the app you need Xcode or Android Studio and a dev client, since the camera and HealthKit need native modules:
+The camera and HealthKit need native modules, so the app runs in a dev client, not Expo Go. With Xcode or Android Studio you can build locally; without them, and on Windows, EAS builds it in the cloud:
 
 ```
 cp .env.example apps/mobile/.env
-pnpm mobile                    # then press i for iOS
+pnpm mobile                    # Metro; then press i for iOS, or scan from the dev client
 npx expo install --fix         # if package versions drift from SDK 57
 ```
+
+```
+eas build --profile development --platform ios
+```
+
+Build profiles are in `apps/mobile/eas.json`. They read the Supabase values from EAS environments rather than `.env`, which is git-ignored and never uploaded. See [docs/ops/launch-checklist.md](./docs/ops/launch-checklist.md) section 4 for the full path, including registering your device for internal distribution.
 
 ## Season one dates
 
