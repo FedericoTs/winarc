@@ -31,7 +31,7 @@ export default function Proof() {
   const [ask, setAsk] = useState<AskReason | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [proofId, setProofId] = useState<string | null>(null);
-  const [squad, setSquad] = useState<{ name: string; code: string } | null>(null);
+  const [squad, setSquad] = useState<{ id: string; name: string; code: string } | null>(null);
   const [sportKey, setSportKey] = useState<string>('GYM');
   const card = useRef<CardRef>(null);
 
@@ -41,10 +41,10 @@ export default function Proof() {
     (async () => {
       const { data: auth } = await supabase.auth.getUser();
       if (!auth.user) return;
-      const { data } = await supabase.from('squad_members').select('squads(name, code)').eq('profile_id', auth.user.id).is('left_at', null).maybeSingle();
-      const s = (data as { squads: { name: string; code: string } | { name: string; code: string }[] | null } | null)?.squads;
-      const one = Array.isArray(s) ? s[0] : s;
-      if (one) setSquad({ name: one.name, code: one.code });
+      const { data } = await supabase.from('squad_members').select('squad_id, squads(name, code)').eq('profile_id', auth.user.id).is('left_at', null).maybeSingle();
+      const row = data as { squad_id: string; squads: { name: string; code: string } | { name: string; code: string }[] | null } | null;
+      const one = Array.isArray(row?.squads) ? row?.squads[0] : row?.squads;
+      if (row && one) setSquad({ id: row.squad_id, name: one.name, code: one.code });
       if (line) {
         const { data: l } = await supabase.from('contract_lines').select('key').eq('id', line).maybeSingle();
         if (l?.key) setSportKey(l.key);
@@ -100,7 +100,7 @@ export default function Proof() {
           {
             contract_line_id: line,
             profile_id: auth.user.id,
-            squad_id: mark?.squad_id,
+            squad_id: mark?.squad_id ?? squad?.id,
             local_date: date,
             day: dayOfSeason(date, SEASON_ONE),
             rear_path: rearPath,

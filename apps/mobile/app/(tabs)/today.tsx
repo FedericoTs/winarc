@@ -35,6 +35,7 @@ export default function Today() {
   const [rescues, setRescues] = useState({ sick: 0, vouch: 0 });
   const [stats, setStats] = useState<{ streak: number; potCents: number; currency: Currency }>({ streak: 0, potCents: 0, currency: 'EUR' });
   const [weighDay, setWeighDay] = useState(false);
+  const [firstSportLine, setFirstSportLine] = useState<string | null>(null);
   const [reloadKey, setReloadKey] = useState(0);
 
   function cantTrain() {
@@ -127,6 +128,9 @@ export default function Today() {
       if (contract) {
         const { data: weigh } = await supabase.from('contract_lines').select('days').eq('contract_id', contract.id).eq('key', WEIGH_KEY).maybeSingle();
         setWeighDay(!!weigh && isWeighDay(weigh.days as number[], weekdayOf(today)));
+        // An extra session on a rest day attaches to the first sport line and shows on the board; it is never owed.
+        const { data: sport } = await supabase.from('contract_lines').select('id').eq('contract_id', contract.id).eq('kind', 'sport').order('position').limit(1).maybeSingle();
+        setFirstSportLine(sport?.id ?? null);
       }
     })();
   }, [today, reloadKey]);
@@ -165,7 +169,8 @@ export default function Today() {
       <Button
         title={done ? 'Proved. See the squad' : open ? proveLabel(open.contract_lines?.verification) : 'Train anyway'}
         variant={open ? 'primary' : 'ghost'}
-        onPress={() => (done ? router.push('/(tabs)/squad') : open ? prove(open) : router.push({ pathname: '/proof', params: { line: '' } }))}
+        disabled={!done && !open && !firstSportLine}
+        onPress={() => (done ? router.push('/(tabs)/squad') : open ? prove(open) : router.push({ pathname: '/proof', params: { line: firstSportLine ?? '' } }))}
       />
       {weighDay ? (
         <Pressable onPress={() => router.push('/weigh')} style={styles.weigh} accessibilityRole="button">
