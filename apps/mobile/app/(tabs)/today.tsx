@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Alert, Pressable, StyleSheet, Text, View } from 'react-native';
 import { router } from 'expo-router';
 import { RESCUE, SEASON_ONE, dayOfSeason, localISODate, sickDaysLeft, vouchesLeft } from '@winarc/domain';
 import { Body, Button, Eyebrow, Screen, Tile } from '@/components/ui';
@@ -14,6 +14,22 @@ export default function Today() {
   const [now, setNow] = useState(new Date());
   const [due, setDue] = useState<Due[]>([]);
   const [rescues, setRescues] = useState({ sick: 0, vouch: 0 });
+  const [reloadKey, setReloadKey] = useState(0);
+
+  function cantTrain() {
+    Alert.alert("Can't train today?", 'Three honest options. None of them reset your arc.', [
+      {
+        text: `Use a sick day (${sickDaysLeft(rescues.sick)} left)`,
+        onPress: async () => {
+          const { error } = await supabase.rpc('use_sick_day');
+          Alert.alert(error ? "Couldn't use a sick day" : 'Rest day', error ? error.message : 'Today is a rest day. The squad is told.');
+          setReloadKey((k) => k + 1);
+        },
+      },
+      { text: 'Take the miss', style: 'destructive', onPress: () => Alert.alert('Noted', 'The day closes as a miss at 23:59. Your arc continues tomorrow.') },
+      { text: "Never mind, I'm going", style: 'cancel' },
+    ]);
+  }
   const today = localISODate(now, tz);
   const day = dayOfSeason(today, SEASON_ONE);
 
@@ -37,10 +53,11 @@ export default function Today() {
       const vouch = (r ?? []).filter((x) => x.kind === 'vouch_request').length;
       setRescues({ sick, vouch });
     })();
-  }, [today]);
+  }, [today, reloadKey]);
 
   const open = due.find((d) => d.mark === 'P');
   const done = due.find((d) => d.mark === 'V' || d.mark === 'B');
+  const sick = due.find((d) => d.mark === 'S');
   const end = new Date(now);
   end.setHours(23, 59, 59, 999);
   const left = Math.max(0, end.getTime() - now.getTime());
@@ -55,12 +72,19 @@ export default function Today() {
         <Text style={styles.slateText}>{today}</Text>
       </View>
       <View style={[styles.due, done && { borderColor: colors.ember }]}>
-        <Eyebrow>{done ? 'Done' : open ? 'Due today' : 'Rest day'}</Eyebrow>
+        <Eyebrow>{done ? 'Done' : open ? 'Due today' : sick ? 'Rest · sick day' : 'Rest day'}</Eyebrow>
         <Text style={styles.what}>{open?.contract_lines?.name ?? done?.contract_lines?.name ?? 'Nothing due'}</Text>
-        <Text style={[styles.cd, done && { color: colors.ember }]}>{done ? 'Stamped' : open ? clock : 'Nothing owed'}</Text>
-        <Text style={styles.rescue}>
-          <Text style={{ color: colors.ink }}>{sickDaysLeft(rescues.sick)}</Text> sick day · <Text style={{ color: colors.ink }}>{vouchesLeft(rescues.vouch)}</Text> vouch left · a miss costs the stake, never your arc
-        </Text>
+        <Text style={[styles.cd, done && { color: colors.ember }]}>{done ? 'Stamped' : open ? clock : sick ? 'Squad told' : 'Nothing owed'}</Text>
+        <View style={styles.rescueRow}>
+          <Text style={styles.rescue}>
+            <Text style={{ color: colors.ink }}>{sickDaysLeft(rescues.sick)}</Text> sick day · <Text style={{ color: colors.ink }}>{vouchesLeft(rescues.vouch)}</Text> vouch left · a miss costs the stake, never your arc
+          </Text>
+          {open ? (
+            <Pressable onPress={cantTrain} hitSlop={8}>
+              <Text style={styles.link}>Can't train?</Text>
+            </Pressable>
+          ) : null}
+        </View>
       </View>
       <Button
         title={done ? 'Proved. See the squad' : open ? 'Prove it' : 'Train anyway'}
@@ -87,5 +111,7 @@ const styles = StyleSheet.create({
   due: { backgroundColor: colors.surface, borderWidth: 1, borderColor: colors.line, borderRadius: 20, padding: 18, gap: 8 },
   what: { fontFamily: fonts.display, fontWeight: '900', fontSize: 40, lineHeight: 38, textTransform: 'uppercase', color: colors.ink },
   cd: { fontFamily: fonts.mono, fontSize: 26, letterSpacing: 1.5, color: colors.ice },
-  rescue: { fontFamily: fonts.mono, fontSize: 10.5, lineHeight: 17, color: colors.ink2, borderTopWidth: 1, borderTopColor: colors.line, paddingTop: 8 },
+  rescueRow: { flexDirection: 'row', alignItems: 'center', gap: 8, borderTopWidth: 1, borderTopColor: colors.line, paddingTop: 8 },
+  rescue: { flex: 1, fontFamily: fonts.mono, fontSize: 10.5, lineHeight: 17, color: colors.ink2 },
+  link: { fontFamily: fonts.body, fontWeight: '600', fontSize: 13, color: colors.ice },
 });

@@ -18,7 +18,8 @@
       },
       "entitlements": {
         "com.apple.developer.healthkit": true
-      }
+      },
+      "usesAppleSignIn": true
     },
     "android": {
       "package": "app.winarc.season",
@@ -37,7 +38,8 @@
         }
       ],
       "expo-secure-store",
-      "expo-notifications"
+      "expo-notifications",
+      "expo-apple-authentication"
     ],
     "experiments": {
       "typedRoutes": true

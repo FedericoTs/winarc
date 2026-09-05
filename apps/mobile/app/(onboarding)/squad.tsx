@@ -4,6 +4,7 @@ import { router } from 'expo-router';
 import { STAKE_TIERS_CENTS, formatStake, normalizeCode, sessionsPerWeek, buildContract } from '@winarc/domain';
 import { Body, Button, Chip, Display, Eyebrow, Screen } from '@/components/ui';
 import { supabase } from '@/lib/supabase';
+import { useSession } from '@/lib/auth';
 import { useOnboarding } from '@/state/arc';
 import { colors, fonts } from '@/theme/tokens';
 
@@ -11,6 +12,7 @@ type Door = 'found' | 'join' | 'draft';
 
 export default function Squad() {
   const ob = useOnboarding();
+  const session = useSession();
   const [door, setDoor] = useState<Door>('found');
   const [name, setName] = useState(ob.squad.name);
   const [code, setCode] = useState('');
@@ -25,7 +27,14 @@ export default function Squad() {
     }
   })();
 
+  function needSignIn(): boolean {
+    if (session) return false;
+    router.push({ pathname: '/sign-in', params: { next: '/(onboarding)/squad' } });
+    return true;
+  }
+
   async function createSquad() {
+    if (needSignIn()) return;
     setBusy(true);
     setMessage(null);
     const { data, error } = await supabase.rpc('create_squad', {
@@ -42,6 +51,7 @@ export default function Squad() {
   }
 
   async function joinSquad() {
+    if (needSignIn()) return;
     const normalized = normalizeCode(code);
     if (!normalized) return setMessage('Codes look like WIN-7K2Q');
     setBusy(true);

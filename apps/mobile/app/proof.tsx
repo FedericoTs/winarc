@@ -26,6 +26,7 @@ export default function Proof() {
   const [tier, setTier] = useState<Tier | null>(null);
   const [ask, setAsk] = useState<AskReason | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [proofId, setProofId] = useState<string | null>(null);
 
   if (!permission?.granted) {
     return (
@@ -87,6 +88,7 @@ export default function Proof() {
         .select('id')
         .single();
       if (pErr || !proof) throw pErr ?? new Error('Could not save the proof');
+      setProofId(proof.id);
       setPhase('verifying');
       const { data, error: fErr } = await supabase.functions.invoke('verify-proof', { body: { proof_id: proof.id } });
       if (fErr) throw fErr;
@@ -141,7 +143,15 @@ export default function Proof() {
               <Button title="Retake" variant="ghost" onPress={() => { setAsk(null); setRearUri(null); setPhase('rear'); }} />
             </View>
             <View style={{ flex: 1.4 }}>
-              <Button title="Ask squad to vouch" onPress={() => router.back()} />
+              <Button
+                title="Ask squad to vouch"
+                onPress={async () => {
+                  if (!proofId) return;
+                  const { error: vErr } = await supabase.rpc('request_vouch', { p_proof: proofId });
+                  if (vErr) return setError(vErr.message);
+                  router.back();
+                }}
+              />
             </View>
           </View>
         </View>
