@@ -4,6 +4,7 @@ import * as AppleAuthentication from 'expo-apple-authentication';
 import * as Crypto from 'expo-crypto';
 import type { Session } from '@supabase/supabase-js';
 import { supabase } from './supabase';
+import { identify, resetIdentity, track } from './analytics';
 
 /**
  * Sign in with Apple on iOS, a six-digit email code everywhere. No passwords.
@@ -14,8 +15,14 @@ import { supabase } from './supabase';
 export function useSession(): Session | null | undefined {
   const [session, setSession] = useState<Session | null | undefined>(undefined);
   useEffect(() => {
-    supabase.auth.getSession().then(({ data }) => setSession(data.session));
-    const { data: sub } = supabase.auth.onAuthStateChange((_event, next) => setSession(next));
+    supabase.auth.getSession().then(({ data }) => {
+      setSession(data.session);
+      if (data.session) identify(data.session.user.id);
+    });
+    const { data: sub } = supabase.auth.onAuthStateChange((_event, next) => {
+      setSession(next);
+      if (next) identify(next.user.id);
+    });
     return () => sub.subscription.unsubscribe();
   }, []);
   return session;
@@ -37,6 +44,7 @@ export async function signInWithApple(): Promise<void> {
   if (error) throw error;
   const name = [credential.fullName?.givenName, credential.fullName?.familyName].filter(Boolean).join(' ');
   await ensureProfile(name || undefined);
+  track({ name: 'signed_in', method: 'apple' });
 }
 
 export async function sendEmailCode(email: string): Promise<void> {
@@ -48,10 +56,12 @@ export async function verifyEmailCode(email: string, token: string): Promise<voi
   const { error } = await supabase.auth.verifyOtp({ email, token, type: 'email' });
   if (error) throw error;
   await ensureProfile();
+  track({ name: 'signed_in', method: 'email' });
 }
 
 export async function signOut(): Promise<void> {
   await supabase.auth.signOut();
+  resetIdentity();
 }
 
 /** Writes the device timezone and, when the profile has none, a display name. */

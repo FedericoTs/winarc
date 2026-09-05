@@ -5,6 +5,7 @@ import { formatDelta, validKg, weighTrend, type WeighIn } from '@winarc/domain';
 import { Body, Button, Display, Eyebrow, Screen, Tile } from '@/components/ui';
 import { health } from '@/lib/health';
 import { supabase } from '@/lib/supabase';
+import { track } from '@/lib/analytics';
 import { colors, fonts } from '@/theme/tokens';
 
 type Source = 'healthkit' | 'health_connect' | 'manual';
@@ -55,6 +56,7 @@ export default function Weigh() {
     if (e) return setError(e.message);
     const row = (Array.isArray(data) ? data[0] : data) as LogRow | undefined;
     const readings = row?.readings ?? 1;
+    track({ name: 'weigh_in_logged', source, readings });
     setDone(readings > 1 ? `${formatDelta(Number(row?.delta_kg ?? 0))} since your first weigh-in.` : 'First reading logged. The trend starts next week.');
     setReload((k) => k + 1);
   }

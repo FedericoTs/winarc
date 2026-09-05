@@ -42,6 +42,7 @@ pnpm monorepo.
 - `packages/domain`: pure product logic with tests. Seasons, sports, habits, contracts, squads, verification decisions, settlement. No I/O, no SDKs. Imported by the app, the verifier, the evals, and copied into the edge functions.
 - `packages/verifier`: the one model call. Takes two images and a sport, returns a structured result and a decision. Used by the edge function and the evals so they can never drift.
 - `apps/mobile`: Expo SDK 57 with expo-router. iOS first, Android from the same code.
+- Analytics: a fetch-based PostHog facade in `apps/mobile/src/lib/analytics.ts`, a no-op without a key. The event list in `docs/product/06-analytics.md` is the contract; an event never carries a body weight, an image, a name or anything from Strava.
 - `apps/web`: Next.js landing page and `/join/[code]`.
 - `supabase`: Postgres with row-level security, private Storage buckets, one Deno edge function for verification, and the daily tick and Sunday settlement as SQL functions run by pg_cron. Migrations are append-only. `supabase/tests` applies the real migrations to a plain Postgres through a small shim and verifies RPCs, policies, ticks and settlement.
 - `evals/verification`: the labeled proof set and the runner. Ship a rubric change only when false accepts are under 5 percent and false rejects under 10 percent.

@@ -4,6 +4,7 @@ import { Image } from 'expo-image';
 import { SEASON_ONE, addDays, dayOfSeason, localISODate, rollupMark, type DayMark } from '@winarc/domain';
 import { Body, Eyebrow, Screen } from '@/components/ui';
 import { supabase } from '@/lib/supabase';
+import { track } from '@/lib/analytics';
 import { colors, fonts } from '@/theme/tokens';
 
 const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
@@ -71,7 +72,8 @@ export default function SquadBoard() {
   }, [today, refresh]);
 
   async function vouch(proofId: string) {
-    await supabase.from('vouches').insert({ proof_id: proofId, voucher_id: me });
+    const { error } = await supabase.from('vouches').insert({ proof_id: proofId, voucher_id: me });
+    if (!error) track({ name: 'vouched' });
     setRefresh((k) => k + 1);
   }
 

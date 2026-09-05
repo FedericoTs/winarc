@@ -18,6 +18,7 @@ import {
 } from '@winarc/domain';
 import { Body, Button, Eyebrow, Screen, Tile } from '@/components/ui';
 import { supabase } from '@/lib/supabase';
+import { track } from '@/lib/analytics';
 import { colors, fonts } from '@/theme/tokens';
 
 const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
@@ -40,6 +41,7 @@ export default function Today() {
         text: `Use a sick day (${sickDaysLeft(rescues.sick)} left)`,
         onPress: async () => {
           const { error } = await supabase.rpc('use_sick_day');
+          track({ name: 'sick_day_used', ok: !error });
           Alert.alert(error ? "Couldn't use a sick day" : 'Rest day', error ? error.message : 'Today is a rest day. The squad is told.');
           setReloadKey((k) => k + 1);
         },

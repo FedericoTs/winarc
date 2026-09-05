@@ -4,6 +4,7 @@ import * as Notifications from 'expo-notifications';
 import Constants from 'expo-constants';
 import { router } from 'expo-router';
 import { supabase } from './supabase';
+import { track, type PushState } from './analytics';
 
 /**
  * Push is one nudge at 20:00, and only when a proof is still missing; the
@@ -15,7 +16,7 @@ Notifications.setNotificationHandler({
   handleNotification: async () => ({ shouldShowBanner: true, shouldShowList: true, shouldPlaySound: false, shouldSetBadge: false }),
 });
 
-export type PushState = 'registered' | 'denied' | 'unavailable';
+export type { PushState };
 
 function projectId(): string | undefined {
   const extra = Constants.expoConfig?.extra as { eas?: { projectId?: string } } | undefined;
@@ -24,6 +25,12 @@ function projectId(): string | undefined {
 
 /** With `ask`, prompts for permission; without it, only a device that already said yes is refreshed. */
 export async function registerForPush(opts: { ask: boolean }): Promise<PushState> {
+  const state = await register(opts);
+  if (opts.ask) track({ name: 'push_registered', state, asked: true });
+  return state;
+}
+
+async function register(opts: { ask: boolean }): Promise<PushState> {
   if (Platform.OS !== 'ios' && Platform.OS !== 'android') return 'unavailable';
   const { data: auth } = await supabase.auth.getUser();
   if (!auth.user) return 'unavailable';

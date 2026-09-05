@@ -1,11 +1,12 @@
 import { useRef, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { router } from 'expo-router';
-import { SEASON_ONE, buildContract, formatStake } from '@winarc/domain';
+import { SEASON_ONE, buildContract, formatStake, sessionsPerWeek } from '@winarc/domain';
 import { Body, Button, Display, Eyebrow, Screen } from '@/components/ui';
 import { PosterCard, type CardRef } from '@/components/cards';
 import { shareCard } from '@/lib/share';
 import { registerForPush } from '@/lib/push';
+import { track } from '@/lib/analytics';
 import { supabase } from '@/lib/supabase';
 import { useOnboarding } from '@/state/arc';
 import { colors, fonts } from '@/theme/tokens';
@@ -49,6 +50,7 @@ export default function Sign() {
       setBusy(false);
       return setError(lErr.message);
     }
+    track({ name: 'contract_signed', lines: lines.length, sessions_per_week: sessionsPerWeek(lines), weigh_in: ob.weighIn, stake_cents: ob.squad.stakeCents });
     // Opens today's due marks right away, so Today is never empty after signing.
     await supabase.rpc('open_today');
     // The one moment the ask makes sense: a signed contract with a 23:59 deadline. One nudge at 20:00, only if a proof is missing.
@@ -56,9 +58,11 @@ export default function Sign() {
     setBusy(false);
     // The poster is the growth loop: every Day 0 post is an invite with a deadline.
     try {
-      await shareCard(poster, `Join my squad on WinArc${ob.squad.code ? ` · ${ob.squad.code}` : ''}`);
+      const result = await shareCard(poster, `Join my squad on WinArc${ob.squad.code ? ` · ${ob.squad.code}` : ''}`);
+      track({ name: 'poster_shared', result });
     } catch {
       // Sharing is optional; the contract is already signed.
+      track({ name: 'poster_shared', result: 'failed' });
     }
     router.replace('/(tabs)/today');
   }

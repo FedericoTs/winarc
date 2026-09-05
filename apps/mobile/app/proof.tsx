@@ -9,6 +9,7 @@ import { supabase } from '@/lib/supabase';
 import { Stamp } from '@/components/Stamp';
 import { ProofCard, type CardRef } from '@/components/cards';
 import { shareCard } from '@/lib/share';
+import { track } from '@/lib/analytics';
 import { SPORTS, customSport } from '@winarc/domain';
 import { colors, fonts } from '@/theme/tokens';
 
@@ -91,6 +92,7 @@ export default function Proof() {
     try {
       await Promise.all([up(rearPath, rear), up(frontPath, front)]);
       const workout = await evidenceFor(now);
+      track({ name: 'proof_captured', sport: sportKey, health_evidence: !!workout });
       const { data: mark } = await supabase.from('day_marks').select('squad_id').eq('contract_line_id', line).eq('local_date', date).maybeSingle();
       const { data: proof, error: pErr } = await supabase
         .from('proofs')
@@ -113,14 +115,17 @@ export default function Proof() {
       if (pErr || !proof) throw pErr ?? new Error('Could not save the proof');
       setProofId(proof.id);
       setPhase('verifying');
+      const t0 = Date.now();
       const { data, error: fErr } = await supabase.functions.invoke('verify-proof', { body: { proof_id: proof.id } });
       if (fErr) throw fErr;
       if (data.status === 'verified') {
         setTier(data.tier);
         setPhase('stamped');
+        track({ name: 'proof_stamped', sport: sportKey, tier: data.tier, latency_ms: Date.now() - t0 });
       } else {
         setAsk(data.reason ?? 'low_confidence');
         setPhase('ask');
+        track({ name: 'proof_asked', sport: sportKey, reason: data.reason ?? 'low_confidence' });
       }
     } catch (e) {
       setError((e as Error).message);
@@ -174,7 +179,11 @@ export default function Proof() {
               <Button title="Done" variant="ghost" onPress={() => router.back()} />
             </View>
             <View style={{ flex: 1 }}>
-              <Button title="Share proof" onPress={() => shareCard(card, `Day ${day} of ${SEASON_ONE.arcDays} on WinArc${squad?.code ? ` · join ${squad.code}` : ''}`).catch(() => {})} />
+              <Button title="Share proof" onPress={() =>
+                  shareCard(card, `Day ${day} of ${SEASON_ONE.arcDays} on WinArc${squad?.code ? ` · join ${squad.code}` : ''}`)
+                    .then((result) => track({ name: 'proof_card_shared', result }))
+                    .catch(() => track({ name: 'proof_card_shared', result: 'failed' }))
+                } />
             </View>
           </View>
         </>
@@ -194,6 +203,7 @@ export default function Proof() {
                   if (!proofId) return;
                   const { error: vErr } = await supabase.rpc('request_vouch', { p_proof: proofId });
                   if (vErr) return setError(vErr.message);
+                  track({ name: 'vouch_requested' });
                   router.back();
                 }}
               />

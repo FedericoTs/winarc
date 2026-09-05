@@ -4,6 +4,7 @@ import { router } from 'expo-router';
 import { STAKE_TIERS_CENTS, formatStake, normalizeCode, sessionsPerWeek, buildContract } from '@winarc/domain';
 import { Body, Button, Chip, Display, Eyebrow, Screen } from '@/components/ui';
 import { supabase } from '@/lib/supabase';
+import { track } from '@/lib/analytics';
 import { useSession } from '@/lib/auth';
 import { useOnboarding } from '@/state/arc';
 import { colors, fonts } from '@/theme/tokens';
@@ -47,6 +48,7 @@ export default function Squad() {
     setBusy(false);
     if (error) return setMessage(error.message);
     ob.setSquad({ id: data.id, code: data.code, name: data.name, role: 'founder' });
+    track({ name: 'squad_founded', size: ob.squad.size, stake_cents: ob.squad.stakeCents, currency: ob.squad.currency });
     setMessage(`Squad created · ${data.code}`);
   }
 
@@ -60,6 +62,7 @@ export default function Squad() {
     setBusy(false);
     if (error) return setMessage(error.message);
     ob.setSquad({ id: data.id, code: data.code, name: data.name, size: data.size, stakeCents: data.stake_cents, potRule: data.pot_rule, currency: data.currency, role: 'member' });
+    track({ name: 'squad_joined', size: data.size, stake_cents: data.stake_cents });
     setMessage(`Joined ${data.name} · ${formatStake(data.stake_cents, data.currency)} per miss · squad pot`);
   }
 
