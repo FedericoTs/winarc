@@ -24,7 +24,7 @@ The contract renders as a poster with the squad code, spots left and the lock da
 
 ## 6. Today
 
-What is due, the deadline, the squad's status, and the rescue line. "Can't train?" opens the three honest options: use a sick day, ask the squad to vouch, take the miss. Push at 20:00 only if the proof is missing.
+What is due, the deadline, the squad's status, and the rescue line. "Can't train?" opens the three honest options: use a sick day, ask the squad to vouch, take the miss. Push at 20:00 only if the proof is missing; the app asks for notification permission once, right after the contract is signed, when the reason is obvious. On the weigh-in day Today adds a private row: a Health reading or a typed number, never staked, never on the board, and the only number shown back is the change since the first reading.
 
 ## 7. Proof
 

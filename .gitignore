@@ -20,3 +20,4 @@ evals/verification/out/
 coverage/
 .next/
 .turbo/
+*.tsbuildinfo

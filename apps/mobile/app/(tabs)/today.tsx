@@ -1,19 +1,37 @@
 import { useEffect, useState } from 'react';
 import { Alert, Pressable, StyleSheet, Text, View } from 'react-native';
 import { router } from 'expo-router';
-import { RESCUE, SEASON_ONE, dayOfSeason, localISODate, sickDaysLeft, vouchesLeft } from '@winarc/domain';
+import {
+  RESCUE,
+  SEASON_ONE,
+  WEIGH_KEY,
+  addDays,
+  dayOfSeason,
+  isWeighDay,
+  localISODate,
+  rollupMark,
+  sickDaysLeft,
+  squadStreak,
+  vouchesLeft,
+  weekdayOf,
+  type DayMark,
+} from '@winarc/domain';
 import { Body, Button, Eyebrow, Screen, Tile } from '@/components/ui';
 import { supabase } from '@/lib/supabase';
 import { colors, fonts } from '@/theme/tokens';
 
 const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+const STREAK_WINDOW = 30;
 
 type Due = { id: string; contract_line_id: string; mark: string; contract_lines: { name: string; verification: string } | null };
+type MarkRow = { profile_id: string; local_date: string; mark: DayMark };
 
 export default function Today() {
   const [now, setNow] = useState(new Date());
   const [due, setDue] = useState<Due[]>([]);
   const [rescues, setRescues] = useState({ sick: 0, vouch: 0 });
+  const [stats, setStats] = useState({ streak: 0, potCents: 0 });
+  const [weighDay, setWeighDay] = useState(false);
   const [reloadKey, setReloadKey] = useState(0);
 
   function cantTrain() {
@@ -52,6 +70,32 @@ export default function Today() {
       const sick = (r ?? []).filter((x) => x.kind === 'sick').length;
       const vouch = (r ?? []).filter((x) => x.kind === 'vouch_request').length;
       setRescues({ sick, vouch });
+
+      // Squad streak from the board's own marks, pot from the ledger. Row-level security scopes both to the home squad.
+      const since = addDays(today, -(STREAK_WINDOW - 1));
+      const { data: marks } = await supabase.from('day_marks').select('profile_id, local_date, mark').gte('local_date', since).lte('local_date', today);
+      const perDay = new Map<string, Map<string, DayMark[]>>();
+      for (const m of (marks as MarkRow[] | null) ?? []) {
+        const members = perDay.get(m.local_date) ?? new Map<string, DayMark[]>();
+        members.set(m.profile_id, [...(members.get(m.profile_id) ?? []), m.mark]);
+        perDay.set(m.local_date, members);
+      }
+      const days: DayMark[][] = [];
+      for (let i = 0; i < STREAK_WINDOW; i++) {
+        const d = addDays(since, i);
+        const rolled = [...(perDay.get(d)?.values() ?? [])].map(rollupMark);
+        if (d === today && rolled.includes('P')) continue; // today counts once everyone is in
+        days.push(rolled);
+      }
+      const { data: ledger } = await supabase.from('ledger_entries').select('amount_cents');
+      setStats({ streak: squadStreak(days), potCents: (ledger ?? []).reduce((a, e) => a + (e.amount_cents as number), 0) });
+
+      // The weigh-in is unstaked, so it never opens a mark; Today shows a private row on its day.
+      const { data: contract } = await supabase.from('contracts').select('id').eq('profile_id', auth.user.id).eq('season_id', SEASON_ONE.id).maybeSingle();
+      if (contract) {
+        const { data: weigh } = await supabase.from('contract_lines').select('days').eq('contract_id', contract.id).eq('key', WEIGH_KEY).maybeSingle();
+        setWeighDay(!!weigh && isWeighDay(weigh.days as number[], weekdayOf(today)));
+      }
     })();
   }, [today, reloadKey]);
 
@@ -91,10 +135,19 @@ export default function Today() {
         variant={open ? 'primary' : 'ghost'}
         onPress={() => (done ? router.push('/(tabs)/squad') : router.push({ pathname: '/proof', params: { line: open?.contract_line_id ?? '' } }))}
       />
+      {weighDay ? (
+        <Pressable onPress={() => router.push('/weigh')} style={styles.weigh} accessibilityRole="button">
+          <View style={{ flex: 1, gap: 2 }}>
+            <Eyebrow color={colors.lilac}>Weigh-in day · private</Eyebrow>
+            <Text style={styles.weighText}>Never staked, never on the board. Health reading or type it.</Text>
+          </View>
+          <Text style={styles.link}>Weigh in</Text>
+        </Pressable>
+      ) : null}
       <View style={{ flexDirection: 'row', gap: 8 }}>
         <Tile value={String(Math.max(0, day))} label="day arc" />
-        <Tile value="–" label="squad streak" color={colors.ember} />
-        <Tile value="–" label="in the pot" color={colors.gold} />
+        <Tile value={String(stats.streak)} label="squad streak" color={colors.ember} />
+        <Tile value={`€${(stats.potCents / 100).toFixed(0)}`} label="in the pot" color={colors.gold} />
       </View>
       <Body muted style={{ fontSize: 12.5 }}>
         Rescue rules: {RESCUE.sickDaysPerFortnight} sick day per fortnight, {RESCUE.vouchesPerWeek} vouch per week.
@@ -114,4 +167,6 @@ const styles = StyleSheet.create({
   rescueRow: { flexDirection: 'row', alignItems: 'center', gap: 8, borderTopWidth: 1, borderTopColor: colors.line, paddingTop: 8 },
   rescue: { flex: 1, fontFamily: fonts.mono, fontSize: 10.5, lineHeight: 17, color: colors.ink2 },
   link: { fontFamily: fonts.body, fontWeight: '600', fontSize: 13, color: colors.ice },
+  weigh: { flexDirection: 'row', alignItems: 'center', gap: 10, backgroundColor: colors.surface, borderWidth: 1, borderColor: colors.line, borderRadius: 16, padding: 14 },
+  weighText: { fontFamily: fonts.body, fontSize: 13, color: colors.ink2 },
 });

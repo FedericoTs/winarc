@@ -5,3 +5,4 @@ export * from './contract.ts';
 export * from './squad.ts';
 export * from './verification.ts';
 export * from './settlement.ts';
+export * from './body.ts';

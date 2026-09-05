@@ -38,8 +38,13 @@
         }
       ],
       "expo-secure-store",
-      "expo-notifications",
-      "expo-apple-authentication"
+      "expo-apple-authentication",
+      [
+        "expo-notifications",
+        {
+          "color": "#FF7A1A"
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true

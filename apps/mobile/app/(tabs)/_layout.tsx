@@ -1,7 +1,15 @@
+import { useEffect } from 'react';
 import { Tabs } from 'expo-router';
+import { registerForPush, usePushRouting } from '@/lib/push';
 import { colors, fonts } from '@/theme/tokens';
 
 export default function TabsLayout() {
+  // Taps on the 20:00 nudge land on Today; an already-granted device refreshes its token on every open.
+  usePushRouting();
+  useEffect(() => {
+    registerForPush({ ask: false }).catch(() => undefined);
+  }, []);
+
   return (
     <Tabs
       screenOptions={{

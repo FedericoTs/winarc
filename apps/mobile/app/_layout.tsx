@@ -22,6 +22,7 @@ export default function RootLayout() {
         <Stack.Protected guard={signedIn}>
           <Stack.Screen name="(tabs)" />
           <Stack.Screen name="proof" options={{ presentation: 'fullScreenModal' }} />
+          <Stack.Screen name="weigh" options={{ presentation: 'modal' }} />
         </Stack.Protected>
       </Stack>
     </>

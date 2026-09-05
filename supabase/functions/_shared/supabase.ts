@@ -1,6 +1,5 @@
 import { createClient, type SupabaseClient } from '@supabase/supabase-js';
 
-
 function env(key: string): string {
   const v = Deno.env.get(key);
   if (!v) throw new Error(`Missing env ${key}`);
@@ -27,18 +26,4 @@ export function json(body: unknown, status = 200): Response {
     status,
     headers: { 'content-type': 'application/json' },
   });
-}
-
-/** Cron-triggered functions are not called by members; they carry a shared secret. */
-export function requireCronSecret(req: Request): Response | null {
-  const expected = Deno.env.get('CRON_SECRET');
-  const got = (req.headers.get('authorization') ?? '').replace(/^Bearer\s+/i, '');
-  if (!expected || got !== expected) return json({ error: 'forbidden' }, 403);
-  return null;
-}
-
-/** Hour of the day, 0 to 23, in a timezone. */
-export function localHour(at: Date, timeZone: string): number {
-  const h = new Intl.DateTimeFormat('en-GB', { timeZone, hour: '2-digit', hourCycle: 'h23' }).format(at);
-  return Number.parseInt(h, 10);
 }

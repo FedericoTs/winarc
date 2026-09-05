@@ -5,6 +5,7 @@ import { SEASON_ONE, buildContract, formatStake } from '@winarc/domain';
 import { Body, Button, Display, Eyebrow, Screen } from '@/components/ui';
 import { PosterCard, type CardRef } from '@/components/cards';
 import { shareCard } from '@/lib/share';
+import { registerForPush } from '@/lib/push';
 import { supabase } from '@/lib/supabase';
 import { useOnboarding } from '@/state/arc';
 import { colors, fonts } from '@/theme/tokens';
@@ -50,6 +51,8 @@ export default function Sign() {
     }
     // Opens today's due marks right away, so Today is never empty after signing.
     await supabase.rpc('open_today');
+    // The one moment the ask makes sense: a signed contract with a 23:59 deadline. One nudge at 20:00, only if a proof is missing.
+    await registerForPush({ ask: true }).catch(() => undefined);
     setBusy(false);
     // The poster is the growth loop: every Day 0 post is an invite with a deadline.
     try {

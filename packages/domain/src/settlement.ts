@@ -90,3 +90,10 @@ export function squadStreak(days: DayMark[][]): number {
   }
   return streak;
 }
+
+/** How a member's marks for one day roll up on the board: a miss outranks a pending, a pending outranks a hit. */
+const ROLLUP_ORDER: DayMark[] = ['X', 'P', 'V', 'B', 'S', 'R'];
+
+export function rollupMark(marks: DayMark[]): DayMark {
+  return ROLLUP_ORDER.find((m) => marks.includes(m)) ?? 'R';
+}
