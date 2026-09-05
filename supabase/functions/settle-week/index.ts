@@ -9,7 +9,7 @@
  *
  * Idempotent through the unique (squad_id, week) round.
  */
-import { SEASON_ONE, localISODate, phaseOn, settleWeek, weekOfSeason, weekdayOf, type DayMark, type MemberWeek } from '@arc/domain';
+import { SEASON_ONE, localISODate, phaseOn, settleWeek, weekOfSeason, weekdayOf, type DayMark, type MemberWeek } from '@winarc/domain';
 import { adminClient, json, localHour, requireCronSecret } from '../_shared/supabase.ts';
 
 declare const Deno: { serve(handler: (req: Request) => Promise<Response> | Response): void };

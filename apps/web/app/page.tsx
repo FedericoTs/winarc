@@ -1,4 +1,4 @@
-import { SEASON_ONE, dayOfSeason } from '@arc/domain';
+import { SEASON_ONE, dayOfSeason } from '@winarc/domain';
 
 export default function Home() {
   const today = new Date().toISOString().slice(0, 10);
@@ -13,7 +13,7 @@ export default function Home() {
       <p style={{ fontSize: 18, lineHeight: 1.5, color: '#C7D1DD' }}>
         Sign a contract you can screenshot. Join a squad of two to eight. Prove every session with the in-app dual camera. Settle the pot every Sunday. No feed, no coach, just proof.
       </p>
-      <p style={{ marginTop: 32, color: '#8A97A8' }}>Have a code? Open <code>arc.app/join/ARC-XXXX</code> on your phone.</p>
+      <p style={{ marginTop: 32, color: '#8A97A8' }}>Have a code? Open <code>winarc.team/join/WIN-XXXX</code> on your phone.</p>
     </main>
   );
 }

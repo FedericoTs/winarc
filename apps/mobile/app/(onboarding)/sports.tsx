@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { ScrollView, TextInput, View } from 'react-native';
 import { router } from 'expo-router';
-import { SPORT_KEYS, customSportKey } from '@arc/domain';
+import { SPORT_KEYS, customSportKey } from '@winarc/domain';
 import { Body, Button, Chip, Display, Eyebrow, Screen } from '@/components/ui';
 import { useOnboarding } from '@/state/arc';
 import { colors } from '@/theme/tokens';

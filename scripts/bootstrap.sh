@@ -4,7 +4,7 @@ set -euo pipefail
 cd "$(dirname "$0")/.."
 command -v pnpm >/dev/null || npm i -g pnpm@10
 pnpm install
-pnpm --filter @arc/domain test
+pnpm --filter @winarc/domain test
 echo
 echo "Next:"
 echo "  1. cp .env.example apps/mobile/.env && fill in Supabase values"

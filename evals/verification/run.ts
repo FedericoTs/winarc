@@ -12,8 +12,8 @@
 import { readFile, mkdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { SPORTS, THRESHOLDS, customSport } from '@arc/domain';
-import { verifyProof, type ImageMediaType } from '@arc/verifier';
+import { SPORTS, THRESHOLDS, customSport } from '@winarc/domain';
+import { verifyProof, type ImageMediaType } from '@winarc/verifier';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 

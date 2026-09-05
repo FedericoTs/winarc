@@ -8,7 +8,7 @@
  *
  * Idempotent: a second run in the same hour finds nothing to change.
  */
-import { SEASON_ONE, addDays, dayOfSeason, localISODate, phaseOn, weekOfSeason, weekdayOf } from '@arc/domain';
+import { SEASON_ONE, addDays, dayOfSeason, localISODate, phaseOn, weekOfSeason, weekdayOf } from '@winarc/domain';
 import { adminClient, json, localHour, requireCronSecret } from '../_shared/supabase.ts';
 
 declare const Deno: { serve(handler: (req: Request) => Promise<Response> | Response): void };

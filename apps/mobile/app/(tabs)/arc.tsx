@@ -1,4 +1,4 @@
-import { EPISODE_DAYS, SEASON_ONE, addDays } from '@arc/domain';
+import { EPISODE_DAYS, SEASON_ONE, addDays } from '@winarc/domain';
 import { Body, Display, Eyebrow, Screen } from '@/components/ui';
 import { colors } from '@/theme/tokens';
 

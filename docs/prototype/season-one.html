@@ -458,7 +458,7 @@ button,input,select{font-family:inherit}
 
           <!-- 01 countdown -->
           <div class="view" id="v-countdown">
-            <div class="brand"><span class="wordmark">ARC</span><span class="eyebrow">Season one · S01</span></div>
+            <div class="brand"><span class="wordmark">WINARC</span><span class="eyebrow">Season one · S01</span></div>
             <div class="hero-count">
               <div class="eyebrow ice" id="cd-eyebrow">Your arc starts in</div>
               <div class="bignum" id="cd-days">25</div>
@@ -517,12 +517,12 @@ button,input,select{font-family:inherit}
                 <div class="chips potchips" id="pots"></div>
                 <div class="math" id="math"></div>
                 <button class="btn sm" id="gencode" type="button">Create squad · get the code</button>
-                <div class="coderow" id="coderow" hidden><div class="code" id="codebox">ARC-0000</div><button class="btn sm ghost" id="copycode" type="button">Copy invite</button></div>
+                <div class="coderow" id="coderow" hidden><div class="code" id="codebox">WIN-0000</div><button class="btn sm ghost" id="copycode" type="button">Copy invite</button></div>
                 <p class="fine" id="spots" hidden>4 spots left · squads lock 7 Oct</p>
                 <p class="fine">Two is a pact. Five to eight is a squad. Under three active members and the survivors get re-drafted.</p>
               </div>
               <div class="door" id="door-join" hidden>
-                <div class="customrow"><input class="input" id="joincode" placeholder="Enter a code, e.g. ARC-7K2Q" maxlength="12" aria-label="Join code"><button class="btn sm" id="joinbtn" type="button">Join</button></div>
+                <div class="customrow"><input class="input" id="joincode" placeholder="Enter a code, e.g. WIN-7K2Q" maxlength="12" aria-label="Join code"><button class="btn sm" id="joinbtn" type="button">Join</button></div>
                 <div class="matched" id="joined" hidden></div>
                 <p class="fine">You inherit the squad's stake and pot rule. No terms to set.</p>
               </div>
@@ -680,7 +680,7 @@ button,input,select{font-family:inherit}
             <div class="lock">
               <div class="time"><div class="t" id="lock-time">06:41</div><div class="d">Monday 12 October</div></div>
               <div class="widget"><div><div class="d1">12<small> / 90</small></div><div class="d2"><span id="lock-squad">The Cold Starters</span> · <span id="lock-pr">3 of 5</span> proved</div></div><div class="avs" id="lock-avs"><span class="avatar av-ember sm">MA</span><span class="avatar av-mint sm">GI</span><span class="avatar av-gold sm">AY</span></div></div>
-              <div class="la"><div class="ic">A</div><div><div class="k">Proof due</div><div class="v" id="lock-cd">17:18:23</div></div><div class="s"><span id="lock-sport">Gym</span><br><b id="lock-pr2">3 / 5</b> proved</div></div>
+              <div class="la"><div class="ic">W</div><div><div class="k">Proof due</div><div class="v" id="lock-cd">17:18:23</div></div><div class="s"><span id="lock-sport">Gym</span><br><b id="lock-pr2">3 / 5</b> proved</div></div>
               <div class="homebar"></div>
             </div>
           </div>
@@ -870,7 +870,7 @@ $('#xcustomadd').addEventListener('click',()=>{
 $('#xcustomname').addEventListener('keydown',e=>{if(e.key==='Enter')$('#xcustomadd').click();});
 
 /* ---------- squad & terms ---------- */
-function code(){const A='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';let s='';for(let i=0;i<4;i++)s+=A[Math.floor(Math.random()*A.length)];return 'ARC-'+s;}
+function code(){const A='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';let s='';for(let i=0;i<4;i++)s+=A[Math.floor(Math.random()*A.length)];return 'WIN-'+s;}
 function renderSquad(){
   $$('#seg button').forEach(b=>b.classList.toggle('on',b.getAttribute('data-door')===S.door));
   ['found','join','draft'].forEach(d=>{$('#door-'+d).hidden=S.door!==d;});
@@ -896,9 +896,9 @@ $$('#seg button').forEach(b=>b.addEventListener('click',()=>{S.door=b.getAttribu
 $('#squadname').addEventListener('input',e=>{S.squad=e.target.value.slice(0,28);save();});
 $('#gencode').addEventListener('click',()=>{if(!S.squad.trim()){S.squad='The Cold Starters';}S.code=code();S.joined=false;S.matched=false;save();renderSquad();toast('Squad created · '+S.code);});
 $('#copycode').addEventListener('click',()=>{toast('Copied: Join my squad · '+S.code);});
-$('#joinbtn').addEventListener('click',()=>{const v=$('#joincode').value.trim().toUpperCase().replace(/[^A-Z0-9]/g,'');if(v.length<4){toast('Enter a code');return;}S.code=v.indexOf('ARC')===0?'ARC-'+v.slice(3,7):'ARC-'+v.slice(0,4);S.joined=true;S.matched=false;S.squad='The Cold Starters';S.size=5;S.stake=10;S.ben='pot';save();renderSquad();});
+$('#joinbtn').addEventListener('click',()=>{const v=$('#joincode').value.trim().toUpperCase().replace(/[^A-Z0-9]/g,'');if(v.length<4){toast('Enter a code');return;}S.code=v.indexOf('WIN')===0?'WIN-'+v.slice(3,7):'WIN-'+v.slice(0,4);S.joined=true;S.matched=false;S.squad='The Cold Starters';S.size=5;S.stake=10;S.ben='pot';save();renderSquad();});
 $('#joincode').addEventListener('keydown',e=>{if(e.key==='Enter')$('#joinbtn').click();});
-$('#matchme').addEventListener('click',()=>{S.matched=true;S.joined=false;S.squad='The Cold Starters';S.code='ARC-7K2Q';S.size=5;S.stake=10;S.ben='pot';save();renderSquad();});
+$('#matchme').addEventListener('click',()=>{S.matched=true;S.joined=false;S.squad='The Cold Starters';S.code='WIN-7K2Q';S.size=5;S.stake=10;S.ben='pot';save();renderSquad();});
 
 /* ---------- sign ---------- */
 let sigDrawn=!!S.sig, drawing=false, ctx;
@@ -1055,7 +1055,7 @@ $('#share-cert').addEventListener('click',()=>openShare('cert'));
 function renderLock(){$('#lock-squad').textContent=squadName();$('#lock-sport').textContent=sportOf(primary()).word;const n=active().length,p=provedToday();$('#lock-pr').textContent=p+' of '+n;$('#lock-pr2').textContent=p+' / '+n;$('#lock-avs').innerHTML=active().filter(m=>m.n!=='You'&&TODAYST[m.n][0]==='v').slice(0,3).map(m=>'<span class="avatar '+m.c+' sm">'+m.i+'</span>').join('');}
 
 /* ---------- cards ---------- */
-function wm(extra){const jc=squadCode();return '<div class="wm"><b>ARC</b> · S01 · '+esc(squadName())+(jc?' · <span class="jc">join '+esc(jc)+'</span>':'')+(extra?'<br>'+extra:'')+'</div>';}
+function wm(extra){const jc=squadCode();return '<div class="wm"><b>WINARC</b> · S01 · '+esc(squadName())+(jc?' · <span class="jc">join '+esc(jc)+'</span>':'')+(extra?'<br>'+extra:'')+'</div>';}
 function cardHTML(type){
   const L=contractLines(); const sp=sportOf(primary()); const st=stats(); const pot=st.missAll*S.stake; const jc=squadCode(); const bronze=S.tier==='BRONZE';
   if(type==='poster')return '<div class="pad"><div class="ey">Season one · S01 · signed '+esc(signedDate())+'</div><div class="big" style="font-size:48px;margin-top:10px;overflow-wrap:anywhere">Arc<br>contract</div><div class="cp-lines">'+L.slice(0,4).map(l=>'<div><span>'+l.per+'× '+esc(l.name)+'</span><b>'+(l.kind==='sport'?'proof':l.kind==='body'?'weekly':'artifact')+'</b></div>').join('')+'<div class="gold"><span>€'+S.stake+' per miss</span><b>'+(S.ben==='pot'?'squad pot':S.ben)+'</b></div></div><div class="cp-join"><span>'+(jc?'Join my squad · '+esc(jc):'Squad forming')+'</span><span>'+spotsText()+' · locks 7 Oct</span></div>'+(S.sig?'<img class="cp-sig" alt="signature" src="'+S.sig+'">':'')+'<div class="cp-sigline"></div>'+wm('starts 01 Oct · signed on glass')+'</div>';

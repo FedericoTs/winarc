@@ -1,4 +1,4 @@
-import { normalizeCode, SEASON_ONE } from '@arc/domain';
+import { normalizeCode, SEASON_ONE } from '@winarc/domain';
 
 /**
  * The join page behind every share card. Deep-links into the app; falls back
@@ -13,12 +13,12 @@ export default async function Join({ params }: { params: Promise<{ code: string 
     return (
       <main style={{ maxWidth: 560, margin: '0 auto', padding: '64px 24px' }}>
         <h1 style={{ textTransform: 'uppercase' }}>That code doesn't look right</h1>
-        <p style={{ color: '#8A97A8' }}>Codes look like ARC-7K2Q. Ask your founder to send it again.</p>
+        <p style={{ color: '#8A97A8' }}>Codes look like WIN-7K2Q. Ask your founder to send it again.</p>
       </main>
     );
   }
 
-  const deepLink = `arc://join/${code}`;
+  const deepLink = `winarc://join/${code}`;
   return (
     <main style={{ maxWidth: 560, margin: '0 auto', padding: '64px 24px' }}>
       <p style={{ letterSpacing: '0.14em', textTransform: 'uppercase', fontSize: 12, color: '#8A97A8' }}>Join a squad</p>
@@ -30,7 +30,7 @@ export default async function Join({ params }: { params: Promise<{ code: string 
         href={deepLink}
         style={{ display: 'inline-block', marginTop: 24, padding: '16px 22px', background: '#9CD3FF', color: '#0B0D12', borderRadius: 14, fontWeight: 600, textDecoration: 'none' }}
       >
-        Open in ARC
+        Open in WinArc
       </a>
       <p style={{ marginTop: 24, color: '#8A97A8', fontSize: 14 }}>No app yet? The store link goes here at launch.</p>
     </main>

@@ -1,5 +1,5 @@
 {
-  "name": "arc",
+  "name": "winarc",
   "private": true,
   "version": "0.1.0",
   "description": "Squad season app: contract, dual-cam proof, squad board, Sunday ledger, episodes.",
@@ -9,9 +9,9 @@
     "test": "pnpm -r --if-present test",
     "typecheck": "pnpm -r --if-present typecheck",
     "lint": "pnpm -r --if-present lint",
-    "domain:test": "pnpm --filter @arc/domain test",
-    "mobile": "pnpm --filter @arc/mobile start",
-    "web": "pnpm --filter @arc/web dev",
-    "eval:verification": "pnpm --filter @arc/eval-verification run eval"
+    "domain:test": "pnpm --filter @winarc/domain test",
+    "mobile": "pnpm --filter @winarc/mobile start",
+    "web": "pnpm --filter @winarc/web dev",
+    "eval:verification": "pnpm --filter @winarc/eval-verification run eval"
   }
 }

@@ -1,5 +1,5 @@
 {
-  "name": "@arc/eval-verification",
+  "name": "@winarc/eval-verification",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -10,8 +10,8 @@
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.124.0",
-    "@arc/domain": "workspace:*",
-    "@arc/verifier": "workspace:*"
+    "@winarc/domain": "workspace:*",
+    "@winarc/verifier": "workspace:*"
   },
   "devDependencies": {
     "@types/node": "^22.0.0",

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { router } from 'expo-router';
-import { RESCUE, SEASON_ONE, dayOfSeason, localISODate, sickDaysLeft, vouchesLeft } from '@arc/domain';
+import { RESCUE, SEASON_ONE, dayOfSeason, localISODate, sickDaysLeft, vouchesLeft } from '@winarc/domain';
 import { Body, Button, Eyebrow, Screen, Tile } from '@/components/ui';
 import { supabase } from '@/lib/supabase';
 import { colors, fonts } from '@/theme/tokens';

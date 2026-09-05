@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { ScrollView, StyleSheet, Text, TextInput, View, Pressable } from 'react-native';
 import { router } from 'expo-router';
-import { STAKE_TIERS_CENTS, formatStake, normalizeCode, sessionsPerWeek, buildContract } from '@arc/domain';
+import { STAKE_TIERS_CENTS, formatStake, normalizeCode, sessionsPerWeek, buildContract } from '@winarc/domain';
 import { Body, Button, Chip, Display, Eyebrow, Screen } from '@/components/ui';
 import { supabase } from '@/lib/supabase';
 import { useOnboarding } from '@/state/arc';
@@ -43,7 +43,7 @@ export default function Squad() {
 
   async function joinSquad() {
     const normalized = normalizeCode(code);
-    if (!normalized) return setMessage('Codes look like ARC-7K2Q');
+    if (!normalized) return setMessage('Codes look like WIN-7K2Q');
     setBusy(true);
     setMessage(null);
     const { data, error } = await supabase.rpc('join_squad', { p_code: normalized });
@@ -92,7 +92,7 @@ export default function Squad() {
         ) : null}
         {door === 'join' ? (
           <View style={styles.door}>
-            <TextInput value={code} onChangeText={setCode} autoCapitalize="characters" placeholder="Enter a code, e.g. ARC-7K2Q" placeholderTextColor={colors.ink3} maxLength={12} style={styles.input} />
+            <TextInput value={code} onChangeText={setCode} autoCapitalize="characters" placeholder="Enter a code, e.g. WIN-7K2Q" placeholderTextColor={colors.ink3} maxLength={12} style={styles.input} />
             <Button title="Join" disabled={busy} onPress={joinSquad} />
             <Body muted style={{ fontSize: 12.5 }}>You inherit the squad's stake and pot rule. No terms to set.</Body>
           </View>

@@ -1,6 +1,6 @@
 import { ScrollView, StyleSheet, Switch, Text, View, Pressable } from 'react-native';
 import { router } from 'expo-router';
-import { HABITS, HABIT_KEYS, buildContract, type ContractLine } from '@arc/domain';
+import { HABITS, HABIT_KEYS, buildContract, type ContractLine } from '@winarc/domain';
 import { Body, Button, Chip, Display, Eyebrow, Screen } from '@/components/ui';
 import { useOnboarding } from '@/state/arc';
 import { colors, fonts } from '@/theme/tokens';

@@ -1,5 +1,5 @@
 {
-  "name": "@arc/domain",
+  "name": "@winarc/domain",
   "version": "0.1.0",
   "private": true,
   "description": "Pure product logic shared by the app, the edge functions and the evals: seasons, sports, contracts, squads, verification decisions, settlement.",

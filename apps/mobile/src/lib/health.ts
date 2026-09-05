@@ -8,7 +8,7 @@
  * To implement:
  *   iOS      @kingstinct/react-native-healthkit  (authorization, workouts, body mass)
  *   Android  react-native-health-connect         (ExerciseSession, Weight)
- * Map workout types with `workoutMatches` from @arc/domain.
+ * Map workout types with `workoutMatches` from @winarc/domain.
  */
 export interface WorkoutEvidence {
   /** HKWorkoutActivityType name or Health Connect exercise type. */

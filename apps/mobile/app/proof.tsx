@@ -2,7 +2,7 @@ import { useRef, useState } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { CameraView, useCameraPermissions } from 'expo-camera';
 import { router, useLocalSearchParams } from 'expo-router';
-import { SEASON_ONE, askCopy, dayOfSeason, localISODate, type AskReason, type Tier } from '@arc/domain';
+import { SEASON_ONE, askCopy, dayOfSeason, localISODate, type AskReason, type Tier } from '@winarc/domain';
 import { Body, Button, Eyebrow } from '@/components/ui';
 import { evidenceFor } from '@/lib/health';
 import { supabase } from '@/lib/supabase';

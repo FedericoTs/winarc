@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import Animated, { useAnimatedStyle, useSharedValue, withSequence, withSpring, withTiming } from 'react-native-reanimated';
 import * as Haptics from 'expo-haptics';
-import type { Tier } from '@arc/domain';
+import type { Tier } from '@winarc/domain';
 import { colors, fonts } from '@/theme/tokens';
 
 /**

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
-import { SEASON_ONE, addDays, dayOfSeason, localISODate, type DayMark } from '@arc/domain';
+import { SEASON_ONE, addDays, dayOfSeason, localISODate, type DayMark } from '@winarc/domain';
 import { Body, Eyebrow, Screen } from '@/components/ui';
 import { supabase } from '@/lib/supabase';
 import { colors, fonts } from '@/theme/tokens';

@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
 
 export const metadata: Metadata = {
-  title: 'ARC',
+  title: 'WinArc',
   description: 'Squad season. Sign a contract, join a squad, prove every session. Season one starts 1 Oct.',
 };
 

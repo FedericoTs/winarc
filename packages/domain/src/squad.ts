@@ -57,7 +57,7 @@ export function validateTerms(t: SquadTerms): SquadTerms {
 
 /** No I, O, 0 or 1: codes are read aloud and typed from stories. */
 export const CODE_ALPHABET = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
-export const CODE_PREFIX = 'ARC-';
+export const CODE_PREFIX = 'WIN-';
 const CODE_BODY = 4;
 
 export function generateCode(random: () => number = Math.random): string {
@@ -68,10 +68,10 @@ export function generateCode(random: () => number = Math.random): string {
   return CODE_PREFIX + body;
 }
 
-/** Accepts `arc-7k2q`, `7K2Q`, `ARC 7K2Q`; returns the canonical code or null. */
+/** Accepts `win-7k2q`, `7K2Q`, `WIN 7K2Q`; returns the canonical code or null. */
 export function normalizeCode(input: string): string | null {
   const raw = input.toUpperCase().replace(/[^A-Z0-9]/g, '');
-  const candidates = raw.startsWith('ARC') ? [raw.slice(3), raw] : [raw];
+  const candidates = raw.startsWith('WIN') ? [raw.slice(3), raw] : [raw];
   for (const s of candidates) {
     if (s.length === CODE_BODY && [...s].every((ch) => CODE_ALPHABET.includes(ch))) {
       return CODE_PREFIX + s;

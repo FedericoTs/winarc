@@ -25,18 +25,19 @@ describe('squad terms', () => {
   });
 
   it('generates codes people can read aloud', () => {
-    expect(generateCode()).toMatch(/^ARC-[A-HJ-NP-Z2-9]{4}$/);
+    expect(generateCode()).toMatch(/^WIN-[A-HJ-NP-Z2-9]{4}$/);
     expect(CODE_ALPHABET).not.toMatch(/[IO01]/);
-    expect(generateCode(() => 0)).toBe('ARC-AAAA');
+    expect(generateCode(() => 0)).toBe('WIN-AAAA');
   });
 
   it('normalizes typed codes', () => {
-    expect(normalizeCode('arc-7k2q')).toBe('ARC-7K2Q');
-    expect(normalizeCode(' 7k2q ')).toBe('ARC-7K2Q');
-    expect(normalizeCode('ARC 7K2Q')).toBe('ARC-7K2Q');
-    expect(normalizeCode('ARCD')).toBe('ARC-ARCD');
-    expect(normalizeCode('ARC-7K2')).toBeNull();
-    expect(normalizeCode('ARC-7K2O')).toBeNull();
+    expect(normalizeCode('win-7k2q')).toBe('WIN-7K2Q');
+    expect(normalizeCode(' 7k2q ')).toBe('WIN-7K2Q');
+    expect(normalizeCode('WIN 7K2Q')).toBe('WIN-7K2Q');
+    // The alphabet has no I, so a code body can never start with WIN and a bare prefix is never mistaken for a code.
+    expect(normalizeCode('WIND')).toBeNull();
+    expect(normalizeCode('WIN-7K2')).toBeNull();
+    expect(normalizeCode('WIN-7K2O')).toBeNull();
   });
 
   it('tracks spots, joining and dissolving', () => {

@@ -10,7 +10,7 @@ import {
   type Outcome,
   type Sport,
   type VerificationResult,
-} from '@arc/domain';
+} from '@winarc/domain';
 
 /**
  * Verifies one dual-cam proof. Runs unchanged in the Deno edge function and in

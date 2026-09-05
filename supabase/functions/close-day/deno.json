@@ -5,7 +5,7 @@
     "zod": "npm:zod@4.5.4",
     "@supabase/supabase-js": "npm:@supabase/supabase-js@2.115.0",
     "@std/encoding/base64": "jsr:@std/encoding@1/base64",
-    "@arc/domain": "../_shared/domain/index.ts",
-    "@arc/verifier": "../_shared/verifier/index.ts"
+    "@winarc/domain": "../_shared/domain/index.ts",
+    "@winarc/verifier": "../_shared/verifier/index.ts"
   }
 }

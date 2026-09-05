@@ -1,5 +1,5 @@
 # Supabase local config. Values here are for local development only.
-project_id = "arc"
+project_id = "winarc"
 
 [api]
 enabled = true
@@ -27,8 +27,8 @@ file_size_limit = "25MiB"
 
 [auth]
 enabled = true
-site_url = "arc://auth"
-additional_redirect_urls = ["https://127.0.0.1:3000", "arc://auth"]
+site_url = "winarc://auth"
+additional_redirect_urls = ["https://127.0.0.1:3000", "winarc://auth"]
 jwt_expiry = 3600
 enable_signup = true
 

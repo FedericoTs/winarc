@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { router } from 'expo-router';
-import { SEASON_ONE, buildContract, formatStake } from '@arc/domain';
+import { SEASON_ONE, buildContract, formatStake } from '@winarc/domain';
 import { Body, Button, Display, Eyebrow, Screen } from '@/components/ui';
 import { supabase } from '@/lib/supabase';
 import { useOnboarding } from '@/state/arc';

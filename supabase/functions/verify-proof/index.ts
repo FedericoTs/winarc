@@ -9,8 +9,8 @@
  * Body: { "proof_id": "<uuid>" }
  */
 import { decodeBase64, encodeBase64 } from '@std/encoding/base64';
-import { SPORTS, askCopy, customSport, workoutMatches } from '@arc/domain';
-import { verifyProof, type ProofImage } from '@arc/verifier';
+import { SPORTS, askCopy, customSport, workoutMatches } from '@winarc/domain';
+import { verifyProof, type ProofImage } from '@winarc/verifier';
 import { adminClient, json, userClient } from '../_shared/supabase.ts';
 
 declare const Deno: { serve(handler: (req: Request) => Promise<Response> | Response): void };

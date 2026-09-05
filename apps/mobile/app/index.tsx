@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { router } from 'expo-router';
-import { SEASON_ONE, dayOfSeason, localISODate } from '@arc/domain';
+import { SEASON_ONE, dayOfSeason, localISODate } from '@winarc/domain';
 import { Body, Button, Eyebrow, Screen, Tile } from '@/components/ui';
 import { colors, fonts } from '@/theme/tokens';
 
@@ -36,7 +36,7 @@ export default function Countdown() {
   return (
     <Screen style={{ justifyContent: 'flex-end', paddingBottom: 28 }}>
       <View style={styles.brand}>
-        <Text style={styles.wordmark}>ARC</Text>
+        <Text style={styles.wordmark}>WINARC</Text>
         <Eyebrow>Season one · {SEASON_ONE.id}</Eyebrow>
       </View>
       <View style={{ gap: 2 }}>

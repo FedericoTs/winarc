@@ -1,4 +1,4 @@
-# ARC
+# WinArc
 
 Squad season app for the winter arc. Sign a contract you can screenshot, join a squad of two to eight, prove every session with the in-app dual camera, and settle the pot every Sunday. Season one: 1 October to 29 December 2026, finale on 31 December.
 

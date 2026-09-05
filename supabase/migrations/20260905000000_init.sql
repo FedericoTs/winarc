@@ -1,4 +1,4 @@
--- ARC season one schema.
+-- WinArc season one schema.
 -- Rules encoded here mirror CLAUDE.md: squad terms live on the squad, stakes are
 -- process-only, the pot is a ledger, visibility is squad-only.
 
@@ -55,7 +55,7 @@ create table public.squads (
   id uuid primary key default gen_random_uuid(),
   season_id text not null references public.seasons (id),
   name text not null check (char_length(name) between 1 and 28),
-  code text not null unique check (code ~ '^ARC-[A-HJ-NP-Z2-9]{4}$'),
+  code text not null unique check (code ~ '^WIN-[A-HJ-NP-Z2-9]{4}$'),
   size int not null check (size between 2 and 8),
   stake_cents int not null check (stake_cents in (500, 1000, 2500)),
   pot_rule text not null default 'pot' check (pot_rule in ('pot', 'charity', 'anti_charity')),
@@ -285,9 +285,9 @@ begin
     for i in 1..4 loop
       body := body || substr(alphabet, 1 + floor(random() * length(alphabet))::int, 1);
     end loop;
-    exit when not exists (select 1 from public.squads where code = 'ARC-' || body);
+    exit when not exists (select 1 from public.squads where code = 'WIN-' || body);
   end loop;
-  return 'ARC-' || body;
+  return 'WIN-' || body;
 end;
 $$;
 

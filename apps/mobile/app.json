@@ -1,15 +1,15 @@
 {
   "expo": {
-    "name": "Arc",
-    "slug": "arc",
-    "scheme": "arc",
+    "name": "WinArc",
+    "slug": "winarc",
+    "scheme": "winarc",
     "version": "0.1.0",
     "orientation": "portrait",
     "userInterfaceStyle": "dark",
     "backgroundColor": "#0B0D12",
     "newArchEnabled": true,
     "ios": {
-      "bundleIdentifier": "app.arc.season",
+      "bundleIdentifier": "app.winarc.season",
       "supportsTablet": false,
       "infoPlist": {
         "NSCameraUsageDescription": "Arc uses the camera for the dual-cam proof: one photo of the place, one of you. Nothing from your library is ever uploaded.",
@@ -21,7 +21,7 @@
       }
     },
     "android": {
-      "package": "app.arc.season",
+      "package": "app.winarc.season",
       "permissions": [
         "android.permission.CAMERA",
         "android.permission.health.READ_EXERCISE",

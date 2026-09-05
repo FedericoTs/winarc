@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import type { ContractInput, PotRule, VerificationMethod } from '@arc/domain';
+import type { ContractInput, PotRule, VerificationMethod } from '@winarc/domain';
 
 /**
  * Onboarding state until the contract is signed. After that the database is

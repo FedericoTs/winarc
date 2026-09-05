@@ -11,7 +11,7 @@ update public.profiles set handle = 'you', tz = 'Europe/Rome' where id = '000000
 update public.profiles set handle = 'marco', tz = 'Europe/Rome' where id = '00000000-0000-0000-0000-000000000002';
 
 insert into public.squads (id, season_id, name, code, size, stake_cents, pot_rule, currency, founder_id)
-values ('10000000-0000-0000-0000-000000000001', 'S01', 'The Cold Starters', 'ARC-7K2Q', 5, 1000, 'pot', 'EUR', '00000000-0000-0000-0000-000000000001')
+values ('10000000-0000-0000-0000-000000000001', 'S01', 'The Cold Starters', 'WIN-7K2Q', 5, 1000, 'pot', 'EUR', '00000000-0000-0000-0000-000000000001')
 on conflict (id) do nothing;
 
 insert into public.squad_members (squad_id, profile_id, season_id, role) values

@@ -1,4 +1,4 @@
-# ARC
+# WinArc
 
 Squad season app. People sign a short training contract, join a squad of two to eight, prove every session with an in-app dual-camera capture, and settle a virtual pot every Sunday. Season one runs 1 Oct to 29 Dec 2026 with the finale on 31 Dec. Squads lock on 7 Oct.
 

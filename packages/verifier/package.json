@@ -1,5 +1,5 @@
 {
-  "name": "@arc/verifier",
+  "name": "@winarc/verifier",
   "version": "0.1.0",
   "private": true,
   "description": "The one model call: two proof images and a sport in, a structured result and a decision out. Shared by the edge function and the evals.",
@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.124.0",
-    "@arc/domain": "workspace:*",
+    "@winarc/domain": "workspace:*",
     "zod": "^4.5.4"
   },
   "devDependencies": {

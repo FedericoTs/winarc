@@ -16,6 +16,6 @@ jobs:
           node-version: 22
           cache: pnpm
       - run: pnpm install --frozen-lockfile
-      - run: pnpm --filter @arc/domain typecheck
-      - run: pnpm --filter @arc/domain test
-      - run: pnpm --filter @arc/eval-verification typecheck
+      - run: pnpm --filter @winarc/domain typecheck
+      - run: pnpm --filter @winarc/domain test
+      - run: pnpm --filter @winarc/eval-verification typecheck
