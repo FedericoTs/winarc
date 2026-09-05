@@ -26,14 +26,32 @@ Season one starts 1 October 2026 and locks squads on 7 October. Everything below
   Expect a verified Silver in under 8 seconds. Then run the eval set in `evals/verification` and check false accepts stay under 5% and false rejects under 10%.
 - Confirm a refusal never charges: a proof the model refuses becomes an ask with retake, vouch and appeal.
 
-## 4. The app
+## 4. The app, building for iOS from Windows
 
-- `cd apps/mobile && cp .env.example .env` and fill `EXPO_PUBLIC_SUPABASE_URL` and `EXPO_PUBLIC_SUPABASE_ANON_KEY`.
-- `eas init` writes the EAS project id into `app.json` under `extra.eas.projectId`. Push tokens need it; without it the app runs but never registers for the 20:00 nudge.
-- Capabilities in the Apple Developer portal for `app.winarc.season`: HealthKit, Sign in with Apple, Push Notifications. Upload the APNs key to Expo (`eas credentials`).
-- Build the dev client and run the ritual on a real iPhone: sign the contract, share the poster, open Today, take a dual-cam proof, get the stamp, see it on the board, log a weigh-in. Then force one settlement on the test squad with `select * from public.settle_squad_week('<squad>', 1, current_date);` and check the Ledger tab.
-- Send a test nudge from https://expo.dev/notifications to a registered token and confirm the tap lands on Today.
-- `eas build --profile production --platform ios` and `eas submit`.
+There is no Xcode on Windows, so every iOS build runs on EAS. That works, but it puts two things on the critical path that have their own clocks: Apple Developer enrolment and the build queue.
+
+- **Enrol in the Apple Developer Program** (99 USD a year) before anything else here. Approval can take a day or two and everything below waits on it.
+- **Install and link.** `npm i -g eas-cli`, then `eas login`, then from `apps/mobile` run `eas init`. That writes the project id into `app.json` under `extra.eas.projectId`. Commit that change: push notifications read it at runtime and fail without it.
+- **Set the build-time environment variables.** `apps/mobile/.env` is git-ignored, and EAS uploads from git, so a build would otherwise ship with an empty Supabase URL. The repository is public, so these must live in EAS and not in `eas.json`. From `apps/mobile`, for each of `development`, `preview` and `production`:
+
+  ```
+  eas env:create --environment development --name EXPO_PUBLIC_SUPABASE_URL --value https://YOUR-PROJECT.supabase.co --visibility plaintext
+  eas env:create --environment development --name EXPO_PUBLIC_SUPABASE_ANON_KEY --value eyJ... --visibility sensitive
+  ```
+
+  Running `eas env:create` with no flags prompts for each field instead. Add `EXPO_PUBLIC_POSTHOG_KEY` the same way once analytics is wanted; leaving it unset simply sends nothing. Check the result with `eas env:list --environment development`.
+- **Register your iPhone.** Development and preview builds use internal distribution, which is ad hoc: the device has to be in the provisioning profile. Run `eas device:create`, open the link on the phone, install the profile, then confirm with `eas device:list`. A build made before the device is registered will not install on it.
+- **Build the dev client.** `eas build --profile development --platform ios`. First run asks to generate a distribution certificate and provisioning profile; let EAS manage both. Expect 10 to 25 minutes including queue. When it finishes, open the build link on the phone and install.
+- **Connect Metro.** `pnpm mobile` from the repository root, then scan the QR from inside the dev client. The phone and the laptop must be on the same network, and Windows Firewall will ask to allow Node the first time. Say yes for private networks.
+- **Apple capabilities.** In the developer portal, `app.winarc.season` needs HealthKit, Sign in with Apple and Push Notifications. Upload an APNs key with `eas credentials`.
+- **Run the whole ritual on the device.** Sign a contract, share the poster, take a dual-cam proof, get the stamp, request a vouch from a second account and grant it, log a weigh-in. Then force a settlement and read the Ledger tab:
+
+  ```
+  select * from public.settle_squad_week('<squad-id>', 1, current_date);
+  ```
+
+- **Test a nudge.** Send one from https://expo.dev/notifications to a token from `select token from public.push_tokens;` and confirm the tap lands on Today.
+- **Ship.** `eas build --profile production --platform ios` then `eas submit --profile production --platform ios`.
 
 ## 5. App Store
 
