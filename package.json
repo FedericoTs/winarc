@@ -4,7 +4,9 @@
   "version": "0.1.0",
   "description": "Squad season app: contract, dual-cam proof, squad board, Sunday ledger, episodes.",
   "packageManager": "pnpm@10.33.0",
-  "engines": { "node": ">=22" },
+  "engines": {
+    "node": ">=22"
+  },
   "scripts": {
     "test": "pnpm -r --if-present test",
     "typecheck": "pnpm -r --if-present typecheck",
@@ -13,6 +15,7 @@
     "db:test": "pnpm --filter @winarc/db-tests test",
     "mobile": "pnpm --filter @winarc/mobile start",
     "web": "pnpm --filter @winarc/web dev",
-    "eval:verification": "pnpm --filter @winarc/eval-verification run eval"
+    "eval:verification": "pnpm --filter @winarc/eval-verification run eval",
+    "mobile:bundle": "pnpm --filter @winarc/mobile bundle:check"
   }
 }

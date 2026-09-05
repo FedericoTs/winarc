@@ -55,6 +55,7 @@ pnpm domain:test                  # the product rules as tests
 pnpm db:test                      # real migrations on Postgres; needs DATABASE_URL or a local postgres:postgres
 pnpm typecheck                    # all packages
 pnpm mobile                       # Expo dev client
+pnpm mobile:bundle                # Metro bundles the iOS app; catches a bad import or version drift without a device
 pnpm web                          # Next.js
 pnpm eval:verification            # needs ANTHROPIC_API_KEY and a labeled set
 scripts/sync-domain.sh            # after editing packages/domain or packages/verifier, before deploying functions
