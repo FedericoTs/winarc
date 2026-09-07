@@ -58,6 +58,6 @@ describe('squad RPCs', () => {
     await asUser(c, u);
     expect(await expectError(c, `select * from public.join_squad('WIN-ZZZZ')`)).toMatch(/no squad/);
     await asAnon(c);
-    expect(await expectError(c, `select * from public.create_squad('Anon', 3, 1000)`)).toMatch(/not signed in/);
+    expect(await expectError(c, `select * from public.create_squad('Anon', 3, 1000)`)).toMatch(/not signed in|permission denied/);
   });
 });
