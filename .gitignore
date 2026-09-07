@@ -21,3 +21,6 @@ coverage/
 .next/
 .turbo/
 *.tsbuildinfo
+
+# Next rewrites this on every dev and build run; `next typegen` recreates it
+apps/web/next-env.d.ts
