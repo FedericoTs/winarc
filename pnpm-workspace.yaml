@@ -3,3 +3,6 @@ packages:
   - "packages/*"
   - "evals/*"
   - "supabase/tests"
+
+# pnpm links modules in isolation by default; React Native autolinking and CocoaPods expect a flat tree.
+nodeLinker: hoisted
