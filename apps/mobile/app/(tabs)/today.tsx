@@ -3,7 +3,6 @@ import { Alert, Pressable, StyleSheet, Text, View } from 'react-native';
 import { router } from 'expo-router';
 import {
   RESCUE,
-  SEASON_ONE,
   WEIGH_KEY,
   addDays,
   dayOfSeason,
@@ -16,8 +15,8 @@ import {
   vouchesLeft,
   weekdayOf,
   type Currency,
-  type DayMark,
-} from '@winarc/domain';
+  type DayMark } from '@winarc/domain';
+import { season } from '@/lib/season';
 import { Body, Button, Eyebrow, Screen, Tile } from '@/components/ui';
 import { supabase } from '@/lib/supabase';
 import { track } from '@/lib/analytics';
@@ -54,7 +53,7 @@ export default function Today() {
     ]);
   }
   const today = localISODate(now, tz);
-  const day = dayOfSeason(today, SEASON_ONE);
+  const day = dayOfSeason(today, season());
 
   /** Sport lines take the dual-cam ritual; mind and money lines are witnessed by the squad. */
   function proveLabel(v?: string): string {
@@ -124,7 +123,7 @@ export default function Today() {
       setStats({ streak: squadStreak(days), potCents: (ledger ?? []).reduce((a, e) => a + (e.amount_cents as number), 0), currency });
 
       // The weigh-in is unstaked, so it never opens a mark; Today shows a private row on its day.
-      const { data: contract } = await supabase.from('contracts').select('id').eq('profile_id', auth.user.id).eq('season_id', SEASON_ONE.id).maybeSingle();
+      const { data: contract } = await supabase.from('contracts').select('id').eq('profile_id', auth.user.id).eq('season_id', season().id).maybeSingle();
       if (contract) {
         const { data: weigh } = await supabase.from('contract_lines').select('days').eq('contract_id', contract.id).eq('key', WEIGH_KEY).maybeSingle();
         setWeighDay(!!weigh && isWeighDay(weigh.days as number[], weekdayOf(today)));
@@ -147,7 +146,7 @@ export default function Today() {
     <Screen>
       <View style={styles.slate}>
         <Text style={styles.slateText}>
-          <Text style={{ color: colors.ink }}>{SEASON_ONE.id}</Text> · Day {Math.max(0, day)} / {SEASON_ONE.arcDays}
+          <Text style={{ color: colors.ink }}>{season().id}</Text> · Day {Math.max(0, day)} / {season().arcDays}
         </Text>
         <Text style={styles.slateText}>{today}</Text>
       </View>

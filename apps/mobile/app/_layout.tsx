@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { useFonts } from 'expo-font';
@@ -11,6 +11,7 @@ import { InstrumentSans_400Regular } from '@expo-google-fonts/instrument-sans/40
 import { InstrumentSans_500Medium } from '@expo-google-fonts/instrument-sans/500Medium';
 import { InstrumentSans_600SemiBold } from '@expo-google-fonts/instrument-sans/600SemiBold';
 import { useSession } from '@/lib/auth';
+import { loadSeason } from '@/lib/season';
 import { colors } from '@/theme/tokens';
 
 // Held until the faces and the session are both ready, so no screen and no
@@ -34,9 +35,16 @@ export default function RootLayout() {
     IBMPlexMono_500Medium,
   });
 
+  // The season row decides every date on screen; read it once before the
+  // first paint, with a fallback and a timeout so the splash never hangs.
+  const [seasonReady, setSeasonReady] = useState(false);
+  useEffect(() => {
+    loadSeason().finally(() => setSeasonReady(true));
+  }, []);
+
   // A font that fails to load falls back to the system face rather than
   // holding the splash forever; the arc still has to open.
-  const ready = session !== undefined && (fontsLoaded || fontError !== null);
+  const ready = session !== undefined && seasonReady && (fontsLoaded || fontError !== null);
 
   useEffect(() => {
     if (ready) SplashScreen.hideAsync().catch(() => undefined);

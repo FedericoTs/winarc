@@ -75,3 +75,12 @@ There is no Xcode on Windows, so every iOS build runs on EAS. That works, but it
 - One full ritual completed on a production build by two accounts in one squad, including a vouch.
 - `select count(*) from public.push_tokens;` is at least the number of test devices.
 - The three cron jobs have run at least once: `select * from cron.job_run_details order by start_time desc limit 10;`.
+
+## 8. Rehearsal week on staging
+
+Due marks open only inside the season's dates, so before 1 October nothing on a device can exercise the deadline, the miss, the sick day or the Sunday ledger. The app reads the season from the database (ADR 0011), so a rehearsal needs no code and no rebuild:
+
+- Use a second Supabase project as staging, with the same migrations and functions. The `preview` EAS environment points at it.
+- In its SQL editor run `supabase/rehearsal/season.sql`. Season one becomes a two-week arc starting tomorrow, locking after two days, with two Sunday ledgers inside it.
+- Build the app with `eas build --platform ios --profile preview`, sign contracts with the founding squads, and live the ritual for real: proofs, a vouch, a sick day, the nudge at 20:00, the ledger on Sunday.
+- When done, run `supabase/rehearsal/reset.sql` there. Production is untouched throughout.

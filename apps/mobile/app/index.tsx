@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { router } from 'expo-router';
-import { SEASON_ONE, dayOfSeason, localISODate } from '@winarc/domain';
+import { dayOfSeason, localISODate } from '@winarc/domain';
+import { season } from '@/lib/season';
 import { Body, Button, Eyebrow, Screen, Tile } from '@/components/ui';
 import { colors, fonts } from '@/theme/tokens';
 
@@ -9,7 +10,7 @@ const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
 function countdown(now: Date) {
   // Local midnight of the start date on this device.
-  const [yy, mm, dd] = SEASON_ONE.startsOn.split('-').map(Number) as [number, number, number];
+  const [yy, mm, dd] = season().startsOn.split('-').map(Number) as [number, number, number];
   const start = new Date(yy, mm - 1, dd).getTime();
   const diff = start - now.getTime();
   if (diff <= 0) return null;
@@ -31,18 +32,18 @@ export default function Countdown() {
   }, []);
 
   const cd = countdown(now);
-  const day = dayOfSeason(localISODate(now, tz), SEASON_ONE);
+  const day = dayOfSeason(localISODate(now, tz), season());
 
   return (
     <Screen style={{ justifyContent: 'flex-end', paddingBottom: 28 }}>
       <View style={styles.brand}>
         <Text style={styles.wordmark}>WINARC</Text>
-        <Eyebrow>Season one · {SEASON_ONE.id}</Eyebrow>
+        <Eyebrow>Season one · {season().id}</Eyebrow>
       </View>
       <View style={{ gap: 2 }}>
         <Eyebrow color={colors.ice}>{cd ? 'Your arc starts in' : 'Season one · live'}</Eyebrow>
-        <Text style={styles.big}>{cd ? cd.days : Math.min(day, SEASON_ONE.arcDays)}</Text>
-        <Text style={styles.unit}>{cd ? (cd.days === 1 ? 'day' : 'days') : `of ${SEASON_ONE.arcDays}`}</Text>
+        <Text style={styles.big}>{cd ? cd.days : Math.min(day, season().arcDays)}</Text>
+        <Text style={styles.unit}>{cd ? (cd.days === 1 ? 'day' : 'days') : `of ${season().arcDays}`}</Text>
         {cd ? <Text style={styles.clock}>{cd.clock}</Text> : null}
         <Text style={styles.range}>01 OCT → 29 DEC 2026</Text>
       </View>
@@ -53,7 +54,7 @@ export default function Countdown() {
       </View>
       <Button title="Start your arc" onPress={() => router.push('/(onboarding)/sports')} />
       <Body muted style={{ fontSize: 12.5 }}>
-        Squads lock {SEASON_ONE.locksOn}. No feed. No coach. Just proof.
+        Squads lock {season().locksOn}. No feed. No coach. Just proof.
       </Body>
     </Screen>
   );

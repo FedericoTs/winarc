@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { Image } from 'expo-image';
-import { SEASON_ONE, addDays, dayOfSeason, localISODate, rollupMark, type DayMark } from '@winarc/domain';
+import { addDays, dayOfSeason, localISODate, rollupMark, type DayMark } from '@winarc/domain';
+import { season } from '@/lib/season';
 import { Body, Eyebrow, Screen } from '@/components/ui';
 import { supabase } from '@/lib/supabase';
 import { track } from '@/lib/analytics';
@@ -105,7 +106,7 @@ export default function SquadBoard() {
             <View style={styles.name} />
             {dates.map((d) => (
               <Text key={d} style={[styles.dh, d === today && { color: colors.ice }]}>
-                {Math.max(0, dayOfSeason(d, SEASON_ONE))}
+                {Math.max(0, dayOfSeason(d, season()))}
               </Text>
             ))}
           </View>

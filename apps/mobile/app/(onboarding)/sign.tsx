@@ -1,7 +1,8 @@
 import { useRef, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { router } from 'expo-router';
-import { SEASON_ONE, buildContract, formatStake, sessionsPerWeek } from '@winarc/domain';
+import { buildContract, formatStake, sessionsPerWeek } from '@winarc/domain';
+import { season } from '@/lib/season';
 import { Body, Button, Display, Eyebrow, Screen } from '@/components/ui';
 import { PosterCard, type CardRef } from '@/components/cards';
 import { shareCard } from '@/lib/share';
@@ -36,7 +37,7 @@ export default function Sign() {
     }
     const { data: contract, error: cErr } = await supabase
       .from('contracts')
-      .insert({ profile_id: auth.user.id, squad_id: ob.squad.id, season_id: SEASON_ONE.id, weigh_in: ob.weighIn, signed_at: new Date().toISOString() })
+      .insert({ profile_id: auth.user.id, squad_id: ob.squad.id, season_id: season().id, weigh_in: ob.weighIn, signed_at: new Date().toISOString() })
       .select('id')
       .single();
     if (cErr || !contract) {
@@ -77,7 +78,7 @@ export default function Sign() {
           squadName={ob.squad.name || 'Squad forming'}
           code={ob.squad.code}
           spots={spots}
-          locksOn={SEASON_ONE.locksOn}
+          locksOn={season().locksOn}
           signedOn={new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}
         />
       </View>
@@ -94,7 +95,7 @@ export default function Sign() {
         </Text>
         <Text style={[styles.ln, { color: colors.ice }]}>
           {ob.squad.name || 'Squad forming'}
-          {ob.squad.code ? ` · join ${ob.squad.code}` : ''} · locks {SEASON_ONE.locksOn}
+          {ob.squad.code ? ` · join ${ob.squad.code}` : ''} · locks {season().locksOn}
         </Text>
       </View>
       <View style={styles.pad}>

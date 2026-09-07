@@ -39,6 +39,7 @@ Copy is written from the member's side, active voice, no em-dashes. Never a numb
 
 pnpm monorepo.
 
+- The season is a database row (ADR 0011): the app renders `season()` from `apps/mobile/src/lib/season.ts`, the web page `getSeason()`, both loaded before paint. `SEASON_ONE` in the domain is the offline fallback and the value tests pin; never read it directly from a screen.
 - `packages/domain`: pure product logic with tests. Seasons, sports, habits, contracts, squads, verification decisions, settlement. No I/O, no SDKs. Imported by the app, the verifier, the evals, and copied into the edge functions.
 - `packages/verifier`: the one model call. Takes two images and a sport, returns a structured result and a decision. Used by the edge function and the evals so they can never drift.
 - `apps/mobile`: Expo SDK 57 with expo-router. iOS first, Android from the same code.

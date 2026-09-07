@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { EPISODE_DAYS, SEASON_ONE, addDays, dayOfSeason, episodeWindow, localISODate, type EpisodeNumber, type EpisodeStats } from '@winarc/domain';
+import { EPISODE_DAYS, addDays, dayOfSeason, episodeWindow, localISODate, type EpisodeNumber, type EpisodeStats } from '@winarc/domain';
+import { season } from '@/lib/season';
 import { Body, Button, Display, Eyebrow, Screen } from '@/components/ui';
 import { EpisodeCard, type CardRef } from '@/components/cards';
 import { shareCard } from '@/lib/share';
@@ -20,7 +21,7 @@ type EpisodeRow = { number: EpisodeNumber; title: string; stats: EpisodeStats & 
  */
 export default function Arc() {
   const today = localISODate(new Date(), tz);
-  const day = dayOfSeason(today, SEASON_ONE);
+  const day = dayOfSeason(today, season());
   const [episodes, setEpisodes] = useState<Partial<Record<EpisodeNumber, EpisodeRow>>>({});
   const [squad, setSquad] = useState<{ name: string; code: string } | null>(null);
   const [busy, setBusy] = useState<EpisodeNumber | null>(null);
@@ -70,7 +71,7 @@ export default function Arc() {
       <Display size={36}>Episodes</Display>
       {NUMBERS.map((n) => {
         const at = EPISODE_DAYS[n - 1];
-        const date = addDays(SEASON_ONE.startsOn, at - 1);
+        const date = addDays(season().startsOn, at - 1);
         const ep = episodes[n];
         const unlocked = day >= at;
         const w = episodeWindow(n);
@@ -114,7 +115,7 @@ export default function Arc() {
         );
       })}
       {error ? <Body style={{ color: colors.rose }}>{error}</Body> : null}
-      <Body style={{ color: colors.ink2, fontSize: 12.5 }}>The finale on {SEASON_ONE.finaleOn} adds the certificate, the season stats and the pot vote.</Body>
+      <Body style={{ color: colors.ink2, fontSize: 12.5 }}>The finale on {season().finaleOn} adds the certificate, the season stats and the pot vote.</Body>
     </Screen>
   );
 }

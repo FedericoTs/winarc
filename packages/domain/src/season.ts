@@ -119,3 +119,36 @@ export function episodeAtDay(day: number): 1 | 2 | 3 | null {
   const i = EPISODE_DAYS.indexOf(day as (typeof EPISODE_DAYS)[number]);
   return i < 0 ? null : ((i + 1) as 1 | 2 | 3);
 }
+
+/** The `seasons` row as the database returns it. */
+export interface SeasonRow {
+  id: string;
+  starts_on: string;
+  arc_days: number;
+  locks_on: string;
+  finale_on: string;
+}
+
+export function seasonFromRow(row: SeasonRow): Season {
+  return { id: row.id, startsOn: row.starts_on, arcDays: row.arc_days, locksOn: row.locks_on, finaleOn: row.finale_on };
+}
+
+/** Days before the first arc day during which a season is already "on": squads form, contracts get signed. Mirrors `season_on` in SQL. */
+export const PRESEASON_DAYS = 30;
+
+/**
+ * The season the app should show on a given date: the one whose window, from
+ * 30 days before the start through the finale, contains the date, latest
+ * start first; otherwise the next one to start; otherwise null. The database
+ * is the source of truth for dates, and `SEASON_ONE` is the fallback when it
+ * cannot be read.
+ */
+export function pickSeason(seasons: readonly Season[], todayISO: string): Season | null {
+  const today = utcOf(todayISO);
+  const onNow = seasons
+    .filter((s) => today >= utcOf(s.startsOn) - PRESEASON_DAYS * DAY_MS && today <= utcOf(s.finaleOn))
+    .sort((a, b) => utcOf(b.startsOn) - utcOf(a.startsOn));
+  if (onNow[0]) return onNow[0];
+  const upcoming = seasons.filter((s) => utcOf(s.startsOn) > today).sort((a, b) => utcOf(a.startsOn) - utcOf(b.startsOn));
+  return upcoming[0] ?? null;
+}

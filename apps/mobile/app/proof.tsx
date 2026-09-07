@@ -2,7 +2,8 @@ import { useEffect, useRef, useState } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { CameraView, useCameraPermissions } from 'expo-camera';
 import { router, useLocalSearchParams } from 'expo-router';
-import { SEASON_ONE, askCopy, dayOfSeason, localISODate, type AskReason, type Tier } from '@winarc/domain';
+import { askCopy, dayOfSeason, localISODate, type AskReason, type Tier } from '@winarc/domain';
+import { season } from '@/lib/season';
 import { Body, Button, Eyebrow } from '@/components/ui';
 import { evidenceFor, health } from '@/lib/health';
 import { supabase } from '@/lib/supabase';
@@ -102,7 +103,7 @@ export default function Proof() {
             profile_id: auth.user.id,
             squad_id: mark?.squad_id ?? squad?.id,
             local_date: date,
-            day: dayOfSeason(date, SEASON_ONE),
+            day: dayOfSeason(date, season()),
             rear_path: rearPath,
             front_path: frontPath,
             health_workout: workout,
@@ -133,7 +134,7 @@ export default function Proof() {
     }
   }
 
-  const day = dayOfSeason(localISODate(new Date(), tz), SEASON_ONE);
+  const day = dayOfSeason(localISODate(new Date(), tz), season());
   const copy = ask ? askCopy(ask) : null;
   const sport = SPORTS[sportKey] ?? customSport(sportKey);
   const now = new Date();
@@ -159,12 +160,12 @@ export default function Proof() {
       ) : null}
       {phase === 'stamped' && tier ? (
         <>
-          <Stamp tier={tier} subtitle={`Day ${day} / ${SEASON_ONE.arcDays} · ${tier}`} />
+          <Stamp tier={tier} subtitle={`Day ${day} / ${season().arcDays} · ${tier}`} />
           <View style={{ position: 'absolute', left: -2000, top: 0 }} pointerEvents="none">
             <ProofCard
               ref={card}
               day={day}
-              arcDays={SEASON_ONE.arcDays}
+              arcDays={season().arcDays}
               time={time}
               sportWord={sport.word}
               tier={tier}
@@ -180,7 +181,7 @@ export default function Proof() {
             </View>
             <View style={{ flex: 1 }}>
               <Button title="Share proof" onPress={() =>
-                  shareCard(card, `Day ${day} of ${SEASON_ONE.arcDays} on WinArc${squad?.code ? ` · join ${squad.code}` : ''}`)
+                  shareCard(card, `Day ${day} of ${season().arcDays} on WinArc${squad?.code ? ` · join ${squad.code}` : ''}`)
                     .then((result) => track({ name: 'proof_card_shared', result }))
                     .catch(() => track({ name: 'proof_card_shared', result: 'failed' }))
                 } />
