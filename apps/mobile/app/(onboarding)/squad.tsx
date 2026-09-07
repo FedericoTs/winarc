@@ -4,6 +4,7 @@ import { router } from 'expo-router';
 import { STAKE_TIERS_CENTS, formatStake, normalizeCode, sessionsPerWeek, buildContract } from '@winarc/domain';
 import { Body, Button, Chip, Display, Eyebrow, Screen } from '@/components/ui';
 import { supabase } from '@/lib/supabase';
+import { season } from '@/lib/season';
 import { track } from '@/lib/analytics';
 import { useSession } from '@/lib/auth';
 import { useOnboarding } from '@/state/arc';
@@ -44,6 +45,7 @@ export default function Squad() {
       p_stake_cents: ob.squad.stakeCents,
       p_pot_rule: 'pot',
       p_currency: ob.squad.currency,
+      p_season: season().id,
     });
     setBusy(false);
     if (error) return setMessage(error.message);

@@ -1,8 +1,9 @@
 import type { Metadata } from 'next';
-import { SEASON_ONE, endsOn, formatStake, normalizeCode } from '@winarc/domain';
+import { endsOn, formatStake, normalizeCode } from '@winarc/domain';
 import { CopyCode } from '@/components/copy-code';
 import { dayMonth, dayMonthUpper } from '@/lib/format';
 import { squadPreview } from '@/lib/squad-preview';
+import { getSeason } from '@/lib/season';
 
 export const revalidate = 60;
 
@@ -19,13 +20,14 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
  * in the dashed box. Every line here has a twin on the card that sent them.
  */
 export default async function Join({ params }: Params) {
+  const season = await getSeason();
   const raw = (await params).code;
   const code = normalizeCode(raw);
 
   if (!code) {
     return (
       <main className="view">
-        <Brand />
+        <Brand seasonId={season.id} />
         <div className="eyebrow ice">Join a squad</div>
         <h1 className="disp h2" style={{ margin: 0 }}>That code doesn&apos;t look right.</h1>
         <p className="p">Codes look like WIN-7K2Q. Ask your founder to send it again.</p>
@@ -38,14 +40,14 @@ export default async function Join({ params }: Params) {
 
   const squad = await squadPreview(code);
   const deepLink = `winarc://join/${code}`;
-  const locksOn = dayMonth(squad?.locks_on ?? SEASON_ONE.locksOn);
+  const locksOn = dayMonth(squad?.locks_on ?? season.locksOn);
   const stake = squad ? formatStake(squad.stake_cents, squad.currency) : null;
   const spots = squad ? `${squad.spots_left} ${squad.spots_left === 1 ? 'spot' : 'spots'}` : 'spots open';
   const name = squad?.name ?? null;
 
   return (
     <main className="view">
-      <Brand />
+      <Brand seasonId={season.id} />
       <div className="eyebrow ice">{name ? `You're invited · ${name}` : "You're invited"}</div>
       <h1 className="disp h2" style={{ margin: 0 }}>
         You don&apos;t do this alone.
@@ -53,7 +55,7 @@ export default async function Join({ params }: Params) {
 
       <div className="scard" aria-label="Squad invite">
         <div className="pad">
-          <div className="ey">Season one · {SEASON_ONE.id} · locks {locksOn}</div>
+          <div className="ey">Season one · {season.id} · locks {locksOn}</div>
           <div className="big" style={{ fontSize: 48, marginTop: 10, overflowWrap: 'anywhere' }}>
             {name ? name : <>Join<br />the squad</>}
           </div>
@@ -75,9 +77,9 @@ export default async function Join({ params }: Params) {
             </div>
             <div>
               <span>
-                {dayMonthUpper(SEASON_ONE.startsOn)} → {dayMonthUpper(endsOn(SEASON_ONE))}
+                {dayMonthUpper(season.startsOn)} → {dayMonthUpper(endsOn(season))}
               </span>
-              <b>{SEASON_ONE.arcDays} days</b>
+              <b>{season.arcDays} days</b>
             </div>
           </div>
           <div className="cp-join">
@@ -105,9 +107,9 @@ export default async function Join({ params }: Params) {
             </div>
           </div>
           <div className="wm">
-            <b>WINARC</b> · {SEASON_ONE.id} · <span className="jc">join {code}</span>
+            <b>WINARC</b> · {season.id} · <span className="jc">join {code}</span>
             <br />
-            {name ?? 'Squad forming'} · starts {dayMonth(SEASON_ONE.startsOn)} · you inherit the terms
+            {name ?? 'Squad forming'} · starts {dayMonth(season.startsOn)} · you inherit the terms
           </div>
         </div>
       </div>
@@ -129,11 +131,11 @@ export default async function Join({ params }: Params) {
   );
 }
 
-function Brand() {
+function Brand({ seasonId }: { seasonId: string }) {
   return (
     <div className="brand">
       <span className="wordmark">WINARC</span>
-      <span className="eyebrow">Season one · {SEASON_ONE.id}</span>
+      <span className="eyebrow">Season one · {seasonId}</span>
     </div>
   );
 }
