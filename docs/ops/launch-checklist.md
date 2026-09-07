@@ -4,12 +4,13 @@ Season one starts 1 October 2026 and locks squads on 7 October. Everything below
 
 ## 1. Supabase project
 
-- Create the production project in the EU region. Note the project ref, the URL and the anon key.
-- In Database → Extensions enable `pg_cron` and `pg_net`. The migrations are guarded and apply without them, but the tick, the settlement and the nudge only run with them.
-- Link and push: `supabase link --project-ref <ref>` (asks for the database password you set at creation) then `supabase db push`. Without a global install, prefix every command with `npx`, as in `npx supabase link`. Migrations 0000 to 0004 create the tables, policies, buckets, RPCs and cron jobs.
-- Verify the three jobs exist: `select jobname, schedule from cron.job;` should list `winarc-tick`, `winarc-settle` and `winarc-nudge`, all hourly.
-- Do not run `supabase/seed.sql` in production. It is for the local stack only.
-- Run `supabase db test`-style checks locally first: `pnpm db:test` applies the same migrations to plain Postgres and runs 30 assertions.
+Done on 7 September through the connector: project `winarc`, ref `gixfcrtnyjzlpylcimrb`, Frankfurt, Postgres 17. All seven migrations applied in one transaction; `pg_cron` and `pg_net` enabled; the three jobs `winarc-tick`, `winarc-settle` and `winarc-nudge` scheduled; the migration history written with the repository's versions, so `supabase db push` treats them as applied. The remote schema was fingerprinted against the local test database: functions, columns, policies, indexes and check constraints all match by hash.
+
+- URL: `https://gixfcrtnyjzlpylcimrb.supabase.co`
+- Publishable key: `sb_publishable_FHBR5Ro-szpYciar1NuuKA_Qj88GLbL`. This is a client key by design; the app and the web page use it as the anon key. Row-level security is what protects data, and the tests cover it.
+- `ai-rush` was paused to free the second free-tier slot; its data is intact and it resumes from the dashboard in one click.
+- Never run `supabase/seed.sql` against this project.
+- To use the CLI later, `npx supabase link --project-ref gixfcrtnyjzlpylcimrb` asks for the database password: reset it under Settings, Database if you never saw it.
 
 ## 2. Auth
 
@@ -17,10 +18,18 @@ Season one starts 1 October 2026 and locks squads on 7 October. Everything below
 - Email: keep the OTP flow. In Authentication → Email Templates make the "Magic Link" template show `{{ .Token }}` so the message carries the six-digit code the app asks for. Set OTP expiry to 10 minutes.
 - Turn off anonymous sign-ins. Leave sign-ups on; the join code is the gate, not the account.
 
-## 3. Verification edge function
+## 3. Edge functions and their secrets
 
-- Deploy: `supabase functions deploy verify-proof title-episode --use-api`. The flag bundles on Supabase's side, so no Docker is needed; each function's `deno.json` import map is picked up from its folder.
-- Secrets: `supabase secrets set ANTHROPIC_API_KEY=... VERIFY_MODEL=claude-opus-5`.
+The connector cannot set secrets and deploys functions only by retyping their source, so these two run from your machine. They need only a browser login, not the database password:
+
+```
+npx supabase login
+npx supabase secrets set --project-ref gixfcrtnyjzlpylcimrb ANTHROPIC_API_KEY=sk-ant-... VERIFY_MODEL=claude-opus-5
+npx supabase functions deploy verify-proof title-episode --project-ref gixfcrtnyjzlpylcimrb --use-api
+```
+
+`--use-api` bundles on Supabase's side, so no Docker; each function's `deno.json` import map is picked up from its folder. Confirm with `npx supabase functions list --project-ref gixfcrtnyjzlpylcimrb`.
+
 - Smoke test with real images from a phone, on your machine. Put the two JPEGs in `evals/verification/cases/`, which is git-ignored, then run from that folder so the paths resolve:
 
   ```
@@ -28,7 +37,8 @@ Season one starts 1 October 2026 and locks squads on 7 October. Everything below
   pnpm smoke cases/rear.jpg cases/front.jpg GYM
   ```
 
-  Export `ANTHROPIC_API_KEY` first (`set` on Windows `cmd`). No photos to hand? `pnpm smoke fixtures/rear.jpg fixtures/front.jpg GYM` runs the same call on two drawn fixtures and should answer `ask`; it proves the plumbing, not the calibration. The files must be real JPEGs: an iPhone shoots HEIC by default, and sending the photos to yourself through WhatsApp or Mail converts them. Expect a verified Silver in under 8 seconds; add `true` as a fourth argument to simulate a matching workout and get Gold. Then run the eval set in `evals/verification` and check false accepts stay under 5% and false rejects under 10%.
+  Export `ANTHROPIC_API_KEY` first (`set` on Windows `cmd`). No photos to hand? `pnpm smoke fixtures/rear.jpg fixtures/front.jpg GYM` runs the same call on two drawn fixtures and should answer `ask`; it proves the plumbing, not the calibration. The files must be real JPEGs: an iPhone shoots HEIC by default, and sending the photos to yourself through WhatsApp or Mail converts them. Expect a verified Silver in under 8 seconds; add `true` as a fourth argument to simulate a matching workout and get Gold.
+- Then run the eval set in `evals/verification` and check false accepts stay under 5% and false rejects under 10%.
 - Confirm a refusal never charges: a proof the model refuses becomes an ask with retake, vouch and appeal.
 
 ## 4. The app, building for iOS from Windows
@@ -40,8 +50,8 @@ There is no Xcode on Windows, so every iOS build runs on EAS. That works, but it
 - **Set the build-time environment variables.** `apps/mobile/.env` is git-ignored, and EAS uploads from git, so a build would otherwise ship with an empty Supabase URL. The repository is public, so these must live in EAS and not in `eas.json`. From `apps/mobile`, for each of `development`, `preview` and `production`:
 
   ```
-  eas env:set --environment development --name EXPO_PUBLIC_SUPABASE_URL --value https://YOUR-PROJECT.supabase.co --visibility plaintext
-  eas env:set --environment development --name EXPO_PUBLIC_SUPABASE_ANON_KEY --value eyJ... --visibility sensitive
+  eas env:set --environment development --name EXPO_PUBLIC_SUPABASE_URL --value https://gixfcrtnyjzlpylcimrb.supabase.co --visibility plaintext
+  eas env:set --environment development --name EXPO_PUBLIC_SUPABASE_ANON_KEY --value sb_publishable_FHBR5Ro-szpYciar1NuuKA_Qj88GLbL --visibility plaintext
   ```
 
   `env:set` creates or updates; the older `env:create` is deprecated. Running it with no flags prompts for each field instead. Add `EXPO_PUBLIC_POSTHOG_KEY` the same way once analytics is wanted; leaving it unset simply sends nothing. Check the result with `eas env:list --environment development`.
@@ -76,11 +86,12 @@ There is no Xcode on Windows, so every iOS build runs on EAS. That works, but it
 - `select count(*) from public.push_tokens;` is at least the number of test devices.
 - The three cron jobs have run at least once: `select * from cron.job_run_details order by start_time desc limit 10;`.
 
-## 8. Rehearsal week on staging
+## 8. Rehearsal week
 
-Due marks open only inside the season's dates, so before 1 October nothing on a device can exercise the deadline, the miss, the sick day or the Sunday ledger. The app reads the season from the database (ADR 0011), so a rehearsal needs no code and no rebuild:
+Due marks open only inside the season's dates, so before 1 October nothing on a device can exercise the deadline, the miss, the sick day or the Sunday ledger. The app reads the season from the database (ADR 0011), so a rehearsal needs no code and no rebuild.
 
-- Use a second Supabase project as staging, with the same migrations and functions. The `preview` EAS environment points at it.
-- In its SQL editor run `supabase/rehearsal/season.sql`. Season one becomes a two-week arc starting tomorrow, locking after two days, with two Sunday ledgers inside it.
-- Build the app with `eas build --platform ios --profile preview`, sign contracts with the founding squads, and live the ritual for real: proofs, a vouch, a sick day, the nudge at 20:00, the ledger on Sunday.
-- When done, run `supabase/rehearsal/reset.sql` there. Production is untouched throughout.
+The free tier allows two active projects, so the rehearsal runs on the production project *before any real contract exists*, and the reset script wipes it:
+
+- Around 8 September, in the SQL editor, run `supabase/rehearsal/season.sql`. Season one becomes a two-week arc starting tomorrow, locking after two days, with two Sunday ledgers inside it.
+- Sign a test contract with a second account, and live the ritual for real: proofs, a vouch, a sick day, the nudge at 20:00, the ledger on Sunday.
+- By 23 September run `supabase/rehearsal/reset.sql` there. It restores 1 October and deletes every squad, contract, mark, proof and ledger row, keeping accounts. Only then invite the founding squads to sign. Never run it after a real contract exists.

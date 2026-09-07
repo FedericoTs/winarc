@@ -11,7 +11,7 @@ export async function getSeason(): Promise<Season> {
   if (!url || !key) return SEASON_ONE;
   try {
     const res = await fetch(`${url}/rest/v1/seasons?select=id,starts_on,arc_days,locks_on,finale_on`, {
-      headers: { apikey: key, Authorization: `Bearer ${key}` },
+      headers: { apikey: key },
       next: { revalidate: 300 },
     });
     if (!res.ok) return SEASON_ONE;

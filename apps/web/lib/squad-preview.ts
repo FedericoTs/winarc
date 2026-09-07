@@ -23,7 +23,7 @@ export async function squadPreview(code: string): Promise<SquadPreview | null> {
   try {
     const res = await fetch(`${url}/rest/v1/rpc/squad_preview`, {
       method: 'POST',
-      headers: { apikey: key, Authorization: `Bearer ${key}`, 'content-type': 'application/json' },
+      headers: { apikey: key, 'content-type': 'application/json' },
       body: JSON.stringify({ p_code: code }),
       next: { revalidate: 60 },
     });
