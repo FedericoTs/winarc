@@ -47,6 +47,7 @@
       [
         "expo-notifications",
         {
+          "icon": "./assets/notification-icon.png",
           "color": "#FF7A1A"
         }
       ],
@@ -54,7 +55,7 @@
         "expo-splash-screen",
         {
           "image": "./assets/splash-icon.png",
-          "imageWidth": 220,
+          "imageWidth": 240,
           "resizeMode": "contain",
           "backgroundColor": "#0B0D12"
         }

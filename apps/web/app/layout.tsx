@@ -2,9 +2,17 @@ import type { Metadata, Viewport } from 'next';
 import type { ReactNode } from 'react';
 import './globals.css';
 
+// Absolute URLs for the share image: the site's own domain once it exists, Vercel's production URL until then.
+const SITE = process.env.NEXT_PUBLIC_SITE_URL
+  ?? (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : 'http://localhost:3000');
+
+const DESCRIPTION = 'Squad season. Sign a contract, join a squad, prove every session. Season one starts 1 Oct.';
+
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE),
   title: 'WinArc',
-  description: 'Squad season. Sign a contract, join a squad, prove every session. Season one starts 1 Oct.',
+  description: DESCRIPTION,
+  openGraph: { title: 'WinArc', description: DESCRIPTION, siteName: 'WinArc', type: 'website' },
 };
 
 export const viewport: Viewport = { themeColor: '#0B0D12', colorScheme: 'dark' };

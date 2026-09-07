@@ -32,6 +32,7 @@ Single dark world on the phone. Ground `#0B0D12`, surface `#141821`, line `#262E
 Each color has one job. Ember `#FF7A1A` is proof and streaks only. Gold `#E9B54A` is money only. Ice `#9CD3FF` is structure and every primary action. Rose `#FF4D6D` is a miss. Mint `#7EE0B8` is the squad: MVP, matched, vouched.
 
 Type: Big Shoulders Display for numerals and slates, Instrument Sans for UI, IBM Plex Mono for the ledger and timecodes. Tokens are in `apps/mobile/src/theme/tokens.ts`.
+The mark is the Arc: an ember semicircle with the W cut by its edge. Sources and rules are in `brand/README.md`; never redraw the W in a typeface or put the dome in another colour.
 
 Copy is written from the member's side, active voice, no em-dashes. Never a number on every point; one number per card.
 

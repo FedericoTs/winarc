@@ -9,6 +9,7 @@ The product rules that every session must respect are in [CLAUDE.md](./CLAUDE.md
 ```
 apps/mobile          Expo SDK 57, expo-router. The app.
 apps/web             Next.js. Landing page and /join/[code].
+brand/               The Arc mark and the lockups as SVG, and the rules. Every icon and splash is rendered from here.
 packages/domain      Pure product logic with tests. Seasons, contracts, squads, verification decisions, settlement.
 packages/verifier    The one model call, shared by the edge function and the evals.
 supabase             Schema with row-level security, storage, the verify-proof and title-episode functions, ticks, settlement, rescues and episodes in SQL, and the database tests.

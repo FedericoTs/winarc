@@ -1,6 +1,7 @@
 import { getSeason } from '../lib/season';
 import { Countdown } from '@/components/countdown';
 import { JoinForm } from '@/components/join-form';
+import { Brand } from '@/components/brand';
 import { dayMonth } from '@/lib/format';
 
 /** The prototype's first screen. The date is the product: one number, one button. */
@@ -8,10 +9,7 @@ export default async function Home() {
   const season = await getSeason();
   return (
     <main className="view">
-      <div className="brand">
-        <span className="wordmark">WINARC</span>
-        <span className="eyebrow">Season one · {season.id}</span>
-      </div>
+      <Brand seasonId={season.id} />
       <Countdown season={season} />
       <div className="tiles">
         <div className="tile">

@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { endsOn, formatStake, normalizeCode } from '@winarc/domain';
+import { Brand } from '@/components/brand';
 import { CopyCode } from '@/components/copy-code';
 import { dayMonth, dayMonthUpper } from '@/lib/format';
 import { squadPreview } from '@/lib/squad-preview';
@@ -128,14 +129,5 @@ export default async function Join({ params }: Params) {
         You inherit the squad&apos;s stake and pot rule. No terms to set. Squads lock {locksOn}.
       </p>
     </main>
-  );
-}
-
-function Brand({ seasonId }: { seasonId: string }) {
-  return (
-    <div className="brand">
-      <span className="wordmark">WINARC</span>
-      <span className="eyebrow">Season one · {seasonId}</span>
-    </div>
   );
 }

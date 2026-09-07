@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { Image } from 'expo-image';
 import { router } from 'expo-router';
 import { dayOfSeason, localISODate } from '@winarc/domain';
 import { season } from '@/lib/season';
@@ -37,7 +38,10 @@ export default function Countdown() {
   return (
     <Screen style={{ justifyContent: 'flex-end', paddingBottom: 28 }}>
       <View style={styles.brand}>
-        <Text style={styles.wordmark}>WINARC</Text>
+        <View style={styles.lockup}>
+          <Image source={require('../assets/brand/mark.png')} style={styles.mark} contentFit="contain" accessibilityLabel="WinArc" />
+          <Text style={styles.wordmark}>WINARC</Text>
+        </View>
         <Eyebrow>Season one · {season().id}</Eyebrow>
       </View>
       <View style={{ gap: 2 }}>
@@ -61,7 +65,9 @@ export default function Countdown() {
 }
 
 const styles = StyleSheet.create({
-  brand: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 'auto', marginTop: 8 },
+  brand: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 'auto', marginTop: 8 },
+  lockup: { flexDirection: 'row', alignItems: 'center', gap: 8 },
+  mark: { width: 32, height: 16 },
   wordmark: { fontFamily: fonts.display, fontSize: 26, letterSpacing: 2, color: colors.ink },
   big: { fontFamily: fonts.display, fontSize: 172, lineHeight: 141, letterSpacing: -1.7, color: colors.ink, marginLeft: -4 },
   unit: { fontFamily: fonts.displayBold, fontSize: 30, letterSpacing: 2, color: colors.ink2, textTransform: 'uppercase' },

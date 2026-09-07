@@ -22,7 +22,9 @@ button,input{font-family:inherit}
   .view{min-height:844px;padding:78px 20px 26px;border-radius:46px;background:var(--p-ground);box-shadow:0 0 0 11px #050608,0 0 0 12px #2a2f3a,0 40px 90px rgba(0,0,0,.45)}
 }
 
-.brand{display:flex;justify-content:space-between;align-items:baseline}
+.brand{display:flex;justify-content:space-between;align-items:center}
+.lockup{display:inline-flex;align-items:center;gap:9px}
+.lockup svg{display:block;flex:none}
 .wordmark{font-family:var(--f-display);font-weight:900;font-size:26px;letter-spacing:.08em}
 .eyebrow{font-family:var(--f-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--p-ink-2)}
 .eyebrow.ice{color:var(--p-ice)}
