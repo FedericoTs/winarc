@@ -2,7 +2,7 @@
  * One real verification, end to end, from your machine:
  *
  *   cd evals/verification
- *   ANTHROPIC_API_KEY=... pnpm smoke -- cases/rear.jpg cases/front.jpg GYM [true]
+ *   ANTHROPIC_API_KEY=... pnpm smoke cases/rear.jpg cases/front.jpg GYM [true]
  *
  * Paths resolve from this folder. cases/ is git-ignored, so photos put there
  * never reach the repository. The fourth argument simulates a matching
@@ -15,7 +15,10 @@ import { readFile } from 'node:fs/promises';
 import { SPORTS, customSport } from '@winarc/domain';
 import { verifyProof, type ImageMediaType } from '@winarc/verifier';
 
-const [rearPath, frontPath, sportKey = 'GYM', health = 'false'] = process.argv.slice(2);
+// pnpm passes a literal "--" through to scripts; tolerate it so both spellings work.
+const argv = process.argv.slice(2);
+if (argv[0] === '--') argv.shift();
+const [rearPath, frontPath, sportKey = 'GYM', health = 'false'] = argv;
 if (!rearPath || !frontPath) {
   console.error('usage: smoke <rear.jpg> <front.jpg> [SPORT] [healthMatched true|false]');
   process.exit(2);

@@ -7,7 +7,7 @@
  * the domain thresholds, so a rubric change cannot ship past it.
  *
  *   ANTHROPIC_API_KEY=... pnpm eval:verification
- *   pnpm eval:verification -- --limit 20 --model claude-opus-5 --concurrency 4
+ *   pnpm eval:verification --limit 20 --model claude-opus-5 --concurrency 4
  */
 import { readFile, mkdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
@@ -160,6 +160,7 @@ function parseArgs(argv: string[]): Record<string, string> {
   const out: Record<string, string> = {};
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i]!;
+    if (a === '--') continue; // pnpm passes the separator through
     if (a.startsWith('--')) out[a.slice(2)] = argv[i + 1] && !argv[i + 1]!.startsWith('--') ? argv[++i]! : 'true';
   }
   return out;

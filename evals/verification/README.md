@@ -38,7 +38,7 @@ One JSON object per line in `cases/cases.jsonl`:
 
 ```
 ANTHROPIC_API_KEY=... pnpm eval:verification
-pnpm eval:verification -- --limit 20 --concurrency 4 --model claude-opus-5
+pnpm eval:verification --limit 20 --concurrency 4 --model claude-opus-5
 ```
 
 The report is written to `out/report.json`. Compare reports before and after a change, not just the pass line.

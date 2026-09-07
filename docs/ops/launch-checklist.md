@@ -25,7 +25,7 @@ Season one starts 1 October 2026 and locks squads on 7 October. Everything below
 
   ```
   cd evals/verification
-  pnpm smoke -- cases/rear.jpg cases/front.jpg GYM
+  pnpm smoke cases/rear.jpg cases/front.jpg GYM
   ```
 
   Export `ANTHROPIC_API_KEY` first (`set` on Windows `cmd`). The files must be real JPEGs: an iPhone shoots HEIC by default, and sending the photos to yourself through WhatsApp or Mail converts them. Expect a verified Silver in under 8 seconds; add `true` as a fourth argument to simulate a matching workout and get Gold. Then run the eval set in `evals/verification` and check false accepts stay under 5% and false rejects under 10%.
