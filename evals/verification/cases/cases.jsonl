@@ -1,3 +1,4 @@
 # One case per line. Images are git-ignored; see ../README.md for the layout and the target mix.
 # {"id":"gym-001","rear":"gym/001-rear.jpg","front":"gym/001-front.jpg","sport":"GYM","health_matched":true,"expected":"verified","tags":["genuine"]}
 # {"id":"adv-screen-001","rear":"adv/001-rear.jpg","front":"adv/001-front.jpg","sport":"GYM","expected":"ask","tags":["adversarial:screen"]}
+{"id":"fixture-illustration-001","rear":"../fixtures/rear.jpg","front":"../fixtures/front.jpg","sport":"GYM","expected":"ask","tags":["adversarial:illustration","fixture"]}
