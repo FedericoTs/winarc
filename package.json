@@ -14,6 +14,7 @@
     "domain:test": "pnpm --filter @winarc/domain test",
     "db:test": "pnpm --filter @winarc/db-tests test",
     "mobile": "pnpm --filter @winarc/mobile start",
+    "mobile:go": "pnpm --filter @winarc/mobile start --go",
     "web": "pnpm --filter @winarc/web dev",
     "eval:verification": "pnpm --filter @winarc/eval-verification run eval",
     "mobile:bundle": "pnpm --filter @winarc/mobile bundle:check",

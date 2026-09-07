@@ -51,6 +51,7 @@ The camera and HealthKit need native modules, so the app runs in a dev client, n
 ```
 cp .env.example apps/mobile/.env
 pnpm mobile                    # Metro; then press i for iOS, or scan from the dev client
+pnpm mobile:go                 # the same in Expo Go, before a development build exists
 npx expo install --fix         # if package versions drift from SDK 57
 ```
 

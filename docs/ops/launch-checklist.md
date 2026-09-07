@@ -15,7 +15,7 @@ Done on 7 September through the connector: project `winarc`, ref `gixfcrtnyjzlpy
 ## 2. Auth
 
 - Season one signs in with Apple only (ADR 0012). Nothing to configure for email; the code path is off behind `features.emailSignIn`.
-- Apple: once the developer account exists, in Authentication → Providers enable Apple and put `app.winarc.season` in the Client IDs field. Native sign-in tokens carry the bundle id as their audience and are rejected otherwise. The Services ID and secret key fields are for the web flow and can wait.
+- Apple: in Authentication → Providers enable Apple and put `app.winarc.season,host.exp.Exponent` in the Client IDs field. This needs no developer account. Native sign-in tokens carry the bundle id of the app that asked as their audience and are rejected otherwise; the second id is Expo Go, so the app can be tried on a phone before Apple approves the enrolment. Apple scopes its user ids per team, so an account created through Expo Go is a different account from the one the real build will create, and the rehearsal reset clears it. The Services ID and secret key fields are for the web flow and can wait.
 - Turn off anonymous sign-ins. Leave sign-ups on; the join code is the gate, not the account.
 
 ## 3. Edge functions and their secrets
@@ -51,7 +51,15 @@ There is no Xcode on Windows, so every iOS build runs on EAS. That works, but it
 
 Two more facts about the command itself. A bare `eas build` means the `production` profile on both platforms, which needs App Store signing and an Apple login; the first build you want is `pnpm ios:dev`, one platform, one profile. And the Apple ID prompt on an iOS build cannot be skipped: with no Apple login, EAS needs a certificate and a provisioning profile pasted in by hand. Answer it with the Apple ID that is enrolled in the developer program. Answering it with anything else sends a login attempt for that string, and Apple replies that "this account has been locked", which says nothing about your real account.
 
-- **Enrol in the Apple Developer Program** (99 USD a year) before anything else here. Approval can take a day or two and everything below waits on it.
+**Until Apple approves the enrolment, the app runs in Expo Go.** Install Expo Go from the App Store on the iPhone, put the phone on the PC's Wi-Fi, then from the repository root:
+
+```
+pnpm mobile:go
+```
+
+Scan the QR code with the iPhone camera. If the phone cannot reach the PC (a firewall prompt was dismissed, or the network isolates devices) run `pnpm mobile:go --tunnel`, which routes through Expo's servers instead. What works there: onboarding, the contract, squads and codes, the dual-cam proof and its verification, the ledger, weigh-ins, episodes, Sign in with Apple through the second client id in section 2. What does not: HealthKit is a native module Expo Go does not carry, so every proof is photo-only Silver and Gold waits for the real build; no push token is issued, so nudges cannot be tested; `winarc://` links open nothing. Every one of those returns in the development build below.
+
+- **Enrol in the Apple Developer Program** (99 USD a year) before anything else here. As an individual it is done from the Apple Developer app on the iPhone: it verifies a government ID and approval takes 24 to 48 hours. An organisation needs a D-U-N-S number and takes weeks, so start as an individual; an app can be transferred to a company later. Everything below waits on the approval.
 - **Install and link.** `npm i -g eas-cli`, then `eas login`, then from `apps/mobile` run `eas init`. That writes the project id into `app.json` under `extra.eas.projectId`. Commit that change: push notifications read it at runtime and fail without it.
 - **Environment variables are optional.** The app and the web page carry the production URL and publishable key as defaults, so a build with no EAS environment reaches production. Set them only to point a `preview` build at a staging project: `apps/mobile/.env` is git-ignored, and EAS uploads from git, so a build would otherwise ship with an empty Supabase URL. The repository is public, so these must live in EAS and not in `eas.json`. From `apps/mobile`, for each of `development`, `preview` and `production`:
 
