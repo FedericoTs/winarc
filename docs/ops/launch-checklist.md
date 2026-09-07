@@ -28,7 +28,7 @@ Season one starts 1 October 2026 and locks squads on 7 October. Everything below
   pnpm smoke cases/rear.jpg cases/front.jpg GYM
   ```
 
-  Export `ANTHROPIC_API_KEY` first (`set` on Windows `cmd`). The files must be real JPEGs: an iPhone shoots HEIC by default, and sending the photos to yourself through WhatsApp or Mail converts them. Expect a verified Silver in under 8 seconds; add `true` as a fourth argument to simulate a matching workout and get Gold. Then run the eval set in `evals/verification` and check false accepts stay under 5% and false rejects under 10%.
+  Export `ANTHROPIC_API_KEY` first (`set` on Windows `cmd`). No photos to hand? `pnpm smoke fixtures/rear.jpg fixtures/front.jpg GYM` runs the same call on two drawn fixtures and should answer `ask`; it proves the plumbing, not the calibration. The files must be real JPEGs: an iPhone shoots HEIC by default, and sending the photos to yourself through WhatsApp or Mail converts them. Expect a verified Silver in under 8 seconds; add `true` as a fourth argument to simulate a matching workout and get Gold. Then run the eval set in `evals/verification` and check false accepts stay under 5% and false rejects under 10%.
 - Confirm a refusal never charges: a proof the model refuses becomes an ask with retake, vouch and appeal.
 
 ## 4. The app, building for iOS from Windows

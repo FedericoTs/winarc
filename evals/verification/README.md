@@ -46,3 +46,14 @@ The report is written to `out/report.json`. Compare reports before and after a c
 ## Cost
 
 About 1,500 image tokens per proof. On `claude-opus-5` a 500-case run is on the order of five dollars. Run the full set before a rubric change and a 50-case smoke set in CI when a key is configured.
+
+## Plumbing check without photos
+
+`fixtures/` holds two drawn illustrations, a gym scene and a face. They are not photographs and the verifier should answer `ask` for them; they exist so one command proves the key, the model call, the structured output and the decision path all work before a real pair is to hand:
+
+```
+cd evals/verification
+pnpm smoke fixtures/rear.jpg fixtures/front.jpg GYM
+```
+
+Expect `outcome.status` of `ask` and a `latencyMs` under 8000. A `verified` here means the rubric accepts an illustration, which is worth knowing even though the app only ever sends in-app camera captures. Calibration still needs the real pair.
