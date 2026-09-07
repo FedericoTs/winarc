@@ -25,6 +25,7 @@ export default function Weigh() {
   const [done, setDone] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [reload, setReload] = useState(0);
+  const [adult, setAdult] = useState<boolean | null>(null);
 
   useEffect(() => {
     (async () => {
@@ -42,6 +43,11 @@ export default function Weigh() {
 
   useEffect(() => {
     (async () => {
+      const { data: auth } = await supabase.auth.getUser();
+      if (auth.user) {
+        const { data: me } = await supabase.from('profiles').select('adult_confirmed_at').eq('id', auth.user.id).maybeSingle();
+        setAdult(!!me?.adult_confirmed_at);
+      }
       const { data } = await supabase.from('weigh_ins').select('local_date, kg').order('local_date', { ascending: true });
       setHistory(((data as { local_date: string; kg: string | number }[] | null) ?? []).map((r) => ({ date: r.local_date, kg: Number(r.kg) })));
     })();
@@ -71,6 +77,25 @@ export default function Weigh() {
       <Display size={36}>Your number{'\n'}stays yours.</Display>
       <Body muted>Weekly, optional, and never on a squad surface. The only thing WinArc computes is the change since your first reading.</Body>
 
+      {adult === false ? (
+        <View style={styles.box}>
+          <Text style={styles.label}>Adults only</Text>
+          <Body muted>Under-18s cannot set weight tracking. Confirm once and the weigh-in opens.</Body>
+          <Button
+            title="I'm 18 or older"
+            onPress={async () => {
+              const { data: auth } = await supabase.auth.getUser();
+              if (!auth.user) return;
+              const { error: e } = await supabase.from('profiles').update({ adult_confirmed_at: new Date().toISOString() }).eq('id', auth.user.id);
+              if (e) return setError(e.message);
+              setAdult(true);
+            }}
+          />
+        </View>
+      ) : null}
+
+      {adult ? (
+        <>
       {reading ? (
         <View style={styles.box}>
           <Text style={styles.label}>From Health · {when}</Text>
@@ -92,6 +117,8 @@ export default function Weigh() {
         />
         <Button title="Log it" variant={reading ? 'ghost' : 'primary'} disabled={busy || !validKg(typedKg)} onPress={() => log(typedKg, 'manual')} />
       </View>
+        </>
+      ) : null}
 
       {done ? <Body style={{ color: colors.mint }}>{done}</Body> : null}
       {error ? <Body style={{ color: colors.rose }}>{error}</Body> : null}

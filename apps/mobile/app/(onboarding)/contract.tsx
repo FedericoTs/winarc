@@ -1,4 +1,4 @@
-import { ScrollView, StyleSheet, Switch, Text, View, Pressable } from 'react-native';
+import { Alert, ScrollView, StyleSheet, Switch, Text, View, Pressable } from 'react-native';
 import { router } from 'expo-router';
 import { HABITS, HABIT_KEYS, buildContract, type ContractLine } from '@winarc/domain';
 import { Body, Button, Chip, Display, Eyebrow, Screen } from '@/components/ui';
@@ -7,6 +7,21 @@ import { colors, fonts } from '@/theme/tokens';
 
 export default function Contract() {
   const ob = useOnboarding();
+
+  /** Product rule 2: under-18s cannot set weight tracking. Asked once, stored on the profile at signing. */
+  function confirmAdult() {
+    if (ob.adult) return ob.setWeighIn(true);
+    Alert.alert('The weigh-in is for adults', 'Under-18s cannot set weight tracking. Are you 18 or older?', [
+      { text: 'Not yet', style: 'cancel' },
+      {
+        text: "I'm 18 or older",
+        onPress: () => {
+          ob.setAdult(true);
+          ob.setWeighIn(true);
+        },
+      },
+    ]);
+  }
   let lines: ContractLine[] = [];
   let error: string | null = null;
   try {
@@ -33,7 +48,7 @@ export default function Contract() {
               </Text>
             </View>
             {l.kind === 'body' ? (
-              <Switch value={ob.weighIn} onValueChange={ob.setWeighIn} trackColor={{ true: colors.ice }} />
+              <Switch value={ob.weighIn} onValueChange={(on) => (on ? confirmAdult() : ob.setWeighIn(false))} trackColor={{ true: colors.ice }} />
             ) : (
               <View style={styles.step}>
                 <Pressable onPress={() => ob.setPerWeek(l.key, l.perWeek - 1)} style={styles.stepBtn}>
@@ -53,7 +68,7 @@ export default function Contract() {
               <Text style={styles.name}>Weekly weigh-in</Text>
               <Text style={styles.ver}>off · turn on to track privately</Text>
             </View>
-            <Switch value={false} onValueChange={ob.setWeighIn} />
+            <Switch value={false} onValueChange={(on) => (on ? confirmAdult() : ob.setWeighIn(false))} />
           </View>
         ) : null}
         <Eyebrow>Mind &amp; money · max 2 · {ob.habits.length} picked</Eyebrow>

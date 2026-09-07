@@ -5,10 +5,11 @@ import { SEASON_ONE, pickSeason, seasonFromRow, type Season, type SeasonRow } fr
  * PostgREST and picks the one for today, mirroring the app; without env or on
  * any failure it renders the compiled fallback so the page never breaks.
  */
+import { SUPABASE_ANON_KEY, SUPABASE_URL } from './public-config';
+
 export async function getSeason(): Promise<Season> {
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-  if (!url || !key) return SEASON_ONE;
+  const url = SUPABASE_URL;
+  const key = SUPABASE_ANON_KEY;
   try {
     const res = await fetch(`${url}/rest/v1/seasons?select=id,starts_on,arc_days,locks_on,finale_on`, {
       headers: { apikey: key },

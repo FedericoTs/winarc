@@ -4,6 +4,7 @@ import { router, useLocalSearchParams } from 'expo-router';
 import * as AppleAuthentication from 'expo-apple-authentication';
 import { Body, Button, Display, Eyebrow, Screen } from '@/components/ui';
 import { appleAvailable, sendEmailCode, signInWithApple, verifyEmailCode } from '@/lib/auth';
+import { features } from '@/config';
 import { colors, fonts } from '@/theme/tokens';
 
 /**
@@ -67,6 +68,7 @@ export default function SignIn() {
           onPress={() => run(signInWithApple)}
         />
       ) : null}
+      {features.emailSignIn ? (
       <View style={styles.box}>
         <Text style={styles.label}>{sent ? `Code sent to ${email}` : 'Or use your email'}</Text>
         {!sent ? (
@@ -89,6 +91,12 @@ export default function SignIn() {
           </>
         )}
       </View>
+      ) : !apple ? (
+        <View style={styles.box}>
+          <Text style={styles.label}>Season one</Text>
+          <Body muted>WinArc signs in with Apple on iPhone this season. Android and email arrive at day 30.</Body>
+        </View>
+      ) : null}
       {error ? <Body style={{ color: colors.rose }}>{error}</Body> : null}
     </Screen>
   );

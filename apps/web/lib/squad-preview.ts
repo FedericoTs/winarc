@@ -3,6 +3,8 @@
  * RPC over PostgREST with the anon key; returns null without env, on a bad
  * code, or on any failure, and the page renders the code alone.
  */
+import { SUPABASE_ANON_KEY, SUPABASE_URL } from './public-config';
+
 export interface SquadPreview {
   id: string;
   name: string;
@@ -17,9 +19,8 @@ export interface SquadPreview {
 }
 
 export async function squadPreview(code: string): Promise<SquadPreview | null> {
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-  if (!url || !key) return null;
+  const url = SUPABASE_URL;
+  const key = SUPABASE_ANON_KEY;
   try {
     const res = await fetch(`${url}/rest/v1/rpc/squad_preview`, {
       method: 'POST',

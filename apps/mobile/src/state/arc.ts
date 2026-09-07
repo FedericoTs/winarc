@@ -11,6 +11,8 @@ export interface OnboardingState {
   perWeek: Record<string, number>;
   days: Record<string, number[]>;
   weighIn: boolean;
+  /** Self-attested 18 or older; the weigh-in cannot be set without it. */
+  adult: boolean;
   habits: string[];
   customHabits: { key: string; name: string; verification: VerificationMethod }[];
   squad: {
@@ -28,6 +30,7 @@ export interface OnboardingState {
   setPerWeek(key: string, n: number): void;
   setDays(key: string, days: number[]): void;
   setWeighIn(on: boolean): void;
+  setAdult(on: boolean): void;
   toggleHabit(key: string): void;
   addCustomHabit(key: string, name: string, verification: VerificationMethod): void;
   setSquad(patch: Partial<OnboardingState['squad']>): void;
@@ -40,7 +43,8 @@ const initial = {
   customSports: [],
   perWeek: {},
   days: {},
-  weighIn: true,
+  weighIn: false,
+  adult: false,
   habits: [],
   customHabits: [],
   squad: {
@@ -69,7 +73,8 @@ export const useOnboarding = create<OnboardingState>((set, get) => ({
     })),
   setPerWeek: (key, n) => set((s) => ({ perWeek: { ...s.perWeek, [key]: n }, days: omit(s.days, key) })),
   setDays: (key, days) => set((s) => ({ days: { ...s.days, [key]: days } })),
-  setWeighIn: (on) => set({ weighIn: on }),
+  setWeighIn: (on) => set((s) => ({ weighIn: on && s.adult })),
+  setAdult: (on) => set((s) => ({ adult: on, weighIn: on ? s.weighIn : false })),
   toggleHabit: (key) =>
     set((s) => {
       if (s.habits.includes(key)) return { habits: s.habits.filter((k) => k !== key) };

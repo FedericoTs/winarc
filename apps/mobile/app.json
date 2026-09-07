@@ -28,7 +28,11 @@
         "android.permission.health.READ_EXERCISE",
         "android.permission.health.READ_WEIGHT",
         "android.permission.RECORD_AUDIO"
-      ]
+      ],
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#0B0D12"
+      }
     },
     "plugins": [
       "expo-router",
@@ -45,6 +49,15 @@
         {
           "color": "#FF7A1A"
         }
+      ],
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/splash-icon.png",
+          "imageWidth": 220,
+          "resizeMode": "contain",
+          "backgroundColor": "#0B0D12"
+        }
       ]
     ],
     "experiments": {
@@ -56,6 +69,7 @@
         "projectId": "880fc508-a1a6-47a8-a80b-74a3e215d63b"
       }
     },
-    "owner": "federicots"
+    "owner": "federicots",
+    "icon": "./assets/icon.png"
   }
 }

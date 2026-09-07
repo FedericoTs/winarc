@@ -14,8 +14,8 @@ Done on 7 September through the connector: project `winarc`, ref `gixfcrtnyjzlpy
 
 ## 2. Auth
 
-- Apple: in Authentication → Providers enable Apple with the Services ID, Team ID, Key ID and the .p8 key from the Apple Developer account. The bundle identifier is `app.winarc.season`.
-- Email: keep the OTP flow. In Authentication → Email Templates make the "Magic Link" template show `{{ .Token }}` so the message carries the six-digit code the app asks for. Set OTP expiry to 10 minutes.
+- Season one signs in with Apple only (ADR 0012). Nothing to configure for email; the code path is off behind `features.emailSignIn`.
+- Apple: once the developer account exists, in Authentication → Providers enable Apple and put `app.winarc.season` in the Client IDs field. Native sign-in tokens carry the bundle id as their audience and are rejected otherwise. The Services ID and secret key fields are for the web flow and can wait.
 - Turn off anonymous sign-ins. Leave sign-ups on; the join code is the gate, not the account.
 
 ## 3. Edge functions and their secrets
@@ -49,7 +49,7 @@ There is no Xcode on Windows, so every iOS build runs on EAS. That works, but it
 
 - **Enrol in the Apple Developer Program** (99 USD a year) before anything else here. Approval can take a day or two and everything below waits on it.
 - **Install and link.** `npm i -g eas-cli`, then `eas login`, then from `apps/mobile` run `eas init`. That writes the project id into `app.json` under `extra.eas.projectId`. Commit that change: push notifications read it at runtime and fail without it.
-- **Set the build-time environment variables.** `apps/mobile/.env` is git-ignored, and EAS uploads from git, so a build would otherwise ship with an empty Supabase URL. The repository is public, so these must live in EAS and not in `eas.json`. From `apps/mobile`, for each of `development`, `preview` and `production`:
+- **Environment variables are optional.** The app and the web page carry the production URL and publishable key as defaults, so a build with no EAS environment reaches production. Set them only to point a `preview` build at a staging project: `apps/mobile/.env` is git-ignored, and EAS uploads from git, so a build would otherwise ship with an empty Supabase URL. The repository is public, so these must live in EAS and not in `eas.json`. From `apps/mobile`, for each of `development`, `preview` and `production`:
 
   ```
   eas env:set --environment development --name EXPO_PUBLIC_SUPABASE_URL --value https://gixfcrtnyjzlpylcimrb.supabase.co --visibility plaintext

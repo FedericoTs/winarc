@@ -35,6 +35,10 @@ export default function Sign() {
       setBusy(false);
       return setError('Sign in first');
     }
+    if (ob.weighIn) {
+      // The database refuses a weigh-in on a contract whose profile carries no adult confirmation.
+      await supabase.from('profiles').update({ adult_confirmed_at: new Date().toISOString() }).eq('id', auth.user.id);
+    }
     const { data: contract, error: cErr } = await supabase
       .from('contracts')
       .insert({ profile_id: auth.user.id, squad_id: ob.squad.id, season_id: season().id, weigh_in: ob.weighIn, signed_at: new Date().toISOString() })

@@ -7,8 +7,8 @@ values
   ('00000000-0000-0000-0000-000000000002', '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated', 'marco@arc.local', crypt('password', gen_salt('bf')), now(), '{"name":"Marco"}', now(), now())
 on conflict (id) do nothing;
 
-update public.profiles set handle = 'you', tz = 'Europe/Rome' where id = '00000000-0000-0000-0000-000000000001';
-update public.profiles set handle = 'marco', tz = 'Europe/Rome' where id = '00000000-0000-0000-0000-000000000002';
+update public.profiles set handle = 'you', tz = 'Europe/Rome', adult_confirmed_at = now() where id = '00000000-0000-0000-0000-000000000001';
+update public.profiles set handle = 'marco', tz = 'Europe/Rome', adult_confirmed_at = now() where id = '00000000-0000-0000-0000-000000000002';
 
 insert into public.squads (id, season_id, name, code, size, stake_cents, pot_rule, currency, founder_id)
 values ('10000000-0000-0000-0000-000000000001', 'S01', 'The Cold Starters', 'WIN-7K2Q', 5, 1000, 'pot', 'EUR', '00000000-0000-0000-0000-000000000001')
