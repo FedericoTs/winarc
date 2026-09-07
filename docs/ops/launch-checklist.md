@@ -30,6 +30,8 @@ npx supabase functions deploy verify-proof title-episode --project-ref gixfcrtny
 
 `--use-api` bundles on Supabase's side, so no Docker; each function's `deno.json` import map is picked up from its folder. Confirm with `npx supabase functions list --project-ref gixfcrtnyjzlpylcimrb`.
 
+Deployed on 7 September, both at version 1 with `verify_jwt` on. Two facts worth knowing when probing them: the gateway treats the publishable key in the `apikey` header as a valid credential, so such a request reaches the function code, and a request with no credential at all is refused at the gateway with `UNAUTHORIZED_NO_AUTH_HEADER`. The functions do their own authentication regardless: an anonymous call with a valid body gets `not signed in` (401) before any proof is loaded, and a signed-in member asking about someone else's proof gets `not your proof` (403) before the model is called. Nobody reaches the model without owning the proof.
+
 - Smoke test with real images from a phone, on your machine. Put the two JPEGs in `evals/verification/cases/`, which is git-ignored, then run from that folder so the paths resolve:
 
   ```
