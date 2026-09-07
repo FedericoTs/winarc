@@ -55,7 +55,8 @@ npx expo install --fix         # if package versions drift from SDK 57
 ```
 
 ```
-eas build --profile development --platform ios
+cd apps/mobile
+eas build --profile development --platform ios    # or, from the root: pnpm ios:dev
 ```
 
 Build profiles are in `apps/mobile/eas.json`. They read the Supabase values from EAS environments rather than `.env`, which is git-ignored and never uploaded. See [docs/ops/launch-checklist.md](./docs/ops/launch-checklist.md) section 4 for the full path, including registering your device for internal distribution.

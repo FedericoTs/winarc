@@ -16,6 +16,8 @@
     "mobile": "pnpm --filter @winarc/mobile start",
     "web": "pnpm --filter @winarc/web dev",
     "eval:verification": "pnpm --filter @winarc/eval-verification run eval",
-    "mobile:bundle": "pnpm --filter @winarc/mobile bundle:check"
+    "mobile:bundle": "pnpm --filter @winarc/mobile bundle:check",
+    "eas": "cd apps/mobile && eas",
+    "ios:dev": "cd apps/mobile && eas build --platform ios --profile development"
   }
 }
