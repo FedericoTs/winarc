@@ -76,7 +76,10 @@ There is no Xcode on Windows, so every iOS build runs on EAS. That works, but it
 - Age rating 17+ is not required; the weigh-in is optional and unstaked. The under-18 weigh-in restriction from the product rules needs an age gate that does not exist yet; ship it before opening sign-ups to anyone under 18 or keep the first season invite-only to adults.
 - Screenshots come from the share cards and the Squad Board on a dark background. No feed, no charts.
 
-## 6. Domain and links
+## 6. Web, domain and links
+
+- The web page deploys from GitHub through Vercel (team `federicosciuca-gmailcoms-projects`, project `winarc`, root `apps/web`). Linking needs the Vercel GitHub app installed once at https://github.com/apps/vercel with access to `FedericoTs/winarc`; after that every push to `main` deploys and the production URL is `winarc.vercel.app` until the domain attaches.
+- Analytics needs a `WinArc` project of its own in PostHog (Settings → Projects → New project, region US). Its public token then goes into `apps/mobile/src/lib/analytics.ts` as the default next to the Supabase values, and the dashboards for the questions in `docs/product/06-analytics.md` get built against it.
 
 - Buy `winarc.app` first, then the defensive ones (`.team`, `.fit`, `.co`). Founder's call.
 - Point the web app at the domain and check `winarc://` plus `https://winarc.app/join/WIN-XXXX` open the join screen.
