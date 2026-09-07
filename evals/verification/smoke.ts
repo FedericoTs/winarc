@@ -1,7 +1,12 @@
 /**
  * One real verification, end to end, from your machine:
  *
- *   ANTHROPIC_API_KEY=... pnpm --filter @winarc/eval-verification smoke -- ./rear.jpg ./front.jpg GYM
+ *   cd evals/verification
+ *   ANTHROPIC_API_KEY=... pnpm smoke -- cases/rear.jpg cases/front.jpg GYM [true]
+ *
+ * Paths resolve from this folder. cases/ is git-ignored, so photos put there
+ * never reach the repository. The fourth argument simulates a matching
+ * workout, which is what turns Silver into Gold.
  *
  * Prints the model's structured result, the decision the app would make, the
  * tier, tokens and latency. Costs about one cent on claude-opus-5.
