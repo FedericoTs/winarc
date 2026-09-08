@@ -47,7 +47,7 @@ pnpm monorepo.
 - `apps/mobile`: Expo SDK 57 with expo-router. iOS first, Android from the same code.
 - Analytics: a fetch-based PostHog facade in `apps/mobile/src/lib/analytics.ts`, a no-op without a key. The event list in `docs/product/06-analytics.md` is the contract; an event never carries a body weight, an image, a name or anything from Strava.
 - `apps/web`: Next.js landing page and `/join/[code]`.
-- `supabase`: Postgres with row-level security, private Storage buckets, two Deno edge functions, proof verification and episode titling, and the daily tick and Sunday settlement as SQL functions run by pg_cron. Migrations are append-only. `supabase/tests` applies the real migrations to a plain Postgres through a small shim and verifies RPCs, policies, ticks and settlement.
+- `supabase`: Postgres with row-level security, private Storage buckets, two Deno edge functions, proof verification and episode titling, and the daily tick, Sunday settlement and the squad signals (ADR 0013) as SQL functions run by pg_cron. Migrations are append-only. `supabase/tests` applies the real migrations to a plain Postgres through a small shim and verifies RPCs, policies, ticks and settlement.
 - `evals/verification`: the labeled proof set and the runner. Ship a rubric change only when false accepts are under 5 percent and false rejects under 10 percent.
 
 ## Commands

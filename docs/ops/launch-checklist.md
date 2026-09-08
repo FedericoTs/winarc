@@ -4,7 +4,7 @@ Season one starts 1 October 2026 and locks squads on 7 October. Everything below
 
 ## 1. Supabase project
 
-Done on 7 September through the connector: project `winarc`, ref `gixfcrtnyjzlpylcimrb`, Frankfurt, Postgres 17. All seven migrations applied in one transaction; `pg_cron` and `pg_net` enabled; the three jobs `winarc-tick`, `winarc-settle` and `winarc-nudge` scheduled; the migration history written with the repository's versions, so `supabase db push` treats them as applied. The remote schema was fingerprinted against the local test database: functions, columns, policies, indexes and check constraints all match by hash.
+Done on 7 September through the connector: project `winarc`, ref `gixfcrtnyjzlpylcimrb`, Frankfurt, Postgres 17. All seven migrations applied in one transaction; `pg_cron` and `pg_net` enabled; the jobs `winarc-tick`, `winarc-settle`, `winarc-nudge` and, since 8 September, `winarc-signals` scheduled; the migration history written with the repository's versions, so `supabase db push` treats them as applied. The remote schema was fingerprinted against the local test database: functions, columns, policies, indexes and check constraints all match by hash.
 
 - URL: `https://gixfcrtnyjzlpylcimrb.supabase.co`
 - Publishable key: `sb_publishable_FHBR5Ro-szpYciar1NuuKA_Qj88GLbL`. This is a client key by design; the app and the web page use it as the anon key. Row-level security is what protects data, and the tests cover it.

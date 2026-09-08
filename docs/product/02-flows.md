@@ -24,7 +24,7 @@ The contract renders as a poster with the squad code, spots left and the lock da
 
 ## 6. Today
 
-What is due, the deadline, the squad's status, and the rescue line. "Can't train?" opens the three honest options: use a sick day, ask the squad to vouch, take the miss. Push at 20:00 only if the proof is missing; the app asks for notification permission once, right after the contract is signed, when the reason is obvious. On the weigh-in day Today adds a private row: a Health reading or a typed number, never staked, never on the board, and the only number shown back is the change since the first reading.
+What is due, the deadline, the squad's status, and the rescue line. "Can't train?" opens the three honest options: use a sick day, ask the squad to vouch, take the miss. Push at 20:00 only if the proof is missing, and it says how the squad is doing: "3 of 4 proved. You are the one missing." When a squadmate stamps the first proof of the day, the members whose marks are still open get one ping, "Marco went first", never before 07:00 and never after they have proved; the switch for it is on the squad board. Sunday's settlement is the third push, and three a day is the cap (ADR 0013). The app asks for notification permission once, right after the contract is signed, when the reason is obvious. On the weigh-in day Today adds a private row: a Health reading or a typed number, never staked, never on the board, and the only number shown back is the change since the first reading.
 
 ## 7. Proof
 

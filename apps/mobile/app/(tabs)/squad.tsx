@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, Switch, Text, View } from 'react-native';
 import { Image } from 'expo-image';
 import { addDays, dayOfSeason, localISODate, rollupMark, type DayMark } from '@winarc/domain';
 import { season } from '@/lib/season';
@@ -32,6 +32,7 @@ export default function SquadBoard() {
   const [thumbs, setThumbs] = useState<Thumb[]>([]);
   const [requests, setRequests] = useState<VouchRequest[]>([]);
   const [me, setMe] = useState<string | null>(null);
+  const [pings, setPings] = useState<boolean | null>(null);
   const [refresh, setRefresh] = useState(0);
   const today = localISODate(new Date(), tz);
   const dates = Array.from({ length: DAYS }, (_, i) => addDays(today, i - (DAYS - 1)));
@@ -46,6 +47,10 @@ export default function SquadBoard() {
       setRows((data as MarkRow[] | null) ?? []);
       const { data: auth } = await supabase.auth.getUser();
       setMe(auth.user?.id ?? null);
+      if (auth.user) {
+        const { data: prof } = await supabase.from('profiles').select('squad_pings').eq('id', auth.user.id).maybeSingle();
+        setPings((prof as { squad_pings: boolean } | null)?.squad_pings ?? true);
+      }
       const { data: r } = await supabase
         .from('rescues')
         .select('id, proof_id, profile_id, local_date, profiles(display_name)')
@@ -72,6 +77,13 @@ export default function SquadBoard() {
       );
     })();
   }, [today, refresh]);
+
+  /** The first proof of the day pings squadmates still open. One a day, never before 07:00; this is the off switch. */
+  async function setSquadPings(on: boolean) {
+    if (!me) return;
+    setPings(on);
+    await supabase.from('profiles').update({ squad_pings: on }).eq('id', me);
+  }
 
   async function vouch(proofId: string) {
     const { error } = await supabase.from('vouches').insert({ proof_id: proofId, voucher_id: me });
@@ -129,6 +141,15 @@ export default function SquadBoard() {
         </View>
       </ScrollView>
       {members.length === 0 ? <Body muted>No marks yet. The board fills in from Day 1.</Body> : null}
+      {pings !== null ? (
+        <View style={styles.setting}>
+          <View style={{ flex: 1, gap: 2 }}>
+            <Text style={styles.settingTitle}>First-proof ping</Text>
+            <Text style={styles.settingBody}>When a squadmate proves first, once a day, only while yours is still open.</Text>
+          </View>
+          <Switch value={pings} onValueChange={setSquadPings} trackColor={{ true: colors.ember, false: colors.surface2 }} thumbColor={colors.ink} />
+        </View>
+      ) : null}
       {requests.length ? (
         <View style={{ gap: 8 }}>
           <Eyebrow>Vouch requests · two squadmates make it Bronze</Eyebrow>
@@ -160,4 +181,7 @@ const styles = StyleSheet.create({
   requestText: { flex: 1, fontFamily: fonts.body, fontSize: 13.5, color: colors.ink },
   vouchBtn: { backgroundColor: colors.mint, borderRadius: 10, paddingVertical: 8, paddingHorizontal: 14 },
   vouchText: { fontFamily: fonts.bodySemi, fontSize: 13, color: '#06281B' },
+  setting: { flexDirection: 'row', alignItems: 'center', gap: 12, backgroundColor: colors.surface, borderRadius: 12, padding: 12, marginTop: 'auto' },
+  settingTitle: { fontFamily: fonts.bodySemi, fontSize: 13.5, color: colors.ink },
+  settingBody: { fontFamily: fonts.body, fontSize: 12, color: colors.ink2 },
 });
